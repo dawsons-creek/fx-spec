@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="MatchResult.fs" />
+    <Compile Include="Assertions.fs" />
+    <Compile Include="CoreMatchers.fs" />
+    <Compile Include="CollectionMatchers.fs" />
+    <Compile Include="NumericMatchers.fs" />
+    <Compile Include="StringMatchers.fs" />
+    <Compile Include="ExceptionMatchers.fs" />
+  </ItemGroup>
+
+</Project>
