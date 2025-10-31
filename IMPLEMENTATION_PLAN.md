@@ -111,6 +111,7 @@ type MatchResult<'a> =
 - `FxSpec.Matchers` library
 - Comprehensive matcher tests
 - Documentation for custom matcher authoring
+- **🎯 Rewrite Phase 1 tests using FxSpec itself (dogfooding begins!)**
 
 ### Phase 3: Test Runner (Week 3-5)
 
@@ -155,6 +156,7 @@ type TestResultNode =
 - `FxSpec.Runner` library and executable
 - Integration tests for full execution pipeline
 - CLI documentation
+- **🎯 FxSpec now runs its own tests using its own runner!**
 
 ### Phase 4: Console Reporting (Week 5-6)
 
