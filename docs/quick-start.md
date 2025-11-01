@@ -393,6 +393,96 @@ dotnet run -- --format simple
 
 ---
 
+## Async Testing
+
+FxSpec supports asynchronous tests using `itAsync`:
+
+```fsharp
+open System.Net.Http
+
+[<Tests>]
+let asyncSpecs =
+    describe "Async Operations" [
+        itAsync "fetches data from API" (async {
+            use client = new HttpClient()
+            let! response = client.GetAsync("https://api.github.com") |> Async.AwaitTask
+            expectHttp(response).toHaveStatusOk()
+        })
+        
+        itAsync "handles async computations" (async {
+            let! result = async {
+                return 42
+            }
+            expect(result).toEqual(42)
+        })
+    ]
+```
+
+**Key Points:**
+- Use `itAsync` instead of `it` for async tests
+- Wrap test in `async { }` computation expression
+- Use `let!` to await async operations
+- Use `Async.AwaitTask` to convert .NET Tasks to F# Async
+
+For more details, see [DSL API Reference](reference/dsl-api.md#itasync).
+
+---
+
+## Result Testing
+
+Test F# Result types with state-only or value-specific matchers:
+
+```fsharp
+[<Tests>]
+let resultSpecs =
+    describe "Result Matchers" [
+        it "checks success state" (fun () ->
+            let result = Ok 42
+            expectResult(result).toBeOk()  // Just check it succeeded
+        )
+        
+        it "checks specific success value" (fun () ->
+            let result = Ok "success"
+            expectResult(result).toBeOk("success")  // Check value too
+        )
+        
+        it "checks error state" (fun () ->
+            let result = Error "failed"
+            expectResult(result).toBeError()  // Just check it failed
+        )
+    ]
+```
+
+For more details, see [Result Matchers](reference/matchers/result.md).
+
+---
+
+## HTTP Testing
+
+Test HTTP responses with the fluent HTTP API:
+
+```fsharp
+open FxSpec.Http
+open System.Net.Http
+
+[<Tests>]
+let httpSpecs =
+    describe "HTTP API Tests" [
+        itAsync "validates API response" (async {
+            use client = new HttpClient()
+            let! response = client.GetAsync("https://api.example.com/users") |> Async.AwaitTask
+            
+            expectHttp(response).toHaveStatusOk()
+            expectHttp(response).toHaveContentType("application/json")
+            expectHttp(response).toHaveBodyContaining("users")
+        })
+    ]
+```
+
+For more details, see [HTTP Testing](reference/http.md).
+
+---
+
 ## What's Next?
 
 You now have a solid foundation in FxSpec. Continue learning:

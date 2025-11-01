@@ -26,17 +26,6 @@ module SpecHelpers =
                 Fail(Some ex)
         Example(description, execution)
 
-    /// Creates an async test example node.
-    /// Usage: itAsync "description" (async { test code })
-    let itAsync description (test: Async<unit>) : TestNode =
-        let execution () =
-            try
-                Async.RunSynchronously test
-                Pass
-            with ex ->
-                Fail(Some ex)
-        Example(description, execution)
-
     /// Creates a group node with nested tests.
     /// Usage: describe "description" [ ... tests ... ]
     let describe description (tests: TestNode list) : TestNode =
@@ -70,12 +59,6 @@ module SpecHelpers =
         let execution () = Skipped "Test marked as pending with xit"
         Example(description, execution)
 
-    /// Creates a skipped async test example.
-    /// Usage: xitAsync "description" (async { test code })
-    let xitAsync description (test: Async<unit>) : TestNode =
-        let execution () = Skipped "Test marked as pending with xitAsync"
-        Example(description, execution)
-
     /// Creates a skipped test example (alias for xit).
     /// Usage: pending "description" (fun () -> test code)
     let pending description (test: unit -> unit) : TestNode =
@@ -88,18 +71,6 @@ module SpecHelpers =
         let execution () =
             try
                 test()
-                Pass
-            with ex ->
-                Fail(Some ex)
-        FocusedExample(description, execution)
-
-    /// Creates a focused async test example (fitAsync = "focused it async").
-    /// When any fit is present, only fit tests will run.
-    /// Usage: fitAsync "description" (async { test code })
-    let fitAsync description (test: Async<unit>) : TestNode =
-        let execution () =
-            try
-                Async.RunSynchronously test
                 Pass
             with ex ->
                 Fail(Some ex)
@@ -152,3 +123,4 @@ module SpecHelpers =
     /// Usage: afterAll (fun () -> teardown code)
     let afterAll (hook: unit -> unit) : TestNode =
         AfterAllHook hook
+

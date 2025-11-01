@@ -278,6 +278,63 @@ expectThrowsWithMessage<InvalidOperationException>("error", fun () ->
     raise (InvalidOperationException("error"))
 )
 expectNotToThrow(fun () -> printfn "safe operation")
+
+// HTTP expectations (with expectHttp)
+expectHttp(response).toHaveStatusOk()
+expectHttp(response).toHaveStatus(201)
+expectHttp(response).toHaveHeader("Content-Type", "application/json")
+expectHttp(response).toHaveBodyContaining("success")
+expectHttp(response).toHaveJsonBody({| name = "John"; age = 30 |})
+```
+
+### Async Test Support
+
+FxSpec supports asynchronous tests with `itAsync`:
+
+```fsharp
+describe "Async API" [
+    itAsync "fetches user data" (async {
+        let! user = getUserAsync 123
+        expectOption(user).toBeSome()
+    })
+    
+    itAsync "handles HTTP requests" (async {
+        use client = new HttpClient()
+        let! response = client.GetAsync("https://api.example.com/users") |> Async.AwaitTask
+        expectHttp(response).toHaveStatusOk()
+    })
+]
+```
+
+### HTTP Testing
+
+FxSpec provides comprehensive HTTP matchers for testing web APIs:
+
+```fsharp
+open FxSpec.Http
+
+describe "User API" [
+    itAsync "creates a new user" (async {
+        let! response = client.PostAsync("/api/users", jsonContent)
+        
+        // Status matchers
+        expectHttp(response).toHaveStatusCreated()
+        expectHttp(response).toHaveStatus(201)
+        
+        // Header matchers
+        expectHttp(response).toHaveHeader("Content-Type", "application/json")
+        expectHttp(response).toHaveContentType("application/json")
+        
+        // Body matchers
+        expectHttp(response).toHaveBodyContaining("user")
+        expectHttp(response).toHaveJsonBody({| id = 1; name = "John" |})
+    })
+    
+    itAsync "returns 404 for missing user" (async {
+        let! response = client.GetAsync("/api/users/999")
+        expectHttp(response).toHaveStatusNotFound()
+    })
+]
 ```
 
 ### Comprehensive Matchers
@@ -290,6 +347,7 @@ expectNotToThrow(fun () -> printfn "safe operation")
 - **Options**: `toBeSome`, `toBeNone`
 - **Results**: `toBeOk`, `toBeError`
 - **Booleans**: `toBeTrue`, `toBeFalse`
+- **HTTP**: `toHaveStatus`, `toHaveStatusOk`, `toHaveHeader`, `toHaveContentType`, `toHaveBody`, `toHaveBodyContaining`, `toHaveJsonBody`
 
 ## Architecture Highlights
 

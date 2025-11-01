@@ -159,11 +159,13 @@ nav:
     - reference/index.md
     - DSL API: reference/dsl-api.md
     - Test Runner: reference/runner.md
+    - HTTP Testing: reference/http.md
     - Matchers:
       - Core: reference/matchers/core.md
       - Collections: reference/matchers/collections.md
       - Strings: reference/matchers/strings.md
       - Numeric: reference/matchers/numeric.md
+      - Result: reference/matchers/result.md
       - Exceptions: reference/matchers/exceptions.md
 
   - Community:
