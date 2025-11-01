@@ -295,6 +295,14 @@ This project is in active design and planning. We're building the best F# BDD fr
 - [x] FxSpec runs its own tests!
 - [ ] Scope stack with `let'` and hooks (deferred to Phase 5)
 
+### Phase 4: Formatters (Week 5-6) ✅
+- [x] Spectre.Console integration
+- [x] Expected vs Actual diffs
+- [x] Full test path in failures
+- [x] Beautiful tables and panels
+- [x] Color-coded output
+- [x] Format selection (--format option)
+
 ### Phase 4: Formatters (Weeks 5-6)
 - [ ] Spectre.Console integration
 - [ ] Documentation formatter
