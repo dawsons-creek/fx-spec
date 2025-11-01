@@ -11,6 +11,7 @@
     <Compile Include="TypesSpecs.fs" />
     <Compile Include="SpecBuilderSpecs.fs" />
     <Compile Include="Phase5Specs.fs" />
+    <Compile Include="HooksSpecs.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
