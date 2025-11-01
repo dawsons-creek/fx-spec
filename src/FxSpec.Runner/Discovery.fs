@@ -15,11 +15,19 @@ module Discovery =
     let private isTestNodeListProperty (prop: PropertyInfo) : bool =
         prop.PropertyType = typeof<TestNode list>
 
+    /// Checks if a property type is a single TestNode.
+    let private isTestNodeProperty (prop: PropertyInfo) : bool =
+        prop.PropertyType = typeof<TestNode>
+
     /// Checks if a field type is TestNode list.
     let private isTestNodeListField (field: FieldInfo) : bool =
         field.FieldType = typeof<TestNode list>
 
-    /// Extracts test nodes from a property value.
+    /// Checks if a field type is a single TestNode.
+    let private isTestNodeField (field: FieldInfo) : bool =
+        field.FieldType = typeof<TestNode>
+
+    /// Extracts test nodes from a property value (TestNode list).
     let private extractPropertyValue (prop: PropertyInfo) : TestNode array =
         try
             let value = prop.GetValue(null) :?> TestNode list
@@ -28,7 +36,16 @@ module Discovery =
             printfn "Warning: Could not extract property value from %s: %s" prop.Name ex.Message
             [||]
 
-    /// Extracts test nodes from a field value.
+    /// Extracts a single test node from a property value.
+    let private extractSinglePropertyValue (prop: PropertyInfo) : TestNode array =
+        try
+            let value = prop.GetValue(null) :?> TestNode
+            [| value |]
+        with ex ->
+            printfn "Warning: Could not extract property value from %s: %s" prop.Name ex.Message
+            [||]
+
+    /// Extracts test nodes from a field value (TestNode list).
     let private extractFieldValue (field: FieldInfo) : TestNode array =
         try
             let value = field.GetValue(null) :?> TestNode list
@@ -37,21 +54,48 @@ module Discovery =
             printfn "Warning: Could not extract field value from %s: %s" field.Name ex.Message
             [||]
 
+    /// Extracts a single test node from a field value.
+    let private extractSingleFieldValue (field: FieldInfo) : TestNode array =
+        try
+            let value = field.GetValue(null) :?> TestNode
+            [| value |]
+        with ex ->
+            printfn "Warning: Could not extract field value from %s: %s" field.Name ex.Message
+            [||]
+
     /// Discovers test nodes from properties in a type.
     let private discoverFromProperties (typ: Type) : TestNode array =
         let bindingFlags = BindingFlags.Public ||| BindingFlags.Static
-        typ.GetProperties(bindingFlags)
-        |> Array.filter hasTestsAttribute
-        |> Array.filter isTestNodeListProperty
-        |> Array.collect extractPropertyValue
+        let props = typ.GetProperties(bindingFlags) |> Array.filter hasTestsAttribute
+        
+        let fromLists =
+            props
+            |> Array.filter isTestNodeListProperty
+            |> Array.collect extractPropertyValue
+        
+        let fromSingle =
+            props
+            |> Array.filter isTestNodeProperty
+            |> Array.collect extractSinglePropertyValue
+        
+        Array.append fromLists fromSingle
 
     /// Discovers test nodes from fields in a type.
     let private discoverFromFields (typ: Type) : TestNode array =
         let bindingFlags = BindingFlags.Public ||| BindingFlags.Static
-        typ.GetFields(bindingFlags)
-        |> Array.filter hasTestsAttribute
-        |> Array.filter isTestNodeListField
-        |> Array.collect extractFieldValue
+        let fields = typ.GetFields(bindingFlags) |> Array.filter hasTestsAttribute
+        
+        let fromLists =
+            fields
+            |> Array.filter isTestNodeListField
+            |> Array.collect extractFieldValue
+        
+        let fromSingle =
+            fields
+            |> Array.filter isTestNodeField
+            |> Array.collect extractSingleFieldValue
+        
+        Array.append fromLists fromSingle
 
     /// Discovers test nodes from a single type.
     let private discoverFromType (typ: Type) : TestNode array =

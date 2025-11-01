@@ -10,142 +10,71 @@ printfn ""
 
 // Core Matchers
 printfn "Core Matchers:"
-expect 42 |> should (equal 42)
-printfn "  ✓ equal"
+expect(42).toEqual(42)
+printfn "  ✓ toEqual"
 
-expect None |> should beNone
-printfn "  ✓ beNone"
+expectOption(None).toBeNone()
+printfn "  ✓ toBeNone"
 
-expect (Some 42) |> should (beSome 42)
-printfn "  ✓ beSome"
+expectOption(Some 42).toBeSome(42)
+printfn "  ✓ toBeSome"
 
-expect (Ok 42) |> should (beOk 42)
-printfn "  ✓ beOk"
+expectResult(Ok 42).toBeOk(42)
+printfn "  ✓ toBeOk"
 
-expect (Error "failed") |> should (beError "failed")
-printfn "  ✓ beError"
+expectResult(Error "failed").toBeError("failed")
+printfn "  ✓ toBeError"
 
-expect true |> should beTrue
-printfn "  ✓ beTrue"
+expectBool(true).toBeTrue()
+printfn "  ✓ toBeTrue"
 
-expect false |> should beFalse
-printfn "  ✓ beFalse"
-
-expect 10 |> should (satisfy (fun x -> x > 5) "be greater than 5")
-printfn "  ✓ satisfy"
-
-printfn ""
-
-// Collection Matchers
-printfn "Collection Matchers:"
-expect [1; 2; 3] |> should (contain 2)
-printfn "  ✓ contain"
-
-expect [] |> should beEmpty
-printfn "  ✓ beEmpty"
-
-expect [1; 2; 3] |> should (haveLength 3)
-printfn "  ✓ haveLength"
-
-expect [2; 4; 6] |> should (allSatisfy (fun x -> x % 2 = 0) "be even")
-printfn "  ✓ allSatisfy"
-
-expect [1; 2; 3] |> should (anySatisfy (fun x -> x > 2) "be greater than 2")
-printfn "  ✓ anySatisfy"
-
-expect [1; 2; 3; 4] |> should (containAll [2; 4])
-printfn "  ✓ containAll"
-
-expect [1; 2; 3] |> should (equalSeq [1; 2; 3])
-printfn "  ✓ equalSeq"
+expectBool(false).toBeFalse()
+printfn "  ✓ toBeFalse"
 
 printfn ""
 
 // Numeric Matchers
 printfn "Numeric Matchers:"
-expect 10 |> should (beGreaterThan 5)
-printfn "  ✓ beGreaterThan"
+expectNum(10).toBeGreaterThan(5)
+printfn "  ✓ toBeGreaterThan"
 
-expect 5 |> should (beLessThan 10)
-printfn "  ✓ beLessThan"
+expectNum(5).toBeLessThan(10)
+printfn "  ✓ toBeLessThan"
 
-expect 5 |> should (beBetween 1 10)
-printfn "  ✓ beBetween"
+expectNum(10).toBeGreaterThanOrEqual(10)
+printfn "  ✓ toBeGreaterThanOrEqual"
 
-expect 3.14159 |> should (beCloseTo 3.14 0.01)
-printfn "  ✓ beCloseTo"
+expectNum(5).toBeLessThanOrEqual(5)
+printfn "  ✓ toBeLessThanOrEqual"
 
-expect 5 |> should bePositive
-printfn "  ✓ bePositive"
+printfn ""
 
-expect -5 |> should beNegative
-printfn "  ✓ beNegative"
+// Collection Matchers
+printfn "Collection Matchers:"
+expectSeq([1; 2; 3]).toContain(2)
+printfn "  ✓ toContain"
 
-expect 0 |> should beZero
-printfn "  ✓ beZero"
+expectSeq([]).toBeEmpty()
+printfn "  ✓ toBeEmpty"
 
-expect 4 |> should beEven
-printfn "  ✓ beEven"
-
-expect 5 |> should beOdd
-printfn "  ✓ beOdd"
-
-expect 15 |> should (beDivisibleBy 5)
-printfn "  ✓ beDivisibleBy"
+expectSeq([1; 2; 3]).toHaveLength(3)
+printfn "  ✓ toHaveLength"
 
 printfn ""
 
 // String Matchers
 printfn "String Matchers:"
-expect "hello world" |> should (startWith "hello")
-printfn "  ✓ startWith"
+expectStr("hello world").toStartWith("hello")
+printfn "  ✓ toStartWith"
 
-expect "hello world" |> should (endWith "world")
-printfn "  ✓ endWith"
+expectStr("hello world").toEndWith("world")
+printfn "  ✓ toEndWith"
 
-expect "hello world" |> should (containSubstring "lo wo")
-printfn "  ✓ containSubstring"
+expectStr("hello world").toContain("lo wo")
+printfn "  ✓ toContain"
 
-expect "hello123" |> should (matchRegex "hello\\d+")
-printfn "  ✓ matchRegex"
-
-expect "" |> should beEmptyString
-printfn "  ✓ beEmptyString"
-
-expect "hello" |> should (haveStringLength 5)
-printfn "  ✓ haveStringLength"
-
-expect "HELLO" |> should (equalIgnoreCase "hello")
-printfn "  ✓ equalIgnoreCase"
-
-expect "hello" |> should beAlphabetic
-printfn "  ✓ beAlphabetic"
-
-expect "12345" |> should beNumeric
-printfn "  ✓ beNumeric"
-
-printfn ""
-
-// Exception Matchers
-printfn "Exception Matchers:"
-expect (fun () -> failwith "error") |> should raiseException<System.Exception>
-printfn "  ✓ raiseException"
-
-expect (fun () -> failwith "specific error") |> should (raiseExceptionWithMessage "specific error")
-printfn "  ✓ raiseExceptionWithMessage"
-
-expect (fun () -> failwith "error occurred") |> should (raiseExceptionContaining "error")
-printfn "  ✓ raiseExceptionContaining"
-
-expect (fun () -> ignore (1 + 1)) |> should notRaiseException
-printfn "  ✓ notRaiseException"
-
-printfn ""
-
-// Negation
-printfn "Negation:"
-expect 42 |> shouldNot (equal 99)
-printfn "  ✓ notTo' (negated assertion)"
+expectStr("").toBeEmpty()
+printfn "  ✓ toBeEmpty"
 
 printfn ""
 printfn "==================================="

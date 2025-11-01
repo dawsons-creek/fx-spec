@@ -15,26 +15,26 @@ Matches if the collection contains the expected item.
 **Usage:**
 
 ```fsharp
-expect collection |> should (contain item)
+expectSeq(collection).toContain(item)
 ```
 
 **Examples:**
 
 ```fsharp
-expect [1; 2; 3] |> should (contain 2)
-expect [|"a"; "b"; "c"|] |> should (contain "b")
-expect (seq { 1..10 }) |> should (contain 5)
+expectSeq([1; 2; 3]).toContain(2)
+expectSeq([|"a"; "b"; "c"|]).toContain("b")
+expectSeq((seq { 1..10 })).toContain(5)
 
 // With custom types
 type Person = { Name: string }
 let people = [{ Name = "Alice" }; { Name = "Bob" }]
-expect people |> should (contain { Name = "Alice" })
+expectSeq(people).toContain({ Name = "Alice" })
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect [1; 2; 3] |> should (contain 5)
+expectSeq([1; 2; 3]).toContain(5)
 // => Expected collection to contain 5, but it did not. Collection: [1; 2; 3]
 ```
 
@@ -49,24 +49,24 @@ Matches if the collection contains all expected items (in any order).
 **Usage:**
 
 ```fsharp
-expect collection |> should (containAll expected)
+expectSeq(collection).toContainAll(expected)
 ```
 
 **Examples:**
 
 ```fsharp
-expect [1; 2; 3; 4; 5] |> should (containAll [2; 4])
-expect [1; 2; 3; 4; 5] |> should (containAll [5; 1; 3])  // Order doesn't matter
-expect ["a"; "b"; "c"; "d"] |> should (containAll ["c"; "a"])
+expectSeq([1; 2; 3; 4; 5]).toContainAll([2; 4])
+expectSeq([1; 2; 3; 4; 5]).toContainAll([5; 1; 3])  // Order doesn't matter
+expectSeq(["a"; "b"; "c"; "d"]).toContainAll(["c"; "a"])
 
 // Empty expected list always passes
-expect [1; 2; 3] |> should (containAll [])
+expectSeq([1; 2; 3]).toContainAll([])
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect [1; 2; 3] |> should (containAll [2; 5; 7])
+expectSeq([1; 2; 3]).toContainAll([2; 5; 7])
 // => Expected collection to contain all of [2; 5; 7], but missing: [5; 7]
 ```
 
@@ -83,26 +83,26 @@ Matches if the collection is empty.
 **Usage:**
 
 ```fsharp
-expect collection |> should beEmpty
+expectSeq(collection).toBeEmpty()
 ```
 
 **Examples:**
 
 ```fsharp
-expect [] |> should beEmpty
+expectSeq([]).toBeEmpty()
 expect [||] |> should beEmpty
-expect Seq.empty |> should beEmpty
-expect (List<int>()) |> should beEmpty
+expectSeq(Seq.empty).toBeEmpty()
+expectSeq((List<int>())).toBeEmpty()
 
 // After operations
 let filtered = [1; 2; 3] |> List.filter (fun x -> x > 10)
-expect filtered |> should beEmpty
+expectSeq(filtered).toBeEmpty()
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect [1; 2; 3] |> should beEmpty
+expectSeq([1; 2; 3]).toBeEmpty()
 // => Expected empty collection, but found 3 items
 ```
 
@@ -117,25 +117,25 @@ Matches if the collection has the expected length.
 **Usage:**
 
 ```fsharp
-expect collection |> should (haveLength count)
+expectSeq(collection).toHaveLength(count)
 ```
 
 **Examples:**
 
 ```fsharp
-expect [1; 2; 3] |> should (haveLength 3)
+expectSeq([1; 2; 3]).toHaveLength(3)
 expect [|"a"; "b"|] |> should (haveLength 2)
-expect "hello" |> should (haveLength 5)  // Strings are sequences of chars
+expectSeq("hello").toHaveLength(5)  // Strings are sequences of chars
 
 // With operations
 let doubled = [1; 2; 3] |> List.map (fun x -> x * 2)
-expect doubled |> should (haveLength 3)
+expectSeq(doubled).toHaveLength(3)
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect [1; 2; 3] |> should (haveLength 5)
+expectSeq([1; 2; 3]).toHaveLength(5)
 // => Expected collection to have length 5, but found length 3
 ```
 
@@ -435,15 +435,15 @@ let shoppingCartSpecs =
                     let cart = Cart.empty
                     let updated = cart.AddItem({ ProductId = 1; Quantity = 2; Price = 10.00m })
 
-                    expect updated.Items |> should (haveLength 1)
-                    expect updated.Items |> should (contain { ProductId = 1; Quantity = 2; Price = 10.00m })
+                    expectSeq(updated.Items).toHaveLength(1)
+                    expectSeq(updated.Items).toContain({ ProductId = 1; Quantity = 2; Price = 10.00m })
                 )
 
                 it "increases quantity for existing item" (fun () ->
                     let cart = { Items = [{ ProductId = 1; Quantity = 1; Price = 10.00m }] }
                     let updated = cart.AddItem({ ProductId = 1; Quantity = 2; Price = 10.00m })
 
-                    expect updated.Items |> should (haveLength 1)
+                    expectSeq(updated.Items).toHaveLength(1)
                     expect updated.Items.[0].Quantity |> should (equal 3)
                 )
             ]
@@ -458,7 +458,7 @@ let shoppingCartSpecs =
                     }
                     let updated = cart.RemoveItem(1)
 
-                    expect updated.Items |> should (haveLength 1)
+                    expectSeq(updated.Items).toHaveLength(1)
                     expect updated.Items |> should (anySatisfy (fun item -> item.ProductId = 2) "contain product 2")
                     expect updated.Items |> shouldNot (anySatisfy (fun item -> item.ProductId = 1) "contain product 1")
                 )
@@ -480,7 +480,7 @@ let shoppingCartSpecs =
                 it "returns zero for empty cart" (fun () ->
                     let cart = Cart.empty
                     expect cart.Total() |> should (equal 0.00m)
-                    expect cart.Items |> should beEmpty
+                    expectSeq(cart.Items).toBeEmpty()
                 )
             ]
         ]

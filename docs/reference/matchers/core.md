@@ -1,344 +1,164 @@
-# Core Matchers
+# Core Expectations
 
-Basic equality, null checks, boolean, Option, Result, and type matchers.
+Basic equality checks, booleans, Option, Result, and common assertions.
 
 ---
 
-## Assertions
+## Expectation Functions
+
+FxSpec provides type-specific expectation functions that return fluent wrappers with relevant assertion methods.
 
 ### expect
 
-**Type:** `'a -> 'a`
+**Type:** `'a -> Expectation<'a>`
 
-Starts an assertion chain. Pass the actual value to test.
+Creates a generic expectation for any type.
 
 **Usage:**
 
 ```fsharp
-expect actual |> should matcher
-expect actual |> shouldNot matcher
+expect(actual).toEqual(expected)
+expect(actual).notToEqual(unexpected)
 ```
 
 **Example:**
 
 ```fsharp
-expect (2 + 2) |> should (equal 4)
-expect "hello" |> should (startWith "hel")
-expect [1; 2; 3] |> should (contain 2)
+expect(2 + 2).toEqual(4)
+expect("hello").notToEqual("world")
+expect([1; 2; 3]).toEqual([1; 2; 3])
 ```
+
+**Available Methods:**
+- `.toEqual(expected)` - Asserts equality using F#'s structural equality
+- `.notToEqual(unexpected)` - Asserts inequality
 
 ---
 
-### to'
+### expectBool
 
-**Type:** `Matcher<'a> -> 'a -> unit`
+**Type:** `bool -> BoolExpectation`
 
-Applies a matcher for positive assertion. Throws `AssertionException` if matcher fails.
+Creates an expectation for boolean values.
 
 **Usage:**
 
 ```fsharp
-expect actual |> should matcher
-```
-
-**Example:**
-
-```fsharp
-expect 10 |> should (beGreaterThan 5)
-expect "test" |> should (haveStringLength 4)
-```
-
----
-
-### notTo'
-
-**Type:** `Matcher<'a> -> 'a -> unit`
-
-Applies a matcher for negative assertion. Throws `AssertionException` if matcher passes.
-
-**Usage:**
-
-```fsharp
-expect actual |> shouldNot matcher
-```
-
-**Example:**
-
-```fsharp
-expect 5 |> shouldNot (equal 10)
-expect "hello" |> shouldNot beEmptyString
-expect [] |> shouldNot (contain 42)
-```
-
----
-
-## Equality
-
-### equal
-
-**Type:** `'a -> Matcher<'a>`
-
-Matches if the actual value equals the expected value using F#'s structural equality.
-
-**Usage:**
-
-```fsharp
-expect actual |> should (equal expected)
+expectBool(actual).toBeTrue()
+expectBool(actual).toBeFalse()
 ```
 
 **Examples:**
 
 ```fsharp
+expectBool(true).toBeTrue()
+expectBool(false).toBeFalse()
+expectBool(10 > 5).toBeTrue()
+expectBool("".Length = 0).toBeTrue()
+```
+
+**Available Methods:**
+- `.toBeTrue()` - Asserts the value is true
+- `.toBeFalse()` - Asserts the value is false
+
+---
+
+### expectOption
+
+**Type:** `'a option -> OptionExpectation<'a>`
+
+Creates an expectation for Option values.
+
+**Usage:**
+
+```fsharp
+expectOption(actual).toBeSome(expected)
+expectOption(actual).toBeNone()
+```
+
+**Examples:**
+
+```fsharp
+expectOption(Some 42).toBeSome(42)
+expectOption(None).toBeNone()
+
+let result = tryParse "123"
+expectOption(result).toBeSome(123)
+
+let notFound = Map.tryFind "key" emptyMap
+expectOption(notFound).toBeNone()
+```
+
+**Available Methods:**
+- `.toBeSome(expected)` - Asserts the Option is Some with the expected value
+- `.toBeNone()` - Asserts the Option is None
+
+---
+
+### expectResult
+
+**Type:** `Result<'a, 'b> -> ResultExpectation<'a, 'b>`
+
+Creates an expectation for Result values.
+
+**Usage:**
+
+```fsharp
+expectResult(actual).toBeOk(expected)
+expectResult(actual).toBeError(expected)
+```
+
+**Examples:**
+
+```fsharp
+expectResult(Ok "success").toBeOk("success")
+expectResult(Error "failed").toBeError("failed")
+
+let parseResult = Int32.TryParse("42")
+expectResult(parseResult).toBeOk(42)
+
+let divisionResult = divide 10 0
+expectResult(divisionResult).toBeError("Division by zero")
+```
+
+**Available Methods:**
+- `.toBeOk(expected)` - Asserts the Result is Ok with the expected value
+- `.toBeError(expected)` - Asserts the Result is Error with the expected error
+
+---
+
+## Equality Assertions
+
+The `expect()` function provides basic equality checking:
+
+**Examples:**
+
+```fsharp
 // Primitives
-expect 42 |> should (equal 42)
-expect "hello" |> should (equal "hello")
-expect true |> should (equal true)
+expect(42).toEqual(42)
+expect("hello").toEqual("hello")
+expect(true).toEqual(true)
 
 // Collections (structural equality)
-expect [1; 2; 3] |> should (equal [1; 2; 3])
-expect {| Name = "Alice"; Age = 30 |} |> should (equal {| Name = "Alice"; Age = 30 |})
+expect([1; 2; 3]).toEqual([1; 2; 3])
+expect({| Name = "Alice"; Age = 30 |}).toEqual({| Name = "Alice"; Age = 30 |})
 
 // Records and DUs
 type Person = { Name: string; Age: int }
 let person1 = { Name = "Alice"; Age = 30 }
 let person2 = { Name = "Alice"; Age = 30 }
-expect person1 |> should (equal person2)  // Passes
+expect(person1).toEqual(person2)  // Passes
+
+// Negative assertions
+expect(5).notToEqual(10)
+expect("hello").notToEqual("world")
 ```
 
 **Notes:**
 
 - Uses F# `=` operator (structural equality)
 - Works with any type that supports equality
-- For reference equality, use `beSameAs`
-
----
-
-## Null Checks
-
-### beNil
-
-**Type:** `Matcher<'a when 'a : null>`
-
-Matches if the actual value is `null`.
-
-**Usage:**
-
-```fsharp
-expect actual |> should beNil
-```
-
-**Examples:**
-
-```fsharp
-expect null |> should beNil
-expect (null: string) |> should beNil
-
-let maybeNull: string = getSomeValue()
-if isNull maybeNull then
-    expect maybeNull |> should beNil
-```
-
-**Notes:**
-
-- Type constraint: `'a : null` (reference types only)
-- Cannot use with value types (int, bool, etc.)
-- For strings, consider `beNullOrEmpty` or `beNullOrWhitespace`
-
----
-
-### notBeNil
-
-**Type:** `Matcher<'a when 'a : null>`
-
-Matches if the actual value is not `null`.
-
-**Usage:**
-
-```fsharp
-expect actual |> should notBeNil
-```
-
-**Examples:**
-
-```fsharp
-expect "hello" |> should notBeNil
-expect [1; 2; 3] |> should notBeNil
-
-let result = database.Query()
-expect result |> should notBeNil
-```
-
----
-
-## Boolean
-
-### beTrue
-
-**Type:** `Matcher<bool>`
-
-Matches if the actual value is `true`.
-
-**Usage:**
-
-```fsharp
-expect actual |> should beTrue
-```
-
-**Examples:**
-
-```fsharp
-expect true |> should beTrue
-expect (2 > 1) |> should beTrue
-expect (list.Any()) |> should beTrue
-```
-
----
-
-### beFalse
-
-**Type:** `Matcher<bool>`
-
-Matches if the actual value is `false`.
-
-**Usage:**
-
-```fsharp
-expect actual |> should beFalse
-```
-
-**Examples:**
-
-```fsharp
-expect false |> should beFalse
-expect (1 > 2) |> should beFalse
-expect (list.IsEmpty) |> should beFalse
-```
-
----
-
-## Option
-
-### beSome
-
-**Type:** `'a -> Matcher<'a option>`
-
-Matches if the actual Option is `Some` with the expected value.
-
-**Usage:**
-
-```fsharp
-expect actual |> should (beSome expected)
-```
-
-**Examples:**
-
-```fsharp
-expect (Some 42) |> should (beSome 42)
-expect (Some "hello") |> should (beSome "hello")
-
-let result = tryFindUser(userId)
-expect result |> should (beSome expectedUser)
-```
-
-**Failure Messages:**
-
-```fsharp
-// If actual is None
-expect None |> should (beSome 42)
-// => Expected Some 42, but found None
-
-// If actual is Some with different value
-expect (Some 10) |> should (beSome 42)
-// => Expected Some 42, but found Some 10
-```
-
----
-
-### beNone
-
-**Type:** `Matcher<'a option>`
-
-Matches if the actual Option is `None`.
-
-**Usage:**
-
-```fsharp
-expect actual |> should beNone
-```
-
-**Examples:**
-
-```fsharp
-expect None |> should beNone
-
-let result = tryParseInt("not a number")
-expect result |> should beNone
-```
-
-**Failure Message:**
-
-```fsharp
-expect (Some 42) |> should beNone
-// => Expected None, but found Some 42
-```
-
----
-
-## Result
-
-### beOk
-
-**Type:** `'a -> Matcher<Result<'a, 'b>>`
-
-Matches if the actual Result is `Ok` with the expected value.
-
-**Usage:**
-
-```fsharp
-expect actual |> should (beOk expected)
-```
-
-**Examples:**
-
-```fsharp
-expect (Ok 42) |> should (beOk 42)
-expect (Ok "success") |> should (beOk "success")
-
-let result = validateEmail("test@example.com")
-expect result |> should (beOk validEmail)
-```
-
-**Failure Messages:**
-
-```fsharp
-// If actual is Error
-expect (Error "failed") |> should (beOk 42)
-// => Expected Ok 42, but found Error "failed"
-
-// If actual is Ok with different value
-expect (Ok 10) |> should (beOk 42)
-// => Expected Ok 42, but found Ok 10
-```
-
----
-
-### beError
-
-**Type:** `'b -> Matcher<Result<'a, 'b>>`
-
-Matches if the actual Result is `Error` with the expected value.
-
-**Usage:**
-
-```fsharp
-expect actual |> should (beError expected)
-```
-
-**Examples:**
-
-```fsharp
-expect (Error "failed") |> should (beError "failed")
-expect (Error 404) |> should (beError 404)
+- Provides clear diff output on failure
 
 let result = validateAge(-1)
 expect result |> should (beError "Age must be positive")

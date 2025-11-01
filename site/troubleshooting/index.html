@@ -1,0 +1,2129 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Pure F# BDD testing framework inspired by RSpec. Type-safe, functional, and beautiful.">
+      
+      
+        <meta name="author" content="FxSpec Contributors">
+      
+      
+        <link rel="canonical" href="https://fxspec.github.io/fx-spec/troubleshooting/">
+      
+      
+        <link rel="prev" href="../quick-start/">
+      
+      
+        <link rel="next" href="../reference/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Troubleshooting - FxSpec</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/timeago.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#troubleshooting" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="FxSpec" class="md-header__button md-logo" aria-label="FxSpec" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FxSpec
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Troubleshooting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="pink"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/fxspec/fx-spec" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    fxspec/fx-spec
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quick-start/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../community/contributing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Community
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="FxSpec" class="md-nav__button md-logo" aria-label="FxSpec" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"/></svg>
+
+    </a>
+    FxSpec
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/fxspec/fx-spec" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    fxspec/fx-spec
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#test-discovery-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Discovery Issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Discovery Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-tests-found-in-assembly" class="md-nav__link">
+    <span class="md-ellipsis">
+      "No tests found in assembly"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compilation-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compilation Errors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compilation Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-value-or-constructor-spec-is-not-defined" class="md-nav__link">
+    <span class="md-ellipsis">
+      "The value or constructor 'spec' is not defined"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-value-or-constructor-expect-is-not-defined" class="md-nav__link">
+    <span class="md-ellipsis">
+      "The value or constructor 'expect' is not defined"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#this-expression-was-expected-to-have-type-testnode-list-but-here-has-type-testnode" class="md-nav__link">
+    <span class="md-ellipsis">
+      "This expression was expected to have type 'TestNode list' but here has type 'TestNode'"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#this-expression-was-expected-to-have-type-unit-unit-but-here-has-type-unit" class="md-nav__link">
+    <span class="md-ellipsis">
+      "This expression was expected to have type 'unit -&gt; unit' but here has type 'unit'"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matcher-type-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matcher Type Errors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Matcher Type Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-mismatch-with-matchers" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Type mismatch" with Matchers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#this-expression-was-expected-to-have-type-matchera-but-here-has-type-matchresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      "This expression was expected to have type 'Matcher&lt;'a&gt;' but here has type 'MatchResult'"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-type-string-does-not-support-the-comparison-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      "The type 'string' does not support the comparison constraint"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runtime Errors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Runtime Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assembly-not-found-or-could-not-load-file-or-assembly" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Assembly not found" or "Could not load file or assembly"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-tests-match-the-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      "No tests match the filter"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests-run-but-all-fail-with-object-reference-not-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests Run But All Fail with "Object reference not set"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-execution-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Execution Issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Execution Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tests-pass-individually-but-fail-when-run-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests Pass Individually But Fail When Run Together
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#focused-tests-not-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      Focused Tests Not Running
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pending-tests-still-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pending Tests Still Running
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tests-running-slowly" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests Running Slowly
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ide-integration-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      IDE Integration Issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IDE Integration Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tests-not-discovered-in-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests Not Discovered in IDE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#syntax-highlighting-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Syntax Highlighting Issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Help
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-gotchas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Gotchas
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Gotchas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-forgetting-yield" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Forgetting yield
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-not-wrapping-test-code-in-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Not Wrapping Test Code in Function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-using-instead-of" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Using {} Instead of []
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-forgetting-tests-attribute" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Forgetting [&lt;Tests&gt;] Attribute
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-wrong-open-statements" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Wrong open Statements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reference/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/dsl-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DSL API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/runner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Test Runner
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Matchers
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Matchers
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/matchers/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/matchers/collections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Collections
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/matchers/strings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Strings
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/matchers/numeric/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Numeric
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/matchers/exceptions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Exceptions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Community
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Community
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../community/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#test-discovery-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Discovery Issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Discovery Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-tests-found-in-assembly" class="md-nav__link">
+    <span class="md-ellipsis">
+      "No tests found in assembly"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compilation-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compilation Errors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compilation Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-value-or-constructor-spec-is-not-defined" class="md-nav__link">
+    <span class="md-ellipsis">
+      "The value or constructor 'spec' is not defined"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-value-or-constructor-expect-is-not-defined" class="md-nav__link">
+    <span class="md-ellipsis">
+      "The value or constructor 'expect' is not defined"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#this-expression-was-expected-to-have-type-testnode-list-but-here-has-type-testnode" class="md-nav__link">
+    <span class="md-ellipsis">
+      "This expression was expected to have type 'TestNode list' but here has type 'TestNode'"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#this-expression-was-expected-to-have-type-unit-unit-but-here-has-type-unit" class="md-nav__link">
+    <span class="md-ellipsis">
+      "This expression was expected to have type 'unit -&gt; unit' but here has type 'unit'"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matcher-type-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matcher Type Errors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Matcher Type Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-mismatch-with-matchers" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Type mismatch" with Matchers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#this-expression-was-expected-to-have-type-matchera-but-here-has-type-matchresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      "This expression was expected to have type 'Matcher&lt;'a&gt;' but here has type 'MatchResult'"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-type-string-does-not-support-the-comparison-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      "The type 'string' does not support the comparison constraint"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runtime Errors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Runtime Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assembly-not-found-or-could-not-load-file-or-assembly" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Assembly not found" or "Could not load file or assembly"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-tests-match-the-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      "No tests match the filter"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests-run-but-all-fail-with-object-reference-not-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests Run But All Fail with "Object reference not set"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-execution-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Execution Issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Execution Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tests-pass-individually-but-fail-when-run-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests Pass Individually But Fail When Run Together
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#focused-tests-not-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      Focused Tests Not Running
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pending-tests-still-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pending Tests Still Running
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tests-running-slowly" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests Running Slowly
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ide-integration-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      IDE Integration Issues
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IDE Integration Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tests-not-discovered-in-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests Not Discovered in IDE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#syntax-highlighting-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Syntax Highlighting Issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Help
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-gotchas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Gotchas
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Gotchas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-forgetting-yield" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Forgetting yield
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-not-wrapping-test-code-in-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Not Wrapping Test Code in Function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-using-instead-of" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Using {} Instead of []
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-forgetting-tests-attribute" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Forgetting [&lt;Tests&gt;] Attribute
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-wrong-open-statements" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Wrong open Statements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h1>
+<p>Common issues and solutions when using FxSpec.</p>
+<hr />
+<h2 id="test-discovery-issues">Test Discovery Issues<a class="headerlink" href="#test-discovery-issues" title="Permanent link">&para;</a></h2>
+<h3 id="no-tests-found-in-assembly">"No tests found in assembly"<a class="headerlink" href="#no-tests-found-in-assembly" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>FxSpec Test Runner
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>==================
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>No tests found in assembly
+</span></code></pre></div>
+<p><strong>Causes &amp; Solutions:</strong></p>
+<h4 id="missing-tests-attribute">Missing <code>[&lt;Tests&gt;]</code> Attribute<a class="headerlink" href="#missing-tests-attribute" title="Permanent link">&para;</a></h4>
+<p><strong>Problem:</strong> Test module doesn't have the <code>[&lt;Tests&gt;]</code> attribute.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// ❌ Wrong - no attribute</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">let</span><span class="w"> </span><span class="nv">mySpecs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="k">yield</span><span class="w"> </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Feature&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="o">]</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="o">}</span>
+</span></code></pre></div>
+<p><strong>Solution:</strong> Add the <code>[&lt;Tests&gt;]</code> attribute:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// ✅ Correct</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">let</span><span class="w"> </span><span class="nv">mySpecs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="k">yield</span><span class="w"> </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Feature&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="o">]</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="o">}</span>
+</span></code></pre></div>
+<h4 id="wrong-return-type">Wrong Return Type<a class="headerlink" href="#wrong-return-type" title="Permanent link">&para;</a></h4>
+<p><strong>Problem:</strong> Test member doesn't return <code>TestNode list</code>.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// ❌ Wrong - returns unit</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">let</span><span class="w"> </span><span class="nv">mySpecs</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">        </span><span class="k">yield</span><span class="w"> </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Feature&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">        </span><span class="o">]</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="o">}</span>
+</span></code></pre></div>
+<p><strong>Solution:</strong> Return <code>TestNode list</code>:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// ✅ Correct</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">let</span><span class="w"> </span><span class="nv">mySpecs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">        </span><span class="k">yield</span><span class="w"> </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Feature&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">        </span><span class="o">]</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="o">}</span>
+</span></code></pre></div>
+<h4 id="non-static-member">Non-Static Member<a class="headerlink" href="#non-static-member" title="Permanent link">&para;</a></h4>
+<p><strong>Problem:</strong> Test member is not static.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">// ❌ Wrong - instance member</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">type</span><span class="w"> </span><span class="nc">MyTests</span><span class="bp">()</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="k">member</span><span class="w"> </span><span class="n">this</span><span class="p">.</span><span class="nf">Specs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">        </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="o">}</span>
+</span></code></pre></div>
+<p><strong>Solution:</strong> Make it static:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// ✅ Correct</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">type</span><span class="w"> </span><span class="nc">MyTests</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">member</span><span class="w"> </span><span class="n">Specs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">        </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="o">}</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1">// Or use module-level let binding</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="k">module</span><span class="w"> </span><span class="nn">MyTests</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="k">let</span><span class="w"> </span><span class="nv">specs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="o">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="compilation-errors">Compilation Errors<a class="headerlink" href="#compilation-errors" title="Permanent link">&para;</a></h2>
+<h3 id="the-value-or-constructor-spec-is-not-defined">"The value or constructor 'spec' is not defined"<a class="headerlink" href="#the-value-or-constructor-spec-is-not-defined" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Missing <code>open FxSpec.Core</code>.</p>
+<p><strong>Solution:</strong></p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Core</span><span class="w">  </span><span class="c1">// ← Add this</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Matchers</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">let</span><span class="w"> </span><span class="nv">mySpecs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="o">}</span>
+</span></code></pre></div>
+<hr />
+<h3 id="the-value-or-constructor-expect-is-not-defined">"The value or constructor 'expect' is not defined"<a class="headerlink" href="#the-value-or-constructor-expect-is-not-defined" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Missing <code>open FxSpec.Matchers</code>.</p>
+<p><strong>Solution:</strong></p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Core</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Matchers</span><span class="w">  </span><span class="c1">// ← Add this</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="k">let</span><span class="w"> </span><span class="nv">mySpecs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="k">yield</span><span class="w"> </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Feature&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">                </span><span class="n">expect</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">beTrue</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">            </span><span class="o">)</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">        </span><span class="o">]</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="o">}</span>
+</span></code></pre></div>
+<hr />
+<h3 id="this-expression-was-expected-to-have-type-testnode-list-but-here-has-type-testnode">"This expression was expected to have type 'TestNode list' but here has type 'TestNode'"<a class="headerlink" href="#this-expression-was-expected-to-have-type-testnode-list-but-here-has-type-testnode" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Missing <code>yield</code> keyword in spec block.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">// ❌ Wrong</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">spec</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Feature&quot;</span><span class="w"> </span><span class="o">[</span><span class="w">  </span><span class="c1">// Missing yield</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="o">]</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="o">}</span>
+</span></code></pre></div>
+<p><strong>Solution:</strong> Add <code>yield</code>:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">// ✅ Correct</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">spec</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="k">yield</span><span class="w"> </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Feature&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="o">]</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="o">}</span>
+</span></code></pre></div>
+<hr />
+<h3 id="this-expression-was-expected-to-have-type-unit-unit-but-here-has-type-unit">"This expression was expected to have type 'unit -&gt; unit' but here has type 'unit'"<a class="headerlink" href="#this-expression-was-expected-to-have-type-unit-unit-but-here-has-type-unit" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Test code not wrapped in a function.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">// ❌ Wrong</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="n">expect</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">beTrue</span><span class="w">  </span><span class="c1">// Not wrapped</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="o">)</span>
+</span></code></pre></div>
+<p><strong>Solution:</strong> Wrap in <code>(fun () -&gt; ...)</code>:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">// ✅ Correct</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="n">expect</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">beTrue</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="o">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="matcher-type-errors">Matcher Type Errors<a class="headerlink" href="#matcher-type-errors" title="Permanent link">&para;</a></h2>
+<h3 id="type-mismatch-with-matchers">"Type mismatch" with Matchers<a class="headerlink" href="#type-mismatch-with-matchers" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Matcher type doesn't match actual value type.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">// ❌ Wrong - comparing int to string</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">expect</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="o">(</span><span class="n">equal</span><span class="w"> </span><span class="s">&quot;42&quot;</span><span class="o">)</span>
+</span></code></pre></div>
+<p><strong>Solution:</strong> Ensure types match:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">// ✅ Correct</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">expect</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="o">(</span><span class="n">equal</span><span class="w"> </span><span class="mi">42</span><span class="o">)</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">expect</span><span class="w"> </span><span class="s">&quot;42&quot;</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="o">(</span><span class="n">equal</span><span class="w"> </span><span class="s">&quot;42&quot;</span><span class="o">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="this-expression-was-expected-to-have-type-matchera-but-here-has-type-matchresult">"This expression was expected to have type 'Matcher&lt;'a&gt;' but here has type 'MatchResult'"<a class="headerlink" href="#this-expression-was-expected-to-have-type-matchera-but-here-has-type-matchresult" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Calling matcher function instead of passing it.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">// ❌ Wrong - calling equal with ()</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">expect</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="o">(</span><span class="n">equal</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="bp">()</span><span class="o">)</span>
+</span></code></pre></div>
+<p><strong>Solution:</strong> Don't call the matcher:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">// ✅ Correct</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">expect</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="o">(</span><span class="n">equal</span><span class="w"> </span><span class="mi">42</span><span class="o">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="the-type-string-does-not-support-the-comparison-constraint">"The type 'string' does not support the comparison constraint"<a class="headerlink" href="#the-type-string-does-not-support-the-comparison-constraint" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Using numeric matchers on non-comparable types.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">// ❌ Wrong - can&#39;t compare functions</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="k">let</span><span class="w"> </span><span class="nv">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="n">expect</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="o">(</span><span class="n">beGreaterThan</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">))</span>
+</span></code></pre></div>
+<p><strong>Solution:</strong> Use appropriate matchers for the type:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">// ✅ Correct - use equality for functions</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="k">let</span><span class="w"> </span><span class="nv">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="n">expect</span><span class="w"> </span><span class="o">(</span><span class="n">f</span><span class="w"> </span><span class="mi">5</span><span class="o">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="o">(</span><span class="n">equal</span><span class="w"> </span><span class="mi">6</span><span class="o">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="runtime-errors">Runtime Errors<a class="headerlink" href="#runtime-errors" title="Permanent link">&para;</a></h2>
+<h3 id="assembly-not-found-or-could-not-load-file-or-assembly">"Assembly not found" or "Could not load file or assembly"<a class="headerlink" href="#assembly-not-found-or-could-not-load-file-or-assembly" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Assembly path is incorrect or assembly not built.</p>
+<p><strong>Solution:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># 1. Build the test project first</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>dotnet<span class="w"> </span>build<span class="w"> </span>tests/MyProject.Tests/MyProject.Tests.fsproj
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># 2. Use the correct path to the built assembly</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--project<span class="w"> </span>src/FxSpec.Runner/FxSpec.Runner.fsproj<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">  </span>tests/MyProject.Tests/bin/Debug/net9.0/MyProject.Tests.dll
+</span></code></pre></div>
+<hr />
+<h3 id="no-tests-match-the-filter">"No tests match the filter"<a class="headerlink" href="#no-tests-match-the-filter" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Filter pattern doesn't match any test descriptions.</p>
+<p><strong>Symptoms:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Filtering tests by: MyTest
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>Running 0 filtered examples
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>No tests match the filter
+</span></code></pre></div>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><strong>Check case sensitivity</strong> - filters are case-sensitive:</li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># ❌ Wrong</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>./run-tests.sh<span class="w"> </span>--filter<span class="w"> </span><span class="s2">&quot;calculator&quot;</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># ✅ Correct</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>./run-tests.sh<span class="w"> </span>--filter<span class="w"> </span><span class="s2">&quot;Calculator&quot;</span>
+</span></code></pre></div>
+<ol>
+<li><strong>Use partial matches</strong>:</li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># ❌ Too specific</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>./run-tests.sh<span class="w"> </span>--filter<span class="w"> </span><span class="s2">&quot;Calculator &gt; addition &gt; adds two numbers&quot;</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># ✅ Better</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>./run-tests.sh<span class="w"> </span>--filter<span class="w"> </span><span class="s2">&quot;addition&quot;</span>
+</span></code></pre></div>
+<ol>
+<li><strong>Remove filter to see all test names</strong>:</li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>./run-tests.sh
+</span></code></pre></div>
+<hr />
+<h3 id="tests-run-but-all-fail-with-object-reference-not-set">Tests Run But All Fail with "Object reference not set"<a class="headerlink" href="#tests-run-but-all-fail-with-object-reference-not-set" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Hooks or test setup not running correctly.</p>
+<p><strong>Common Causes:</strong></p>
+<ol>
+<li><strong>Using mutable variables without initialization</strong>:</li>
+</ol>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1">// ❌ Wrong</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Database&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">mutable</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="w">  </span><span class="c1">// null reference</span>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;queries data&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="w">        </span><span class="n">connection</span><span class="o">.</span><span class="n">Query</span><span class="o">(</span><span class="s">&quot;SELECT 1&quot;</span><span class="o">)</span><span class="w">  </span><span class="c1">// NullReferenceException</span>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="o">]</span>
+</span></code></pre></div>
+<p><strong>Solution:</strong> Use <code>beforeEach</code> to initialize:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1">// ✅ Correct</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Database&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">mutable</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="w">    </span><span class="n">beforeEach</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">        </span><span class="n">connection</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nn">Database</span><span class="p">.</span><span class="n">connect</span><span class="bp">()</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;queries data&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="w">        </span><span class="n">connection</span><span class="o">.</span><span class="n">Query</span><span class="o">(</span><span class="s">&quot;SELECT 1&quot;</span><span class="o">)</span>
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="o">]</span>
+</span></code></pre></div>
+<hr />
+<h2 id="test-execution-issues">Test Execution Issues<a class="headerlink" href="#test-execution-issues" title="Permanent link">&para;</a></h2>
+<h3 id="tests-pass-individually-but-fail-when-run-together">Tests Pass Individually But Fail When Run Together<a class="headerlink" href="#tests-pass-individually-but-fail-when-run-together" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Tests are not isolated - they share state.</p>
+<p><strong>Solution:</strong> Use <code>beforeEach</code> and <code>afterEach</code> for proper isolation:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;User Tests&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">mutable</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">    </span><span class="n">beforeEach</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="w">        </span><span class="n">user</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">createUser</span><span class="bp">()</span><span class="w">  </span><span class="c1">// Fresh user for each test</span>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="w">    </span><span class="n">afterEach</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="w">        </span><span class="n">deleteUser</span><span class="o">(</span><span class="n">user</span><span class="o">)</span><span class="w">  </span><span class="c1">// Clean up after each test</span>
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;test 1&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;test 2&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="o">]</span>
+</span></code></pre></div>
+<hr />
+<h3 id="focused-tests-not-running">Focused Tests Not Running<a class="headerlink" href="#focused-tests-not-running" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Using <code>fit</code> or <code>fdescribe</code> but all tests still run.</p>
+<p><strong>Cause:</strong> Focused filtering only works when tests are discovered together.</p>
+<p><strong>Solution:</strong> Ensure all tests are in the same assembly and discovered together:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1">// ✅ Correct - both in same spec</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="k">let</span><span class="w"> </span><span class="nv">specs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">    </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">        </span><span class="k">yield</span><span class="w"> </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Suite&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">            </span><span class="n">fit</span><span class="w"> </span><span class="s">&quot;only this runs&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;this is skipped&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="w">        </span><span class="o">]</span>
+</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="w">    </span><span class="o">}</span>
+</span></code></pre></div>
+<hr />
+<h3 id="pending-tests-still-running">Pending Tests Still Running<a class="headerlink" href="#pending-tests-still-running" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Using <code>xit</code> but test still executes.</p>
+<p><strong>Cause:</strong> Typo in function name.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="c1">// ❌ Wrong - typo</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="n">xIt</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span><span class="w">  </span><span class="c1">// Capital I</span>
+</span></code></pre></div>
+<p><strong>Solution:</strong> Use correct function name:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="c1">// ✅ Correct</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="n">xit</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span><span class="w">  </span><span class="c1">// lowercase i</span>
+</span></code></pre></div>
+<hr />
+<h2 id="performance-issues">Performance Issues<a class="headerlink" href="#performance-issues" title="Permanent link">&para;</a></h2>
+<h3 id="tests-running-slowly">Tests Running Slowly<a class="headerlink" href="#tests-running-slowly" title="Permanent link">&para;</a></h3>
+<p><strong>Causes &amp; Solutions:</strong></p>
+<h4 id="using-beforeeach-for-expensive-setup">Using <code>beforeEach</code> for Expensive Setup<a class="headerlink" href="#using-beforeeach-for-expensive-setup" title="Permanent link">&para;</a></h4>
+<p><strong>Problem:</strong> Expensive setup runs before every test.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="c1">// ❌ Slow - database created for each test</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="n">beforeEach</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">    </span><span class="n">createDatabase</span><span class="bp">()</span><span class="w">  </span><span class="c1">// Expensive!</span>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="o">)</span>
+</span></code></pre></div>
+<p><strong>Solution:</strong> Use <code>beforeAll</code> for expensive setup:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="c1">// ✅ Fast - database created once</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="n">beforeAll</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">    </span><span class="n">createDatabase</span><span class="bp">()</span>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="o">)</span>
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="n">beforeEach</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="w">    </span><span class="n">clearData</span><span class="bp">()</span><span class="w">  </span><span class="c1">// Fast cleanup</span>
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="o">)</span>
+</span></code></pre></div>
+<h4 id="not-cleaning-up-resources">Not Cleaning Up Resources<a class="headerlink" href="#not-cleaning-up-resources" title="Permanent link">&para;</a></h4>
+<p><strong>Problem:</strong> Resources accumulate during test run.</p>
+<p><strong>Solution:</strong> Use <code>afterEach</code> or <code>afterAll</code>:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;File Tests&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">mutable</span><span class="w"> </span><span class="n">tempFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="w">    </span><span class="n">beforeEach</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="w">        </span><span class="n">tempFile</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nn">Path</span><span class="p">.</span><span class="n">GetTempFileName</span><span class="bp">()</span>
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="w">    </span><span class="n">afterEach</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="w">        </span><span class="nn">File</span><span class="p">.</span><span class="n">Delete</span><span class="o">(</span><span class="n">tempFile</span><span class="o">)</span><span class="w">  </span><span class="c1">// Clean up</span>
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>
+</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a><span class="o">]</span>
+</span></code></pre></div>
+<hr />
+<h2 id="ide-integration-issues">IDE Integration Issues<a class="headerlink" href="#ide-integration-issues" title="Permanent link">&para;</a></h2>
+<h3 id="tests-not-discovered-in-ide">Tests Not Discovered in IDE<a class="headerlink" href="#tests-not-discovered-in-ide" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> FxSpec doesn't integrate with standard .NET test explorers.</p>
+<p><strong>Explanation:</strong> FxSpec uses its own test runner, not the standard .NET test framework.</p>
+<p><strong>Workaround:</strong> Run tests from command line:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>./run-tests.sh
+</span></code></pre></div>
+<p><strong>Future:</strong> IDE integration is planned for future releases.</p>
+<hr />
+<h3 id="syntax-highlighting-issues">Syntax Highlighting Issues<a class="headerlink" href="#syntax-highlighting-issues" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> F# syntax highlighting doesn't work well with FxSpec DSL.</p>
+<p><strong>Solution:</strong> This is a limitation of current F# tooling. The code is valid F# even if highlighting is imperfect.</p>
+<hr />
+<h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
+<p>If you encounter an issue not covered here:</p>
+<ol>
+<li><strong>Check the documentation</strong>:</li>
+<li><a href="../quick-start/">Quick Start Guide</a></li>
+<li><a href="../reference/dsl-api/">DSL API Reference</a></li>
+<li>
+<p><a href="../reference/runner/">Test Runner</a></p>
+</li>
+<li>
+<p><strong>Search existing issues</strong>: <a href="https://github.com/fxspec/fx-spec/issues">GitHub Issues</a></p>
+</li>
+<li>
+<p><strong>Ask for help</strong>:</p>
+</li>
+<li>
+<p>Open a new issue with:</p>
+<ul>
+<li>FxSpec version</li>
+<li>.NET version</li>
+<li>Minimal reproduction code</li>
+<li>Error messages</li>
+<li>What you've tried</li>
+</ul>
+</li>
+<li>
+<p><strong>Contribute</strong>: Found a bug? <a href="../community/contributing/">Submit a PR</a>!</p>
+</li>
+</ol>
+<hr />
+<h2 id="common-gotchas">Common Gotchas<a class="headerlink" href="#common-gotchas" title="Permanent link">&para;</a></h2>
+<h3 id="1-forgetting-yield">1. Forgetting <code>yield</code><a class="headerlink" href="#1-forgetting-yield" title="Permanent link">&para;</a></h3>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="c1">// ❌ Won&#39;t compile</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="n">spec</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Test&quot;</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="o">]</span>
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="o">}</span>
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>
+</span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a><span class="c1">// ✅ Correct</span>
+</span><span id="__span-34-7"><a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a><span class="n">spec</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-34-8"><a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a><span class="w">    </span><span class="k">yield</span><span class="w"> </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Test&quot;</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="o">]</span>
+</span><span id="__span-34-9"><a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a><span class="o">}</span>
+</span></code></pre></div>
+<h3 id="2-not-wrapping-test-code-in-function">2. Not Wrapping Test Code in Function<a class="headerlink" href="#2-not-wrapping-test-code-in-function" title="Permanent link">&para;</a></h3>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="c1">// ❌ Won&#39;t compile</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="n">expect</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">beTrue</span><span class="o">)</span>
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="c1">// ✅ Correct</span>
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">expect</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">beTrue</span><span class="o">)</span>
+</span></code></pre></div>
+<h3 id="3-using-instead-of">3. Using <code>{}</code> Instead of <code>[]</code><a class="headerlink" href="#3-using-instead-of" title="Permanent link">&para;</a></h3>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="c1">// ❌ Wrong syntax</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Test&quot;</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="o">}</span>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="o">}</span>
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a><span class="c1">// ✅ Correct syntax</span>
+</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Test&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a><span class="o">]</span>
+</span></code></pre></div>
+<h3 id="4-forgetting-tests-attribute">4. Forgetting <code>[&lt;Tests&gt;]</code> Attribute<a class="headerlink" href="#4-forgetting-tests-attribute" title="Permanent link">&para;</a></h3>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="c1">// ❌ Tests won&#39;t be discovered</span>
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="k">let</span><span class="w"> </span><span class="nv">mySpecs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="o">}</span>
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="c1">// ✅ Tests will be discovered</span>
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a><span class="k">let</span><span class="w"> </span><span class="nv">mySpecs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="o">}</span>
+</span></code></pre></div>
+<h3 id="5-wrong-open-statements">5. Wrong <code>open</code> Statements<a class="headerlink" href="#5-wrong-open-statements" title="Permanent link">&para;</a></h3>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="c1">// ❌ Missing opens</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="k">let</span><span class="w"> </span><span class="nv">specs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="o">}</span><span class="w">  </span><span class="c1">// Error: &#39;spec&#39; not defined</span>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="c1">// ✅ Correct opens</span>
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Core</span>
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Matchers</span>
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>
+</span><span id="__span-38-8"><a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a><span class="k">let</span><span class="w"> </span><span class="nv">specs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="o">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../quick-start/">Quick Start Guide</a> - Getting started</li>
+<li><a href="../reference/dsl-api/">DSL API Reference</a> - Complete DSL documentation</li>
+<li><a href="../reference/runner/">Test Runner</a> - Runner options and usage</li>
+<li><a href="../community/contributing/">Contributing</a> - How to contribute</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 1, 2025 15:57:37 UTC"><span class="timeago" datetime="2025-11-01T15:57:37+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 1, 2025 15:57:37 UTC">2025-11-01</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 1, 2025 15:57:37 UTC"><span class="timeago" datetime="2025-11-01T15:57:37+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 1, 2025 15:57:37 UTC">2025-11-01</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 FxSpec Contributors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/fxspec/fx-spec" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.instant.prefetch", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.path", "navigation.indexes", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "header.autohide", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../js/timeago.min.js"></script>
+      
+        <script src="../js/timeago_mkdocs_material.js"></script>
+      
+    
+  </body>
+</html>

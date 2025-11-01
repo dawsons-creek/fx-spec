@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -12,6 +12,7 @@
     <Compile Include="SimpleFormatter.fs" />
     <Compile Include="DiffFormatter.fs" />
     <Compile Include="DocumentationFormatter.fs" />
+    <Compile Include="Shuffle.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

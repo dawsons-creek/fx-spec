@@ -15,20 +15,20 @@ Matches if the function raises an exception of the specified type.
 **Usage:**
 
 ```fsharp
-expect action |> should raiseException<ExceptionType>
+expectThrows<ExceptionType>(action)
 ```
 
 **Examples:**
 
 ```fsharp
 // Basic exception
-expect (fun () -> failwith "error") |> should raiseException<System.Exception>
+expectThrows<System.Exception>(fun () -> failwith "error")
 
 // Specific exception type
-expect (fun () -> invalidArg "param" "error") |> should raiseException<System.ArgumentException>
+expectThrows<System.ArgumentException>(fun () -> invalidArg "param" "error")
 
 // Division by zero
-expect (fun () -> 1 / 0 |> ignore) |> should raiseException<System.DivideByZeroException>
+expectThrows<System.DivideByZeroException>(fun () -> 1 / 0 |> ignore)
 
 // Custom exceptions
 type ValidationException() = inherit exn()
@@ -39,11 +39,11 @@ expect (fun () -> raise (ValidationException())) |> should raiseException<Valida
 
 ```fsharp
 // No exception thrown
-expect (fun () -> 1 + 1) |> should raiseException<Exception>
+expectThrows<Exception>(fun () -> 1 + 1)
 // => Expected an exception of type Exception to be thrown, but nothing was thrown
 
 // Wrong exception type
-expect (fun () -> invalidArg "x" "error") |> should raiseException<InvalidOperationException>
+expectThrows<InvalidOperationException>(fun () -> invalidArg "x" "error")
 // => Expected an exception of type InvalidOperationException, but an exception of type ArgumentException was thrown: error
 ```
 
@@ -66,32 +66,32 @@ Matches if the function raises an exception with the specified message (exact ma
 **Usage:**
 
 ```fsharp
-expect action |> should (raiseExceptionWithMessage "expected message")
+expectThrowsWithMessage(action, "expected message")
 ```
 
 **Examples:**
 
 ```fsharp
-expect (fun () -> failwith "error") |> should (raiseExceptionWithMessage "error")
-expect (fun () -> invalidArg "x" "must be positive") |> should (raiseExceptionWithMessage "must be positive (Parameter 'x')")
+expectThrowsWithMessage(fun () -> failwith "error", "error")
+expectThrowsWithMessage(fun () -> invalidArg "x" "must be positive", "must be positive (Parameter 'x')")
 
 // Custom error messages
 let validateAge age =
     if age < 0 then
         invalidArg (nameof age) "Age cannot be negative"
 
-expect (fun () -> validateAge -5) |> should (raiseExceptionWithMessage "Age cannot be negative (Parameter 'age')")
+expectThrowsWithMessage(fun () -> validateAge -5, "Age cannot be negative (Parameter 'age')")
 ```
 
 **Failure Messages:**
 
 ```fsharp
 // No exception
-expect (fun () -> 1 + 1) |> should (raiseExceptionWithMessage "error")
+expectThrowsWithMessage(fun () -> 1 + 1, "error")
 // => Expected an exception with message 'error' to be thrown, but nothing was thrown
 
 // Different message
-expect (fun () -> failwith "wrong") |> should (raiseExceptionWithMessage "error")
+expectThrowsWithMessage(fun () -> failwith "wrong", "error")
 // => Expected exception message 'error', but found 'wrong'
 ```
 
@@ -434,10 +434,10 @@ let errorHandlingSpecs =
 
 ```fsharp
 // Good - specific exception type
-expect action |> should raiseException<ArgumentNullException>
+expectThrows<ArgumentNullException>(action)
 
 // Less good - generic exception type
-expect action |> should raiseException<Exception>
+expectThrows<Exception>(action)
 ```
 
 ### Test Exception Messages
@@ -447,7 +447,7 @@ expect action |> should raiseException<Exception>
 expect action |> should (raiseExceptionContaining "must be positive")
 
 // Less good - only checks exception type
-expect action |> should raiseException<ArgumentException>
+expectThrows<ArgumentException>(action)
 ```
 
 ### Use Lambdas for Lazy Evaluation

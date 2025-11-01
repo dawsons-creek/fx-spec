@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://yourorg.github.io/fx-spec/</loc>
+         <loc>https://fxspec.github.io/fx-spec/</loc>
          <lastmod>2025-11-01</lastmod>
     </url>
     <url>
-         <loc>https://yourorg.github.io/fx-spec/Designing%20an%20F%23%20RSpec%20Clone/</loc>
+         <loc>https://fxspec.github.io/fx-spec/quick-start/</loc>
          <lastmod>2025-11-01</lastmod>
     </url>
     <url>
-         <loc>https://yourorg.github.io/fx-spec/quick-start/</loc>
+         <loc>https://fxspec.github.io/fx-spec/troubleshooting/</loc>
          <lastmod>2025-11-01</lastmod>
     </url>
     <url>
-         <loc>https://yourorg.github.io/fx-spec/community/contributing/</loc>
+         <loc>https://fxspec.github.io/fx-spec/community/contributing/</loc>
          <lastmod>2025-11-01</lastmod>
     </url>
     <url>
-         <loc>https://yourorg.github.io/fx-spec/reference/</loc>
+         <loc>https://fxspec.github.io/fx-spec/reference/</loc>
          <lastmod>2025-11-01</lastmod>
     </url>
     <url>
-         <loc>https://yourorg.github.io/fx-spec/reference/dsl-api/</loc>
+         <loc>https://fxspec.github.io/fx-spec/reference/dsl-api/</loc>
          <lastmod>2025-11-01</lastmod>
     </url>
     <url>
-         <loc>https://yourorg.github.io/fx-spec/reference/matchers/collections/</loc>
+         <loc>https://fxspec.github.io/fx-spec/reference/runner/</loc>
          <lastmod>2025-11-01</lastmod>
     </url>
     <url>
-         <loc>https://yourorg.github.io/fx-spec/reference/matchers/core/</loc>
+         <loc>https://fxspec.github.io/fx-spec/reference/matchers/collections/</loc>
          <lastmod>2025-11-01</lastmod>
     </url>
     <url>
-         <loc>https://yourorg.github.io/fx-spec/reference/matchers/exceptions/</loc>
+         <loc>https://fxspec.github.io/fx-spec/reference/matchers/core/</loc>
          <lastmod>2025-11-01</lastmod>
     </url>
     <url>
-         <loc>https://yourorg.github.io/fx-spec/reference/matchers/numeric/</loc>
+         <loc>https://fxspec.github.io/fx-spec/reference/matchers/exceptions/</loc>
          <lastmod>2025-11-01</lastmod>
     </url>
     <url>
-         <loc>https://yourorg.github.io/fx-spec/reference/matchers/strings/</loc>
+         <loc>https://fxspec.github.io/fx-spec/reference/matchers/numeric/</loc>
+         <lastmod>2025-11-01</lastmod>
+    </url>
+    <url>
+         <loc>https://fxspec.github.io/fx-spec/reference/matchers/strings/</loc>
          <lastmod>2025-11-01</lastmod>
     </url>
 </urlset>
