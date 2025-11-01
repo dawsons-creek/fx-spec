@@ -265,6 +265,307 @@ type TestResultNode =
 - API testing examples
 - Extension documentation
 
+### Phase 6: Code Quality & Refactoring (Week 8-9)
+
+**Goal**: Address code review findings and ensure adherence to best practices
+
+Based on comprehensive code review, this phase focuses on refactoring areas that violate our coding guidelines (simplicity, pure functions, explicit code) and F# best practices.
+
+#### 6.1 Critical Fix: Redesign StateManagement.fs
+
+**Problem**: Current implementation uses ThreadLocal mutable state, violating "Favor Pure Functions" principle.
+
+**Current approach** (problematic):
+```fsharp
+// ❌ Global mutable state via ThreadLocal
+let private currentScopeStack = new System.Threading.ThreadLocal<ScopeStack>(fun () -> ScopeStack.empty)
+
+let let' name (factory: unit -> 'a) : unit =
+    // Mutates ThreadLocal state - side effects!
+    currentScopeStack.Value <- updatedScope :: (ScopeStack.pop currentScopeStack.Value)
+```
+
+**New approach** (pure & functional):
+```fsharp
+// ✅ Hooks are part of the TestNode structure
+type GroupHooks = {
+    LetBindings: Map<string, unit -> obj>
+    BeforeEach: (unit -> unit) list
+    AfterEach: (unit -> unit) list
+    BeforeAll: (unit -> unit) option
+    AfterAll: (unit -> unit) option
+}
+
+type TestNode =
+    | Example of description: string * test: TestExecution
+    | Group of description: string * hooks: GroupHooks * tests: TestNode list
+    | FocusedExample of description: string * test: TestExecution
+    | FocusedGroup of description: string * hooks: GroupHooks * tests: TestNode list
+```
+
+**Benefits**:
+- ✅ No mutable state
+- ✅ Pure functions throughout
+- ✅ Explicit data flow
+- ✅ Thread-safe by design
+- ✅ Testable and predictable
+
+**Tasks**:
+1. Update `TestNode` type to include `GroupHooks`
+2. Update `SpecBuilder` to collect hooks during tree building
+3. Update `Executor` to use hooks from tree (not ThreadLocal)
+4. Remove all ThreadLocal usage
+5. Update tests to use new hook API
+6. Verify all existing tests pass
+
+#### 6.2 Refactor Discovery.fs - Break Down Long Functions
+
+**Problem**: `discoverTests` function is 62 lines with 4+ nesting levels, violating "Limit Nesting (<3 layers)" and "Function Length (25-30 lines)" guidelines.
+
+**Refactoring**:
+```fsharp
+// ✅ Extract helper functions
+let private hasTestsAttribute (member': MemberInfo) =
+    member'.GetCustomAttributes(typeof<TestsAttribute>, false).Length > 0
+
+let private isTestNodeList (propertyType: Type) =
+    propertyType = typeof<TestNode list>
+
+let private extractTestValue (getValue: unit -> obj) : TestNode list =
+    try
+        getValue() :?> TestNode list
+    with ex ->
+        printfn "Warning: Could not extract test value: %s" ex.Message
+        []
+
+let private discoverFromProperties (typ: Type) : TestNode list =
+    let bindingFlags = BindingFlags.Public ||| BindingFlags.Static
+    typ.GetProperties(bindingFlags)
+    |> Array.filter hasTestsAttribute
+    |> Array.filter (fun p -> isTestNodeList p.PropertyType)
+    |> Array.collect (fun p -> extractTestValue (fun () -> p.GetValue(null)))
+    |> Array.toList
+
+let private discoverFromFields (typ: Type) : TestNode list =
+    let bindingFlags = BindingFlags.Public ||| BindingFlags.Static
+    typ.GetFields(bindingFlags)
+    |> Array.filter hasTestsAttribute
+    |> Array.filter (fun f -> isTestNodeList f.FieldType)
+    |> Array.collect (fun f -> extractTestValue (fun () -> f.GetValue(null)))
+    |> Array.toList
+
+let private discoverFromType (typ: Type) : TestNode list =
+    try
+        discoverFromProperties typ @ discoverFromFields typ
+    with ex ->
+        printfn "Warning: Could not inspect type %s: %s" typ.FullName ex.Message
+        []
+
+// ✅ Main function now clean and short (15 lines)
+let discoverTests (assembly: Assembly) : TestNode list =
+    try
+        let allTests =
+            assembly.GetTypes()
+            |> Array.collect (discoverFromType >> List.toArray)
+            |> Array.toList
+
+        TestNode.filterFocused allTests
+    with ex ->
+        printfn "Error discovering tests: %s" ex.Message
+        []
+```
+
+**Tasks**:
+1. Extract helper functions as shown above
+2. Reduce nesting depth to max 2-3 levels
+3. Keep main function under 25 lines
+4. Verify discovery still works correctly
+
+#### 6.3 Replace Mutable Variables with Functional Alternatives
+
+**Problem**: `DiffFormatter.compareStrings` uses mutable variable, violating "Favor Pure Functions".
+
+**Current**:
+```fsharp
+// ❌ Mutable state
+let mutable firstDiff = -1
+for i in 0 .. maxLen - 1 do
+    // ...
+    if expChar <> actChar && firstDiff = -1 then
+        firstDiff <- i
+```
+
+**Refactored**:
+```fsharp
+// ✅ Pure functional approach
+let compareStrings (expected: string) (actual: string) =
+    if expected = actual then None
+    else
+        let maxLen = max expected.Length actual.Length
+        let firstDiff =
+            seq { 0 .. maxLen - 1 }
+            |> Seq.tryFindIndex (fun i ->
+                let expChar = if i < expected.Length then Some expected.[i] else None
+                let actChar = if i < actual.Length then Some actual.[i] else None
+                expChar <> actChar)
+
+        firstDiff |> Option.map (sprintf "First difference at position %d")
+```
+
+**Tasks**:
+1. Replace mutable variables with `Seq.tryFindIndex` or similar
+2. Ensure tests still pass
+3. Verify performance is acceptable
+
+#### 6.4 Consolidate Null-Checking Patterns
+
+**Problem**: StringMatchers has repetitive null-checking logic, violating "Simplicity First".
+
+**Refactoring**:
+```fsharp
+// ✅ Extract common pattern
+let private nullSafeStringMatch
+    (expected: string)
+    (actual: string)
+    (predicate: string -> string -> bool)
+    (successMessage: string)
+    (failureMessage: string -> string -> string) =
+    match actual, expected with
+    | null, null -> Pass
+    | null, _ ->
+        Fail("Expected string, but found null", Some (box expected), Some null)
+    | _, null ->
+        Fail("Expected null, but found string", Some null, Some (box actual))
+    | a, e when predicate a e -> Pass
+    | a, e ->
+        Fail(failureMessage e a, Some (box e), Some (box a))
+
+// ✅ Use it in matchers
+let startWith (expected: string) : Matcher<string> =
+    nullSafeStringMatch expected
+        >> fun actual ->
+            if actual.StartsWith(expected) then Pass
+            else Fail(sprintf "Expected string to start with '%s', but found '%s'" expected actual,
+                     Some (box expected), Some (box actual))
+```
+
+**Tasks**:
+1. Extract common null-checking pattern
+2. Apply to all string matchers
+3. Reduce code duplication
+
+#### 6.5 Add Input Validation to Matchers
+
+**Problem**: Missing validation violates "Validate Inputs" guideline.
+
+**Examples**:
+```fsharp
+// ✅ Add validation to beCloseTo
+let beCloseTo (expected: float) (tolerance: float) : Matcher<float> =
+    if tolerance < 0.0 then
+        invalidArg (nameof tolerance) "Tolerance must be non-negative"
+    if Double.IsNaN(tolerance) || Double.IsNaN(expected) then
+        invalidArg (nameof expected) "Expected and tolerance must be valid numbers"
+    fun actual ->
+        let diff = abs (actual - expected)
+        if diff <= tolerance then Pass
+        else Fail(sprintf "Expected value to be close to %f (±%f), but found %f (diff: %f)"
+                         expected tolerance actual diff,
+                 Some (box expected), Some (box actual))
+
+// ✅ Add validation to beBetween
+let beBetween (min: 'a when 'a : comparison) (max: 'a when 'a : comparison) : Matcher<'a> =
+    if min > max then
+        invalidArg (nameof min) "Minimum value must be less than or equal to maximum value"
+    fun actual ->
+        if actual >= min && actual <= max then Pass
+        else Fail(sprintf "Expected value to be between %A and %A, but found %A" min max actual,
+                 Some (box (min, max)), Some (box actual))
+```
+
+**Tasks**:
+1. Add validation to numeric matchers
+2. Add validation to collection matchers where appropriate
+3. Document validation behavior
+
+#### 6.6 Extract Magic Numbers to Named Constants
+
+**Problem**: Unexplained magic numbers violate "Explicit Code".
+
+**Examples**:
+```fsharp
+// SimpleFormatter.fs
+let private maxStackTraceLines = 3
+let private maxCollectionItemsToShow = 10
+
+// CollectionMatchers.fs
+let private maxItemsInErrorMessage = 10
+
+// Then use these constants:
+|> Array.truncate maxStackTraceLines
+|> Seq.truncate maxItemsInErrorMessage
+```
+
+**Tasks**:
+1. Identify all magic numbers
+2. Extract to named constants with clear names
+3. Place constants at module level with documentation
+
+#### 6.7 Improve Pattern Matching Consistency
+
+**Problem**: Inconsistent use of `function` shorthand vs explicit `match`.
+
+**Guideline**: Use `function` shorthand for single-argument pattern matching on the last parameter.
+
+**Examples**:
+```fsharp
+// ✅ Good - use function shorthand
+let formatResult = function
+    | Pass -> "✓"
+    | Fail _ -> "✗"
+    | Skipped _ -> "⊘"
+
+// ✅ Good - explicit match when multiple arguments or not last parameter
+let compareResults result1 result2 =
+    match result1, result2 with
+    | Pass, Pass -> Pass
+    | Fail msg, _ -> Fail msg
+    | _, Fail msg -> Fail msg
+```
+
+**Tasks**:
+1. Review all pattern matching in codebase
+2. Apply consistent style
+3. Prefer `function` where appropriate
+
+#### 6.8 Documentation Updates
+
+**Tasks**:
+1. Update CLAUDE.md with new hook API
+2. Update examples to use new StateManagement approach
+3. Document validation behavior in matchers
+4. Add migration guide for hook changes
+
+**Deliverables**:
+- ✅ StateManagement redesigned without ThreadLocal
+- ✅ Discovery.fs refactored into smaller functions
+- ✅ All mutable variables replaced with functional alternatives
+- ✅ Null-checking consolidated in StringMatchers
+- ✅ Input validation added to numeric/collection matchers
+- ✅ Magic numbers extracted to named constants
+- ✅ Pattern matching style consistent throughout
+- ✅ All tests passing
+- ✅ Code review compliance: A grade
+- ✅ Updated documentation
+
+**Success Criteria**:
+- Zero ThreadLocal usage
+- No functions over 30 lines
+- Nesting depth ≤ 3 levels everywhere
+- No mutable variables except where absolutely necessary
+- All guidelines from CLAUDE.md followed
+- Code review findings addressed
+
 ## Technical Decisions
 
 ### Dependencies

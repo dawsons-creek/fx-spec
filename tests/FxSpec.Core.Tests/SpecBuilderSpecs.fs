@@ -50,7 +50,7 @@ let specBuilderSpecs =
                     expect nodes |> to' (haveLength 1)
 
                     match List.head nodes with
-                    | Group("Outer", [Group("Inner", [Example("nested test", _)])]) -> ()
+                    | Group("Outer", _, [Group("Inner", _, [Example("nested test", _)])]) -> ()
                     | _ -> failwith "Should create nested groups correctly"
                 )
             ]

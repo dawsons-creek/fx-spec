@@ -13,9 +13,12 @@ let rec executeNode (node: TestNode) : TestResultNode =
         let result = testFn()
         sw.Stop()
         ExampleResult (desc, result, sw.Elapsed)
-    | Group (desc, children) | FocusedGroup (desc, children) ->
+    | Group (desc, _, children) | FocusedGroup (desc, _, children) ->
         let results = children |> List.map executeNode
         GroupResult (desc, results)
+    | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ ->
+        // Hooks are not executed in this simple runner
+        GroupResult ("hook", [])
 
 /// Simple formatter that prints test results
 let rec printResults indent (node: TestResultNode) =

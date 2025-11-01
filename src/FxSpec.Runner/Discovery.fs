@@ -108,21 +108,24 @@ module Discovery =
                         Some (Example (desc, test))
                     else
                         None
-                | Group (desc, children) | FocusedGroup (desc, children) ->
+                | Group (desc, hooks, children) | FocusedGroup (desc, hooks, children) ->
                     // Check if group description matches
                     let descMatches = desc.ToLowerInvariant().Contains(filterLower)
 
                     // If group description matches, include all children
                     // Otherwise, recursively filter children
                     if descMatches then
-                        Some (Group (desc, children))
+                        Some (Group (desc, hooks, children))
                     else
                         let filteredChildren = filterTests filter children
                         // Include group if any children match
                         if not (List.isEmpty filteredChildren) then
-                            Some (Group (desc, filteredChildren))
+                            Some (Group (desc, hooks, filteredChildren))
                         else
                             None
+                | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ ->
+                    // Skip hook nodes during filtering
+                    None
             )
     
     /// Counts total examples in a list of test nodes.

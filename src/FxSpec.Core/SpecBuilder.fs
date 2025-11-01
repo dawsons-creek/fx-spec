@@ -53,12 +53,29 @@ module SpecHelpers =
     /// Creates a group node with nested tests.
     /// Usage: describe "description" [ ... tests ... ]
     let describe description (tests: TestNode list) : TestNode =
-        Group(description, tests)
+        // Separate hooks from other nodes
+        let hooks, nonHooks =
+            tests |> List.partition (function
+                | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ -> true
+                | _ -> false)
+
+        // Collect hooks into GroupHooks
+        let groupHooks =
+            hooks |> List.fold (fun acc node ->
+                match node with
+                | BeforeAllHook h -> GroupHooks.addBeforeAll h acc
+                | BeforeEachHook h -> GroupHooks.addBeforeEach h acc
+                | AfterEachHook h -> GroupHooks.addAfterEach h acc
+                | AfterAllHook h -> GroupHooks.addAfterAll h acc
+                | _ -> acc
+            ) GroupHooks.empty
+
+        Group(description, groupHooks, nonHooks)
 
     /// Creates a context node (alias for describe).
     /// Usage: context "description" [ ... tests ... ]
     let context description (tests: TestNode list) : TestNode =
-        Group(description, tests)
+        describe description tests
 
     /// Creates a skipped test example (xit = "exclude it").
     /// Usage: xit "description" (fun () -> test code)
@@ -87,12 +104,49 @@ module SpecHelpers =
     /// When any fdescribe is present, only tests in fdescribe blocks will run.
     /// Usage: fdescribe "description" [ ... tests ... ]
     let fdescribe description (tests: TestNode list) : TestNode =
-        FocusedGroup(description, tests)
+        // Separate hooks from other nodes
+        let hooks, nonHooks =
+            tests |> List.partition (function
+                | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ -> true
+                | _ -> false)
+
+        // Collect hooks into GroupHooks
+        let groupHooks =
+            hooks |> List.fold (fun acc node ->
+                match node with
+                | BeforeAllHook h -> GroupHooks.addBeforeAll h acc
+                | BeforeEachHook h -> GroupHooks.addBeforeEach h acc
+                | AfterEachHook h -> GroupHooks.addAfterEach h acc
+                | AfterAllHook h -> GroupHooks.addAfterAll h acc
+                | _ -> acc
+            ) GroupHooks.empty
+
+        FocusedGroup(description, groupHooks, nonHooks)
 
     /// Creates a focused context (alias for fdescribe).
     /// Usage: fcontext "description" [ ... tests ... ]
     let fcontext description (tests: TestNode list) : TestNode =
-        FocusedGroup(description, tests)
+        fdescribe description tests
+
+    /// Registers a beforeAll hook.
+    /// Usage: beforeAll (fun () -> setup code)
+    let beforeAll (hook: unit -> unit) : TestNode =
+        BeforeAllHook hook
+
+    /// Registers a beforeEach hook.
+    /// Usage: beforeEach (fun () -> setup code)
+    let beforeEach (hook: unit -> unit) : TestNode =
+        BeforeEachHook hook
+
+    /// Registers an afterEach hook.
+    /// Usage: afterEach (fun () -> teardown code)
+    let afterEach (hook: unit -> unit) : TestNode =
+        AfterEachHook hook
+
+    /// Registers an afterAll hook.
+    /// Usage: afterAll (fun () -> teardown code)
+    let afterAll (hook: unit -> unit) : TestNode =
+        AfterAllHook hook
 
 /// The global instance of the SpecBuilder.
 /// Users will write: spec { ... }

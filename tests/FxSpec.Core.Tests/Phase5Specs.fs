@@ -78,13 +78,13 @@ let focusedSpecs =
                     expect nodes |> to' (haveLength 1)
                     
                     match List.head nodes with
-                    | FocusedGroup (desc, children) -> 
+                    | FocusedGroup (desc, _, children) ->
                         expect desc |> to' (equal "focused group")
                         expect children |> to' (haveLength 2)
                     | _ -> failwith "Expected FocusedGroup"
                 )
             ]
-            
+
             context "fcontext" [
                 it "is an alias for fdescribe" (fun () ->
                     let nodes = spec {
@@ -92,11 +92,11 @@ let focusedSpecs =
                             it "test" (fun () -> ())
                         ]
                     }
-                    
+
                     expect nodes |> to' (haveLength 1)
-                    
+
                     match List.head nodes with
-                    | FocusedGroup (desc, _) -> 
+                    | FocusedGroup (desc, _, _) ->
                         expect desc |> to' (equal "focused context")
                     | _ -> failwith "Expected FocusedGroup"
                 )
@@ -116,7 +116,7 @@ let focusedFilteringSpecs =
                 )
 
                 it "returns true for FocusedGroup" (fun () ->
-                    let node = FocusedGroup ("group", [])
+                    let node = FocusedGroup ("group", GroupHooks.empty, [])
                     expect (TestNode.hasFocused node) |> to' beTrue
                 )
 
@@ -126,7 +126,7 @@ let focusedFilteringSpecs =
                 )
 
                 it "returns true for Group containing focused tests" (fun () ->
-                    let node = Group ("group", [
+                    let node = Group ("group", GroupHooks.empty, [
                         FocusedExample ("focused", fun () -> TestResult.Pass)
                         Example ("regular", fun () -> TestResult.Pass)
                     ])

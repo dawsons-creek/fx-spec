@@ -11,12 +11,14 @@
     <Compile Include="TypesSpecs.fs" />
     <Compile Include="SpecBuilderSpecs.fs" />
     <Compile Include="Phase5Specs.fs" />
+    <Compile Include="HooksSpecs.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\FxSpec.Core\FxSpec.Core.fsproj" />
     <ProjectReference Include="..\..\src\FxSpec.Matchers\FxSpec.Matchers.fsproj" />
+    <ProjectReference Include="..\..\src\FxSpec.Runner\FxSpec.Runner.fsproj" />
   </ItemGroup>
 
 </Project>

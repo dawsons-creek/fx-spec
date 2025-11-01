@@ -88,29 +88,35 @@ let beExample (expectedDesc: string) : Matcher<TestNode> =
         | Example (desc, _) | FocusedExample (desc, _) ->
             let msg = sprintf "Expected Example with description '%s', but got '%s'" expectedDesc desc
             MatchResult.Fail (msg, Some (box expectedDesc), Some (box desc))
-        | Group (desc, _) | FocusedGroup (desc, _) ->
+        | Group (desc, _, _) | FocusedGroup (desc, _, _) ->
             let msg = sprintf "Expected Example with description '%s', but got Group '%s'" expectedDesc desc
             MatchResult.Fail (msg, Some (box "Example"), Some (box "Group"))
+        | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ ->
+            let msg = sprintf "Expected Example with description '%s', but got Hook" expectedDesc
+            MatchResult.Fail (msg, Some (box "Example"), Some (box "Hook"))
 
 /// Matches if the TestNode is a Group with the expected description.
 /// Usage: expect node |> to' (beGroup "group description")
 let beGroup (expectedDesc: string) : Matcher<TestNode> =
     fun actual ->
         match actual with
-        | Group (desc, _) | FocusedGroup (desc, _) when desc = expectedDesc -> MatchResult.Pass
-        | Group (desc, _) | FocusedGroup (desc, _) ->
+        | Group (desc, _, _) | FocusedGroup (desc, _, _) when desc = expectedDesc -> MatchResult.Pass
+        | Group (desc, _, _) | FocusedGroup (desc, _, _) ->
             let msg = sprintf "Expected Group with description '%s', but got '%s'" expectedDesc desc
             MatchResult.Fail (msg, Some (box expectedDesc), Some (box desc))
         | Example (desc, _) | FocusedExample (desc, _) ->
             let msg = sprintf "Expected Group with description '%s', but got Example '%s'" expectedDesc desc
             MatchResult.Fail (msg, Some (box "Group"), Some (box "Example"))
+        | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ ->
+            let msg = sprintf "Expected Group with description '%s', but got Hook" expectedDesc
+            MatchResult.Fail (msg, Some (box "Group"), Some (box "Hook"))
 
 /// Matches if the TestNode is a Group with the expected number of children.
 /// Usage: expect node |> to' (beGroupWithChildren 3)
 let beGroupWithChildren (expectedCount: int) : Matcher<TestNode> =
     fun actual ->
         match actual with
-        | Group (_, children) | FocusedGroup (_, children) ->
+        | Group (_, _, children) | FocusedGroup (_, _, children) ->
             let actualCount = List.length children
             if actualCount = expectedCount then
                 MatchResult.Pass
@@ -120,6 +126,9 @@ let beGroupWithChildren (expectedCount: int) : Matcher<TestNode> =
         | Example (desc, _) | FocusedExample (desc, _) ->
             let msg = sprintf "Expected Group with %d children, but got Example '%s'" expectedCount desc
             MatchResult.Fail (msg, Some (box "Group"), Some (box "Example"))
+        | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ ->
+            let msg = "Expected Group, but got Hook"
+            MatchResult.Fail (msg, Some (box "Group"), Some (box "Hook"))
 
 /// Matches if the TestNode has the expected number of examples (recursively).
 /// Usage: expect node |> to' (haveExampleCount 5)
