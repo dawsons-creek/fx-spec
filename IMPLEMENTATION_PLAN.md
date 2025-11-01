@@ -149,8 +149,8 @@ let specBuilderSpecs =
             describe "simple examples" {
                 it "creates an Example node" {
                     let nodes = spec { yield it "test" (fun () -> ()) }
-                    expect nodes |> to' (haveLength 1)
-                    expect (List.head nodes) |> to' (beExample "test")
+                    expect nodes |> should (haveLength 1)
+                    expect (List.head nodes) |> should (beExample "test")
                 }
             }
         }

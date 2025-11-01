@@ -15,51 +15,51 @@ let testResultSpecs =
             context "isPass" [
                 it "returns true for Pass" (fun () ->
                     let result = TestResult.Pass
-                    expect (TestResult.isPass result) |> to' beTrue
+                    expect (TestResult.isPass result) |> should beTrue
                 )
 
                 it "returns false for Fail" (fun () ->
                     let result = TestResult.Fail None
-                    expect (TestResult.isPass result) |> to' beFalse
+                    expect (TestResult.isPass result) |> should beFalse
                 )
 
                 it "returns false for Skipped" (fun () ->
                     let result = TestResult.Skipped "reason"
-                    expect (TestResult.isPass result) |> to' beFalse
+                    expect (TestResult.isPass result) |> should beFalse
                 )
             ]
 
             context "isFail" [
                 it "returns false for Pass" (fun () ->
                     let result = TestResult.Pass
-                    expect (TestResult.isFail result) |> to' beFalse
+                    expect (TestResult.isFail result) |> should beFalse
                 )
 
                 it "returns true for Fail" (fun () ->
                     let result = TestResult.Fail None
-                    expect (TestResult.isFail result) |> to' beTrue
+                    expect (TestResult.isFail result) |> should beTrue
                 )
 
                 it "returns false for Skipped" (fun () ->
                     let result = TestResult.Skipped "reason"
-                    expect (TestResult.isFail result) |> to' beFalse
+                    expect (TestResult.isFail result) |> should beFalse
                 )
             ]
 
             context "isSkipped" [
                 it "returns false for Pass" (fun () ->
                     let result = TestResult.Pass
-                    expect (TestResult.isSkipped result) |> to' beFalse
+                    expect (TestResult.isSkipped result) |> should beFalse
                 )
 
                 it "returns false for Fail" (fun () ->
                     let result = TestResult.Fail None
-                    expect (TestResult.isSkipped result) |> to' beFalse
+                    expect (TestResult.isSkipped result) |> should beFalse
                 )
 
                 it "returns true for Skipped" (fun () ->
                     let result = TestResult.Skipped "reason"
-                    expect (TestResult.isSkipped result) |> to' beTrue
+                    expect (TestResult.isSkipped result) |> should beTrue
                 )
             ]
         ]
@@ -73,26 +73,26 @@ let testNodeSpecs =
             context "description" [
                 it "returns the description for Example nodes" (fun () ->
                     let example = Example("test example", fun () -> TestResult.Pass)
-                    expect (TestNode.description example) |> to' (equal "test example")
+                    expect (TestNode.description example) |> should (equal "test example")
                 )
 
                 it "returns the description for Group nodes" (fun () ->
                     let group = Group("test group", GroupHooks.empty, [])
-                    expect (TestNode.description group) |> to' (equal "test group")
+                    expect (TestNode.description group) |> should (equal "test group")
                 )
             ]
 
             context "countExamples" [
                 it "counts a single Example as 1" (fun () ->
                     let example = Example("test", fun () -> TestResult.Pass)
-                    expect (TestNode.countExamples example) |> to' (equal 1)
+                    expect (TestNode.countExamples example) |> should (equal 1)
                 )
 
                 it "counts examples in a Group" (fun () ->
                     let example1 = Example("test 1", fun () -> TestResult.Pass)
                     let example2 = Example("test 2", fun () -> TestResult.Pass)
                     let group = Group("group", GroupHooks.empty, [example1; example2])
-                    expect (TestNode.countExamples group) |> to' (equal 2)
+                    expect (TestNode.countExamples group) |> should (equal 2)
                 )
 
                 it "counts examples recursively in nested groups" (fun () ->
@@ -100,27 +100,27 @@ let testNodeSpecs =
                     let example2 = Example("test 2", fun () -> TestResult.Pass)
                     let innerGroup = Group("inner", GroupHooks.empty, [example1])
                     let outerGroup = Group("outer", GroupHooks.empty, [innerGroup; example2])
-                    expect (TestNode.countExamples outerGroup) |> to' (equal 2)
+                    expect (TestNode.countExamples outerGroup) |> should (equal 2)
                 )
             ]
 
             context "countGroups" [
                 it "counts an Example as 0 groups" (fun () ->
                     let example = Example("test", fun () -> TestResult.Pass)
-                    expect (TestNode.countGroups example) |> to' (equal 0)
+                    expect (TestNode.countGroups example) |> should (equal 0)
                 )
 
                 it "counts a single Group as 1" (fun () ->
                     let example = Example("test", fun () -> TestResult.Pass)
                     let group = Group("group", GroupHooks.empty, [example])
-                    expect (TestNode.countGroups group) |> to' (equal 1)
+                    expect (TestNode.countGroups group) |> should (equal 1)
                 )
 
                 it "counts nested groups correctly" (fun () ->
                     let example = Example("test", fun () -> TestResult.Pass)
                     let innerGroup = Group("inner", GroupHooks.empty, [example])
                     let outerGroup = Group("outer", GroupHooks.empty, [innerGroup; example])
-                    expect (TestNode.countGroups outerGroup) |> to' (equal 2)
+                    expect (TestNode.countGroups outerGroup) |> should (equal 2)
                 )
             ]
         ]
@@ -138,7 +138,7 @@ let testResultNodeSpecs =
                     let groupResult = GroupResult("group", [result1; result2])
 
                     let collected = TestResultNode.collectResults groupResult
-                    expect collected |> to' (haveLength 2)
+                    expect collected |> should (haveLength 2)
                 )
             ]
 
@@ -149,7 +149,7 @@ let testResultNodeSpecs =
                     let result3 = ExampleResult("test 3", TestResult.Fail None, TimeSpan.Zero)
                     let groupResult = GroupResult("group", [result1; result2; result3])
 
-                    expect (TestResultNode.countPassed groupResult) |> to' (equal 2)
+                    expect (TestResultNode.countPassed groupResult) |> should (equal 2)
                 )
             ]
 
@@ -160,7 +160,7 @@ let testResultNodeSpecs =
                     let result3 = ExampleResult("test 3", TestResult.Fail None, TimeSpan.Zero)
                     let groupResult = GroupResult("group", [result1; result2; result3])
 
-                    expect (TestResultNode.countFailed groupResult) |> to' (equal 2)
+                    expect (TestResultNode.countFailed groupResult) |> should (equal 2)
                 )
             ]
 
@@ -170,7 +170,7 @@ let testResultNodeSpecs =
                     let result2 = ExampleResult("test 2", TestResult.Skipped "reason", TimeSpan.Zero)
                     let groupResult = GroupResult("group", [result1; result2])
 
-                    expect (TestResultNode.countSkipped groupResult) |> to' (equal 1)
+                    expect (TestResultNode.countSkipped groupResult) |> should (equal 1)
                 )
             ]
         ]

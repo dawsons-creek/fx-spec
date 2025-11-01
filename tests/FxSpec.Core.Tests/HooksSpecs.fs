@@ -23,12 +23,12 @@ let beforeEachAfterEachSpecs =
 
                             it "test 1" (fun () ->
                                 test1Ran <- true
-                                expect setupCount |> to' (equal 1)
+                                expect setupCount |> should (equal 1)
                             )
 
                             it "test 2" (fun () ->
                                 test2Ran <- true
-                                expect setupCount |> to' (equal 2)
+                                expect setupCount |> should (equal 2)
                             )
                         ]
                     }
@@ -36,9 +36,9 @@ let beforeEachAfterEachSpecs =
                     // Execute the tests
                     nodes |> List.iter (executeNode >> ignore)
 
-                    expect test1Ran |> to' beTrue
-                    expect test2Ran |> to' beTrue
-                    expect setupCount |> to' (equal 2)
+                    expect test1Ran |> should beTrue
+                    expect test2Ran |> should beTrue
+                    expect setupCount |> should (equal 2)
                 )
 
                 it "runs in outer-to-inner order for nested groups" (fun () ->
@@ -52,7 +52,7 @@ let beforeEachAfterEachSpecs =
                                 beforeEach (fun () -> executionOrder <- executionOrder @ ["inner"])
 
                                 it "test" (fun () ->
-                                    expect executionOrder |> to' (equal ["outer"; "inner"])
+                                    expect executionOrder |> should (equal ["outer"; "inner"])
                                 )
                             ]
                         ]
@@ -60,7 +60,7 @@ let beforeEachAfterEachSpecs =
 
                     // Execute and verify order
                     nodes |> List.iter (executeNode >> ignore)
-                    expect executionOrder |> to' (equal ["outer"; "inner"])
+                    expect executionOrder |> should (equal ["outer"; "inner"])
                 )
             ]
 
@@ -86,9 +86,9 @@ let beforeEachAfterEachSpecs =
 
                     // Execute the tests
                     nodes |> List.iter (executeNode >> ignore)
-                    expect test1Completed |> to' beTrue
-                    expect test2Completed |> to' beTrue
-                    expect teardownCount |> to' (equal 2)
+                    expect test1Completed |> should beTrue
+                    expect test2Completed |> should beTrue
+                    expect teardownCount |> should (equal 2)
                 )
 
                 it "runs in inner-to-outer order for nested groups" (fun () ->
@@ -108,7 +108,7 @@ let beforeEachAfterEachSpecs =
 
                     // Execute and verify order
                     nodes |> List.iter (executeNode >> ignore)
-                    expect executionOrder |> to' (equal ["inner"; "outer"])
+                    expect executionOrder |> should (equal ["inner"; "outer"])
                 )
 
                 it "runs even when test fails" (fun () ->
@@ -126,7 +126,7 @@ let beforeEachAfterEachSpecs =
 
                     // Execute the test (it should fail but afterEach should still run)
                     nodes |> List.iter (executeNode >> ignore)
-                    expect teardownRan |> to' beTrue
+                    expect teardownRan |> should beTrue
                 )
             ]
 
@@ -147,7 +147,7 @@ let beforeEachAfterEachSpecs =
 
                     // Execute and verify order
                     nodes |> List.iter (executeNode >> ignore)
-                    expect executionOrder |> to' (equal ["before"; "test"; "after"])
+                    expect executionOrder |> should (equal ["before"; "test"; "after"])
                 )
             ]
         ]
@@ -170,21 +170,21 @@ let beforeAllAfterAllSpecs =
 
                             it "test 1" (fun () ->
                                 test1Ran <- true
-                                expect setupCount |> to' (equal 1)
+                                expect setupCount |> should (equal 1)
                             )
 
                             it "test 2" (fun () ->
                                 test2Ran <- true
-                                expect setupCount |> to' (equal 1)  // Still 1, not 2
+                                expect setupCount |> should (equal 1)  // Still 1, not 2
                             )
                         ]
                     }
 
                     // Execute the tests
                     nodes |> List.iter (executeNode >> ignore)
-                    expect test1Ran |> to' beTrue
-                    expect test2Ran |> to' beTrue
-                    expect setupCount |> to' (equal 1)  // Only ran once
+                    expect test1Ran |> should beTrue
+                    expect test2Ran |> should beTrue
+                    expect setupCount |> should (equal 1)  // Only ran once
                 )
             ]
 
@@ -200,21 +200,21 @@ let beforeAllAfterAllSpecs =
 
                             it "test 1" (fun () ->
                                 test1Completed <- true
-                                expect teardownCount |> to' (equal 0)  // Not run yet
+                                expect teardownCount |> should (equal 0)  // Not run yet
                             )
 
                             it "test 2" (fun () ->
                                 test2Completed <- true
-                                expect teardownCount |> to' (equal 0)  // Still not run
+                                expect teardownCount |> should (equal 0)  // Still not run
                             )
                         ]
                     }
 
                     // Execute the tests
                     nodes |> List.iter (executeNode >> ignore)
-                    expect test1Completed |> to' beTrue
-                    expect test2Completed |> to' beTrue
-                    expect teardownCount |> to' (equal 1)  // Ran once after all tests
+                    expect test1Completed |> should beTrue
+                    expect test2Completed |> should beTrue
+                    expect teardownCount |> should (equal 1)  // Ran once after all tests
                 )
 
                 it "runs even when tests fail" (fun () ->
@@ -236,7 +236,7 @@ let beforeAllAfterAllSpecs =
 
                     // Execute the tests (they should fail but afterAll should still run)
                     nodes |> List.iter (executeNode >> ignore)
-                    expect teardownRan |> to' beTrue
+                    expect teardownRan |> should beTrue
                 )
             ]
 
@@ -261,7 +261,7 @@ let beforeAllAfterAllSpecs =
 
                     // Execute and verify order
                     nodes |> List.iter (executeNode >> ignore)
-                    expect executionOrder |> to' (equal ["beforeAll"; "test1"; "test2"; "afterAll"])
+                    expect executionOrder |> should (equal ["beforeAll"; "test1"; "test2"; "afterAll"])
                 )
             ]
 
@@ -294,7 +294,7 @@ let beforeAllAfterAllSpecs =
                         "beforeEach"; "test2"; "afterEach"
                         "afterAll"
                     ]
-                    expect executionOrder |> to' (equal expected)
+                    expect executionOrder |> should (equal expected)
                 )
             ]
         ]

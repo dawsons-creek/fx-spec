@@ -1,0 +1,176 @@
+# Site Information
+site_name: FxSpec
+site_url: https://fxspec.github.io/fx-spec  # TODO: Update with actual URL
+site_author: FxSpec Contributors
+site_description: >-
+  Pure F# BDD testing framework inspired by RSpec.
+  Type-safe, functional, and beautiful.
+
+# Repository
+repo_url: https://github.com/fxspec/fx-spec  # TODO: Update with actual repository
+repo_name: fxspec/fx-spec
+edit_uri: edit/main/docs/
+
+# Copyright
+copyright: Copyright &copy; 2025 FxSpec Contributors
+
+# Theme Configuration
+theme:
+  name: material
+
+  # Color Scheme
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: pink
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: pink
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  # Fonts
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+  # Features
+  features:
+    # Navigation
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.indexes
+    - navigation.top
+
+    # Table of Contents
+    - toc.follow
+
+    # Search
+    - search.suggest
+    - search.highlight
+    - search.share
+
+    # Header
+    - header.autohide
+
+    # Content
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.tooltips
+
+  # Logo and Icons
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/rocket-launch
+
+  # Favicon (will use default for now)
+  # favicon: assets/favicon.png
+
+# Plugins
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+
+  # Social cards require additional dependencies: pip install "mkdocs-material[imaging]"
+  # - social:
+  #     cards: true
+  #     cards_layout_options:
+  #       background_color: "#5E35B1"
+  #       color: "#FFFFFF"
+
+  - macros
+
+  - mermaid2
+
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: timeago
+
+# Markdown Extensions
+markdown_extensions:
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+
+  # PyMdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+# Navigation Structure
+nav:
+  - Home: index.md
+  - Quick Start: quick-start.md
+  - Troubleshooting: troubleshooting.md
+
+  - Reference:
+    - reference/index.md
+    - DSL API: reference/dsl-api.md
+    - Test Runner: reference/runner.md
+    - Matchers:
+      - Core: reference/matchers/core.md
+      - Collections: reference/matchers/collections.md
+      - Strings: reference/matchers/strings.md
+      - Numeric: reference/matchers/numeric.md
+      - Exceptions: reference/matchers/exceptions.md
+
+  - Community:
+    - Contributing: community/contributing.md
+
+# Extra Configuration
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/fxspec/fx-spec  # TODO: Update with actual repository

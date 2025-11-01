@@ -16,7 +16,7 @@ let myTests =
     spec {
         describe "My Feature" [
             it "works correctly" (fun () ->
-                expect true |> to' beTrue
+                expect true |> should beTrue
             )
         ]
     }

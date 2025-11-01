@@ -138,29 +138,29 @@ let mySpec =
 
 ```fsharp
 // Core
-expect 42 |> to' (equal 42)
-expect (Some 42) |> to' (beSome 42)
-expect (Ok "success") |> to' (beOk "success")
+expect 42 |> should (equal 42)
+expect (Some 42) |> should (beSome 42)
+expect (Ok "success") |> should (beOk "success")
 
 // Collections
-expect [1; 2; 3] |> to' (contain 2)
-expect [1; 2; 3] |> to' (haveLength 3)
-expect [2; 4; 6] |> to' (allSatisfy (fun x -> x % 2 = 0) "be even")
+expect [1; 2; 3] |> should (contain 2)
+expect [1; 2; 3] |> should (haveLength 3)
+expect [2; 4; 6] |> should (allSatisfy (fun x -> x % 2 = 0) "be even")
 
 // Numeric
-expect 10 |> to' (beGreaterThan 5)
-expect 3.14159 |> to' (beCloseTo 3.14 0.01)
-expect 4 |> to' beEven
+expect 10 |> should (beGreaterThan 5)
+expect 3.14159 |> should (beCloseTo 3.14 0.01)
+expect 4 |> should beEven
 
 // String
-expect "hello world" |> to' (startWith "hello")
-expect "hello123" |> to' (matchRegex "hello\\d+")
+expect "hello world" |> should (startWith "hello")
+expect "hello123" |> should (matchRegex "hello\\d+")
 
 // Exception
-expect (fun () -> failwith "error") |> to' raiseException<Exception>
+expect (fun () -> failwith "error") |> should raiseException<Exception>
 
 // Negation
-expect 42 |> notTo' (equal 99)
+expect 42 |> shouldNot (equal 99)
 ```
 
 ### Key Achievements
@@ -323,8 +323,8 @@ let specBuilderSpecs =
             context "when creating a simple example" [
                 it "creates an Example node" (fun () ->
                     let nodes = spec { yield it "test" (fun () -> ()) }
-                    expect nodes |> to' (haveLength 1)
-                    expect (List.head nodes) |> to' (beExample "test")
+                    expect nodes |> should (haveLength 1)
+                    expect (List.head nodes) |> should (beExample "test")
                 )
             ]
         ]

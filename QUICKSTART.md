@@ -1,50 +1,69 @@
 # FxSpec Quick Start Guide
 
-## Installation (Future)
+> **📚 For the complete guide, see [docs/quick-start.md](docs/quick-start.md)**
+
+## Installation
+
+FxSpec is not yet published to NuGet. To use it, build from source:
 
 ```bash
-dotnet add package FxSpec
+git clone https://github.com/fxspec/fx-spec.git
+cd fx-spec
+dotnet build
 ```
 
 ## Your First Spec
 
 ```fsharp
-open FxSpec
+module CalculatorSpecs
+
+open FxSpec.Core
+open FxSpec.Matchers
 
 [<Tests>]
 let calculatorSpecs =
     spec {
-        describe "Calculator" {
-            describe "addition" {
-                it "adds two positive numbers" {
-                    expect (2 + 2) |> to' (equal 4)
-                }
-                
-                it "adds negative numbers" {
-                    expect (-1 + -1) |> to' (equal -2)
-                }
-            }
-            
-            describe "division" {
-                it "divides evenly" {
-                    expect (10 / 2) |> to' (equal 5)
-                }
-                
-                it "raises exception for division by zero" {
-                    expect (fun () -> 10 / 0 |> ignore)
-                    |> to' raiseException<DivideByZeroException>
-                }
-            }
-        }
+        yield describe "Calculator" [
+            describe "addition" [
+                it "adds two positive numbers" (fun () ->
+                    expect (2 + 2) |> should (equal 4)
+                )
+
+                it "adds negative numbers" (fun () ->
+                    expect (-1 + -1) |> should (equal -2)
+                )
+            ]
+
+            describe "division" [
+                it "divides evenly" (fun () ->
+                    expect (10 / 2) |> should (equal 5)
+                )
+
+                it "raises exception for division by zero" (fun () ->
+                    let action () = 10 / 0
+                    expect action |> should raiseException
+                )
+            ]
+        ]
     }
 ```
 
 ## Running Tests
 
+Build your test project and run with the FxSpec runner:
+
 ```bash
-dotnet fspec MyTests.dll
-dotnet fspec MyTests.dll --filter "Calculator"
-dotnet fspec MyTests.dll --format documentation
+# Build tests
+dotnet build tests/MyProject.Tests/MyProject.Tests.fsproj
+
+# Run tests
+dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- \
+  tests/MyProject.Tests/bin/Debug/net9.0/MyProject.Tests.dll
+
+# Or use the convenience script
+./run-tests.sh
+./run-tests.sh --filter "Calculator"
+./run-tests.sh --format simple
 ```
 
 ## Expected Output
@@ -52,264 +71,139 @@ dotnet fspec MyTests.dll --format documentation
 ```
 Calculator
   addition
-    ✓ adds two positive numbers
-    ✓ adds negative numbers
+    ✓ adds two positive numbers (1ms)
+    ✓ adds negative numbers (0ms)
   division
-    ✓ divides evenly
-    ✓ raises exception for division by zero
+    ✓ divides evenly (0ms)
+    ✓ raises exception for division by zero (2ms)
 
-4 examples, 0 failures
+┌───────┬────────┬────────┬─────────┬──────────┐
+│ Total │ Passed │ Failed │ Skipped │ Duration │
+│   4   │   4    │   0    │    0    │  0.01s   │
+└───────┴────────┴────────┴─────────┴──────────┘
 ```
 
-## Using State Management
-
-### Lazy Variables with `let'`
-
-```fsharp
-[<Tests>]
-let userSpecs =
-    spec {
-        describe "User" {
-            let' "user" (fun () -> 
-                // Expensive operation, only runs once per test
-                createUser "john@example.com"
-            )
-            
-            it "has an email" {
-                let user = get "user" :?> User
-                expect user.Email |> to' (equal "john@example.com")
-            }
-            
-            it "has a default role" {
-                let user = get "user" :?> User
-                expect user.Role |> to' (equal "Member")
-            }
-        }
-    }
-```
-
-### Subject
-
-```fsharp
-[<Tests>]
-let stackSpecs =
-    spec {
-        describe "Stack" {
-            subject (fun () -> Stack<int>())
-            
-            it "starts empty" {
-                let stack = getSubject() :?> Stack<int>
-                expect stack.Count |> to' (equal 0)
-            }
-            
-            context "when items are pushed" {
-                before (fun () ->
-                    let stack = getSubject() :?> Stack<int>
-                    stack.Push(1)
-                    stack.Push(2)
-                )
-                
-                it "has the correct count" {
-                    let stack = getSubject() :?> Stack<int>
-                    expect stack.Count |> to' (equal 2)
-                }
-                
-                it "pops in LIFO order" {
-                    let stack = getSubject() :?> Stack<int>
-                    expect (stack.Pop()) |> to' (equal 2)
-                    expect (stack.Pop()) |> to' (equal 1)
-                }
-            }
-        }
-    }
-```
-
-## Hooks
+## Using Hooks for Setup/Teardown
 
 ```fsharp
 [<Tests>]
 let databaseSpecs =
     spec {
-        describe "Database operations" {
-            before (fun () ->
-                printfn "Setting up database connection"
-                setupDatabase()
+        yield describe "Database Tests" [
+            let mutable connection = null
+
+            beforeEach (fun () ->
+                connection <- Database.connect()
+                connection.BeginTransaction()
             )
-            
-            after (fun () ->
-                printfn "Tearing down database"
-                teardownDatabase()
+
+            afterEach (fun () ->
+                connection.RollbackTransaction()
+                connection.Dispose()
             )
-            
-            it "inserts a record" {
-                // Database is set up before this runs
-                insertRecord { Id = 1; Name = "Test" }
-                expect (recordExists 1) |> to' (equal true)
-                // Database is torn down after this runs
-            }
-        }
+
+            it "queries data" (fun () ->
+                let result = connection.Query("SELECT 1")
+                expect result |> shouldNot beEmpty
+            )
+
+            it "inserts data" (fun () ->
+                connection.Execute("INSERT INTO users VALUES (1, 'test')")
+                let count = connection.QuerySingle<int>("SELECT COUNT(*) FROM users")
+                expect count |> should (equal 1)
+            )
+        ]
     }
 ```
 
-## Core Matchers
+## Common Matchers
 
-### Equality
 ```fsharp
-expect actual |> to' (equal expected)
-expect actual |> notTo' (equal unexpected)
+// Equality
+expect 42 |> should (equal 42)
+expect "hello" |> should (equal "hello")
+
+// Collections
+expect [1; 2; 3] |> should (contain 2)
+expect [] |> should beEmpty
+expect [1; 2; 3] |> should (haveLength 3)
+
+// Strings
+expect "hello world" |> should (startWith "hello")
+expect "test.txt" |> should (endWith ".txt")
+expect "test@example.com" |> should (matchRegex @"^\w+@\w+\.\w+$")
+
+// Numeric
+expect 10 |> should (beGreaterThan 5)
+expect 3.14159 |> should (beCloseTo 3.14 0.01)
+
+// Options
+expect (Some 42) |> should (beSome 42)
+expect None |> should beNone
+
+// Booleans
+expect true |> should beTrue
+expect false |> should beFalse
+
+// Exceptions
+let action () = failwith "error"
+expect action |> should raiseException
 ```
 
-### Null/None Checking
-```fsharp
-expect value |> to' beNil
-expect option |> to' beNone
-expect option |> to' (beSome 42)
-```
-
-### Result Matching
-```fsharp
-expect result |> to' (beOk 42)
-expect result |> to' (beError "failed")
-```
-
-### Collections
-```fsharp
-expect [1; 2; 3] |> to' (contain 2)
-expect [] |> to' beEmpty
-expect [1; 2; 3] |> to' (haveLength 3)
-```
-
-### Numeric Comparisons
-```fsharp
-expect 10 |> to' (beGreaterThan 5)
-expect 3 |> to' (beLessThan 10)
-expect 3.14159 |> to' (beCloseTo 3.14 0.01)
-```
-
-### Exceptions
-```fsharp
-expect (fun () -> failwith "error")
-|> to' raiseException<Exception>
-
-expect (fun () -> invalidArg "x" "bad")
-|> to' raiseException<ArgumentException>
-```
-
-### String Matching
-```fsharp
-expect "hello world" |> to' (startWith "hello")
-expect "hello world" |> to' (endWith "world")
-expect "hello world" |> to' (matchRegex "h.*d")
-```
-
-## Custom Matchers
-
-Creating custom matchers is simple—just write a function that returns `MatchResult`:
+## Focused and Pending Tests
 
 ```fsharp
-let beEven : Matcher<int> =
-    fun actual ->
-        if actual % 2 = 0 then
-            Pass
-        else
-            Fail($"{actual} is not even", None, Some (box actual))
+spec {
+    yield describe "My Suite" [
+        // Focus on specific test during development
+        fit "only run this test" (fun () ->
+            expect true |> should beTrue
+        )
 
-let beDivisibleBy (divisor: int) : Matcher<int> =
-    fun actual ->
-        if actual % divisor = 0 then
-            Pass
-        else
-            Fail($"{actual} is not divisible by {divisor}",
-                 Some (box divisor),
-                 Some (box actual))
+        // This test will be skipped
+        it "this is skipped" (fun () ->
+            expect false |> should beTrue
+        )
 
-// Usage
-expect 4 |> to' beEven
-expect 15 |> to' (beDivisibleBy 5)
-```
-
-## Request Specs (API Testing)
-
-```fsharp
-open FxSpec.Extensions
-
-[<Tests>]
-let apiSpecs =
-    requestSpec {
-        describe "Users API" {
-            it "returns all users" {
-                get "/api/users"
-                |> expect |> to' (haveStatusCode 200)
-                |> expect |> to' (haveHeader "Content-Type" "application/json")
-            }
-            
-            it "creates a new user" {
-                post "/api/users"
-                |> withJson {| Name = "John"; Email = "john@example.com" |}
-                |> expect |> to' (haveStatusCode 201)
-                |> expect |> to' (haveJsonBody {| Id = 1; Name = "John" |})
-            }
-        }
-    }
-```
-
-## Best Practices
-
-### 1. Descriptive Test Names
-```fsharp
-// Good
-it "returns 404 when user is not found" { ... }
-
-// Bad
-it "test1" { ... }
-```
-
-### 2. One Assertion Per Test (Generally)
-```fsharp
-// Good
-it "has correct name" {
-    expect user.Name |> to' (equal "John")
+        // Mark test as pending
+        xit "not ready yet" (fun () ->
+            expect false |> should beTrue
+        )
+    ]
 }
-
-it "has correct email" {
-    expect user.Email |> to' (equal "john@example.com")
-}
-
-// Acceptable when testing related properties
-it "has correct user details" {
-    expect user.Name |> to' (equal "John")
-    expect user.Email |> to' (equal "john@example.com")
-}
-```
-
-### 3. Use Context for Different Scenarios
-```fsharp
-describe "User authentication" {
-    context "with valid credentials" {
-        it "logs in successfully" { ... }
-    }
-    
-    context "with invalid credentials" {
-        it "returns error" { ... }
-    }
-    
-    context "when account is locked" {
-        it "denies access" { ... }
-    }
-}
-```
-
-### 4. Keep Tests Independent
-```fsharp
-// Each test should be able to run in isolation
-// Use before/after hooks for setup/teardown
-// Don't rely on test execution order
 ```
 
 ## Next Steps
 
-- Read the [Implementation Plan](IMPLEMENTATION_PLAN.md)
-- Review [Technical Architecture](TECHNICAL_ARCHITECTURE.md)
-- Check out [Examples](examples/)
-- Contribute to the project!
+For complete documentation, see:
 
+- **[Full Quick Start Guide](docs/quick-start.md)** - Comprehensive getting started guide
+- **[DSL API Reference](docs/reference/dsl-api.md)** - All DSL functions
+- **[Matchers Reference](docs/reference/matchers/core.md)** - All available matchers
+- **[Contributing Guide](docs/community/contributing.md)** - How to contribute
+
+## Key Differences from xUnit/NUnit
+
+| Feature | xUnit/NUnit | FxSpec |
+|---------|-------------|--------|
+| Test organization | Attributes (`[<Fact>]`) | DSL (`describe`, `it`) |
+| Assertions | `Assert.Equal(expected, actual)` | `expect actual \|> should (equal expected)` |
+| Setup/Teardown | `[<SetUp>]`, `[<TearDown>]` | `beforeEach`, `afterEach` |
+| Test discovery | Attributes | `[<Tests>]` attribute on spec |
+| Hierarchical tests | Classes and methods | Nested `describe` blocks |
+| Focused tests | Not built-in | `fit`, `fdescribe` |
+| Pending tests | `[<Ignore>]` | `xit`, `pending` |
+
+## Tips
+
+1. **Always use `yield`** for top-level nodes in `spec { }`
+2. **Wrap test code** in `(fun () -> ...)` for lazy evaluation
+3. **Use `describe`** for grouping by feature/class
+4. **Use `context`** for grouping by state/condition
+5. **Use `beforeEach`** for test isolation
+6. **Use `beforeAll`** for expensive setup
+7. **Remove `fit`/`fdescribe`** before committing
+
+---
+
+**Happy Testing with FxSpec!** 🚀

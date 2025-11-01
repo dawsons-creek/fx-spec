@@ -86,7 +86,7 @@ context "equal" [
     it "handles recursive structures" (fun () ->
         let rec1 = { Value = 1; Next = None }
         let rec2 = { Value = 1; Next = None }
-        expect rec1 |> to' (equal rec2)
+        expect rec1 |> should (equal rec2)
     )
 ]
 
@@ -94,12 +94,12 @@ context "beCloseTo" [
     // Existing tests...
     
     it "handles NaN correctly" (fun () ->
-        let test () = expect nan |> to' (beCloseTo 0.0 0.1)
-        expect test |> to' raiseException<AssertionException>
+        let test () = expect nan |> should (beCloseTo 0.0 0.1)
+        expect test |> should raiseException<AssertionException>
     )
     
     it "handles Infinity correctly" (fun () ->
-        expect infinity |> to' (beCloseTo infinity 0.1)
+        expect infinity |> should (beCloseTo infinity 0.1)
     )
 ]
 ```
@@ -113,11 +113,11 @@ context "beCloseTo" [
 **Example**:
 ```fsharp
 // Current
-expect [1; 2; 3] |> to' (contain 2)
+expect [1; 2; 3] |> should (contain 2)
 
 // Could also test
-expect ["apple"; "banana"; "cherry"] |> to' (contain "banana")
-expect [Some 1; None; Some 3] |> to' (contain None)
+expect ["apple"; "banana"; "cherry"] |> should (contain "banana")
+expect [Some 1; None; Some 3] |> should (contain None)
 ```
 
 **Recommendation**: Add more diverse test data to catch type-specific issues
@@ -131,16 +131,16 @@ expect [Some 1; None; Some 3] |> to' (contain None)
 **Current**:
 ```fsharp
 it "fails when values are not equal" (fun () ->
-    let test () = expect 42 |> to' (equal 43)
-    expect test |> to' raiseException<AssertionException>
+    let test () = expect 42 |> should (equal 43)
+    expect test |> should raiseException<AssertionException>
 )
 ```
 
 **Recommended**:
 ```fsharp
 it "fails with descriptive message when values are not equal" (fun () ->
-    let test () = expect 42 |> to' (equal 43)
-    expect test |> to' (raiseExceptionContaining "Expected 43, but found 42")
+    let test () = expect 42 |> should (equal 43)
+    expect test |> should (raiseExceptionContaining "Expected 43, but found 42")
 )
 ```
 
@@ -153,12 +153,12 @@ it "fails with descriptive message when values are not equal" (fun () ->
 **Current**:
 ```fsharp
 it "passes when value is greater" (fun () ->
-    expect 10 |> to' (beGreaterThan 5)
+    expect 10 |> should (beGreaterThan 5)
 )
 
 it "fails when value is not greater" (fun () ->
-    let test () = expect 5 |> to' (beGreaterThan 10)
-    expect test |> to' raiseException<AssertionException>
+    let test () = expect 5 |> should (beGreaterThan 10)
+    expect test |> should raiseException<AssertionException>
 )
 ```
 
@@ -171,10 +171,10 @@ itWith "comparison tests" [
     (5, 5, false)
 ] (fun (value, threshold, shouldPass) ->
     if shouldPass then
-        expect value |> to' (beGreaterThan threshold)
+        expect value |> should (beGreaterThan threshold)
     else
-        let test () = expect value |> to' (beGreaterThan threshold)
-        expect test |> to' raiseException<AssertionException>
+        let test () = expect value |> should (beGreaterThan threshold)
+        expect test |> should raiseException<AssertionException>
 )
 ```
 
@@ -242,13 +242,13 @@ Consider adding FsCheck or similar for property-based tests:
 ```fsharp
 // Example with FsCheck
 property "equal is reflexive" (fun (x: int) ->
-    expect x |> to' (equal x)
+    expect x |> should (equal x)
 )
 
 property "equal is symmetric" (fun (x: int) (y: int) ->
     if x = y then
-        expect x |> to' (equal y)
-        expect y |> to' (equal x)
+        expect x |> should (equal y)
+        expect y |> should (equal x)
 )
 ```
 
@@ -259,9 +259,9 @@ context "performance" [
     it "handles large collections efficiently" (fun () ->
         let largeList = [1..1000000]
         let sw = Stopwatch.StartNew()
-        expect largeList |> to' (contain 500000)
+        expect largeList |> should (contain 500000)
         sw.Stop()
-        expect sw.ElapsedMilliseconds |> to' (beLessThan 100L)
+        expect sw.ElapsedMilliseconds |> should (beLessThan 100L)
     )
 ]
 ```

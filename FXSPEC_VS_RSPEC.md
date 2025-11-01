@@ -25,7 +25,7 @@ spec {
     describe "Calculator" {
         context "when adding numbers" {
             it "adds two positive numbers" {
-                expect (2 + 2) |> to' (equal 4)
+                expect (2 + 2) |> should (equal 4)
             }
         }
     }
@@ -67,7 +67,7 @@ spec {
         
         it "is active" {
             let user = getSubject() :?> User
-            expect user.Active |> to' (equal true)
+            expect user.Active |> should (equal true)
         }
     }
 }
@@ -94,7 +94,7 @@ end
 spec {
     describe "Math" {
         it "compares numbers" {
-            expect "5" |> to' (beGreaterThan 3)
+            expect "5" |> should (beGreaterThan 3)
             // Compile error: Type mismatch
             // Expected: int, Got: string
         }
@@ -117,12 +117,12 @@ expect({a: 1}).to include(:a)
 **FxSpec (Type-Constrained)**
 ```fsharp
 // Different matchers for different types
-expect [1; 2; 3] |> to' (contain 2)        // seq<int>
-expect "hello" |> to' (containSubstring "ell")  // string
-expect map |> to' (haveKey "a")            // Map<string, 'a>
+expect [1; 2; 3] |> should (contain 2)        // seq<int>
+expect "hello" |> should (containSubstring "ell")  // string
+expect map |> should (haveKey "a")            // Map<string, 'a>
 
 // Compile error if you mix them up:
-expect [1; 2; 3] |> to' (containSubstring "2")  // ERROR!
+expect [1; 2; 3] |> should (containSubstring "2")  // ERROR!
 ```
 
 **Benefit**: Impossible to use wrong matcher for a type
@@ -188,13 +188,13 @@ spec {
         it "increments" {
             let counter = get "counter" :?> Counter
             let newCounter = Counter.increment counter
-            expect newCounter.Value |> to' (equal 1)
+            expect newCounter.Value |> should (equal 1)
         }
         
         it "starts at zero" {
             // Fresh counter every time - guaranteed
             let counter = get "counter" :?> Counter
-            expect counter.Value |> to' (equal 0)
+            expect counter.Value |> should (equal 0)
         }
     }
 }
@@ -224,11 +224,11 @@ spec {
             
             // Pattern match on discriminated union
             match result with
-            | Ok value -> expect value |> to' (equal 42)
+            | Ok value -> expect value |> should (equal 42)
             | Error msg -> failwith $"Expected Ok, got Error: {msg}"
             
             // Or use built-in matcher
-            expect result |> to' (beOk 42)
+            expect result |> should (beOk 42)
         }
     }
 }
@@ -254,7 +254,7 @@ let matchBoth m1 m2 : Matcher<'a> =
         | _, Fail(msg2, _, _) -> Fail(msg2, None, None)
 
 expect user.Name 
-|> to' (matchBoth (startWith "John") (endWith "Doe"))
+|> should (matchBoth (startWith "John") (endWith "Doe"))
 ```
 
 **Benefit**: Matchers are just functions - compose them however you want
@@ -313,7 +313,7 @@ spec {
     describe "Processing" {
         for n in [1; 2; 3] do
             it $"handles {n}" {
-                expect (process n) |> to' beValid
+                expect (process n) |> should beValid
             }
     }
 }

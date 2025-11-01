@@ -6,7 +6,7 @@ open FxSpec.Core
 open FxSpec.Matchers
 
 /// Matches if the TestResult is Pass.
-/// Usage: expect result |> to' bePass
+/// Usage: expect result |> should bePass
 let bePass : Matcher<TestResult> =
     fun actual ->
         match actual with
@@ -19,7 +19,7 @@ let bePass : Matcher<TestResult> =
             MatchResult.Fail (msg, Some (box "Pass"), Some (box actual))
 
 /// Matches if the TestResult is Fail.
-/// Usage: expect result |> to' beFail
+/// Usage: expect result |> should beFail
 let beFail : Matcher<TestResult> =
     fun actual ->
         match actual with
@@ -32,7 +32,7 @@ let beFail : Matcher<TestResult> =
             MatchResult.Fail (msg, Some (box "Fail"), Some (box actual))
 
 /// Matches if the TestResult is Fail with a specific exception message.
-/// Usage: expect result |> to' (beFailWith "error message")
+/// Usage: expect result |> should (beFailWith "error message")
 let beFailWith (expectedMessage: string) : Matcher<TestResult> =
     fun actual ->
         match actual with
@@ -51,7 +51,7 @@ let beFailWith (expectedMessage: string) : Matcher<TestResult> =
             MatchResult.Fail (msg, Some (box expectedMessage), Some (box reason))
 
 /// Matches if the TestResult is Skipped.
-/// Usage: expect result |> to' beSkipped
+/// Usage: expect result |> should beSkipped
 let beSkipped : Matcher<TestResult> =
     fun actual ->
         match actual with
@@ -64,7 +64,7 @@ let beSkipped : Matcher<TestResult> =
             MatchResult.Fail (msg, Some (box "Skipped"), Some (box actual))
 
 /// Matches if the TestResult is Skipped with a specific reason.
-/// Usage: expect result |> to' (beSkippedWith "reason")
+/// Usage: expect result |> should (beSkippedWith "reason")
 let beSkippedWith (expectedReason: string) : Matcher<TestResult> =
     fun actual ->
         match actual with
@@ -80,7 +80,7 @@ let beSkippedWith (expectedReason: string) : Matcher<TestResult> =
             MatchResult.Fail (msg, Some (box expectedReason), Some (box actual))
 
 /// Matches if the TestNode is an Example with the expected description.
-/// Usage: expect node |> to' (beExample "test description")
+/// Usage: expect node |> should (beExample "test description")
 let beExample (expectedDesc: string) : Matcher<TestNode> =
     fun actual ->
         match actual with
@@ -96,7 +96,7 @@ let beExample (expectedDesc: string) : Matcher<TestNode> =
             MatchResult.Fail (msg, Some (box "Example"), Some (box "Hook"))
 
 /// Matches if the TestNode is a Group with the expected description.
-/// Usage: expect node |> to' (beGroup "group description")
+/// Usage: expect node |> should (beGroup "group description")
 let beGroup (expectedDesc: string) : Matcher<TestNode> =
     fun actual ->
         match actual with
@@ -112,7 +112,7 @@ let beGroup (expectedDesc: string) : Matcher<TestNode> =
             MatchResult.Fail (msg, Some (box "Group"), Some (box "Hook"))
 
 /// Matches if the TestNode is a Group with the expected number of children.
-/// Usage: expect node |> to' (beGroupWithChildren 3)
+/// Usage: expect node |> should (beGroupWithChildren 3)
 let beGroupWithChildren (expectedCount: int) : Matcher<TestNode> =
     fun actual ->
         match actual with
@@ -131,7 +131,7 @@ let beGroupWithChildren (expectedCount: int) : Matcher<TestNode> =
             MatchResult.Fail (msg, Some (box "Group"), Some (box "Hook"))
 
 /// Matches if the TestNode has the expected number of examples (recursively).
-/// Usage: expect node |> to' (haveExampleCount 5)
+/// Usage: expect node |> should (haveExampleCount 5)
 let haveExampleCount (expectedCount: int) : Matcher<TestNode> =
     fun actual ->
         let actualCount = TestNode.countExamples actual
@@ -142,7 +142,7 @@ let haveExampleCount (expectedCount: int) : Matcher<TestNode> =
             MatchResult.Fail (msg, Some (box expectedCount), Some (box actualCount))
 
 /// Matches if the TestNode has the expected number of groups (recursively).
-/// Usage: expect node |> to' (haveGroupCount 3)
+/// Usage: expect node |> should (haveGroupCount 3)
 let haveGroupCount (expectedCount: int) : Matcher<TestNode> =
     fun actual ->
         let actualCount = TestNode.countGroups actual

@@ -17,7 +17,7 @@ Phase 5 is now complete! FxSpec now supports skipping tests with `xit`/`pending`
 spec {
     yield describe "Feature" [
         it "works correctly" (fun () ->
-            expect 1 |> to' (equal 1)
+            expect 1 |> should (equal 1)
         )
         
         xit "not implemented yet" (fun () ->
@@ -61,23 +61,23 @@ spec {
     yield describe "Calculator" [
         fit "adds numbers" (fun () ->
             // ONLY THIS TEST RUNS
-            expect (1 + 1) |> to' (equal 2)
+            expect (1 + 1) |> should (equal 2)
         )
         
         it "subtracts numbers" (fun () ->
             // This is skipped because fit exists
-            expect (2 - 1) |> to' (equal 1)
+            expect (2 - 1) |> should (equal 1)
         )
     ]
     
     yield fdescribe "String operations" [
         // ALL TESTS IN THIS GROUP RUN
         it "concatenates" (fun () ->
-            expect ("hello" + " world") |> to' (equal "hello world")
+            expect ("hello" + " world") |> should (equal "hello world")
         )
         
         it "splits" (fun () ->
-            expect ("a,b".Split(',')) |> to' (haveLength 2)
+            expect ("a,b".Split(',')) |> should (haveLength 2)
         )
     ]
     
@@ -207,7 +207,7 @@ spec {
     yield describe "New Feature" [
         it "requirement 1" (fun () -> 
             // Implemented
-            expect true |> to' beTrue
+            expect true |> should beTrue
         )
         
         xit "requirement 2" (fun () ->
@@ -229,7 +229,7 @@ spec {
     yield describe "Bug Investigation" [
         fit "reproduces the bug" (fun () ->
             // Focus on this one failing test
-            expect buggyFunction() |> to' (equal expectedValue)
+            expect buggyFunction() |> should (equal expectedValue)
         )
         
         // All other tests are temporarily skipped

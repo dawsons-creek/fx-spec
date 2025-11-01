@@ -134,7 +134,7 @@ let matcherTests =
         describe "equal matcher" {
             it "passes when values are equal" {
                 let result = equal 42 42
-                expect result |> to' (equal Pass)
+                expect result |> should (equal Pass)
             }
             
             it "fails when values differ" {

@@ -56,13 +56,13 @@ spec {
         
         it "inserts a record" (fun () ->
             database.insert({ id = 1; name = "test" })
-            expect (database.count()) |> to' (equal 1)
+            expect (database.count()) |> should (equal 1)
         )
         
         it "updates a record" (fun () ->
             database.insert({ id = 1; name = "test" })
             database.update(1, { id = 1; name = "updated" })
-            expect (database.get(1).name) |> to' (equal "updated")
+            expect (database.get(1).name) |> should (equal "updated")
         )
     ]
 }

@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(dotnet build:*)",
+      "Bash(./run-tests.sh:*)",
+      "Bash(dotnet run:*)",
+      "WebSearch",
+      "Bash(uv run mkdocs:*)"
     ],
     "deny": [],
     "ask": []

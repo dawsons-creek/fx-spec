@@ -27,7 +27,7 @@ let testSimpleExample() =
 ```
 
 **Why not dogfood yet?**
-- No matchers yet (can't write `expect x |> to' (equal y)`)
+- No matchers yet (can't write `expect x |> should (equal y)`)
 - No runner yet (can't execute FxSpec tests)
 - Need basic functionality working first
 
@@ -72,13 +72,13 @@ let typeSpecs =
                 it "returns the description of an Example" (fun () ->
                     let example = Example("test example", fun () -> Pass)
                     expect (TestNode.description example) 
-                    |> to' (equal "test example")
+                    |> should (equal "test example")
                 )
                 
                 it "returns the description of a Group" (fun () ->
                     let group = Group("test group", [])
                     expect (TestNode.description group)
-                    |> to' (equal "test group")
+                    |> should (equal "test group")
                 )
             ]
         ]
@@ -201,33 +201,33 @@ let matcherSpecs =
             describe "equal" [
                 it "passes when values are equal" (fun () ->
                     let result = equal 42 42
-                    expect result |> to' (equal Pass)
+                    expect result |> should (equal Pass)
                 )
                 
                 it "fails when values differ" (fun () ->
                     let result = equal 42 99
-                    expect result |> to' (beFail)
+                    expect result |> should (beFail)
                 )
                 
                 it "provides helpful failure message" (fun () ->
                     let result = equal 42 99
                     match result with
                     | Fail (msg, _, _) ->
-                        expect msg |> to' (contain "Expected 42")
-                        expect msg |> to' (contain "but found 99")
+                        expect msg |> should (contain "Expected 42")
+                        expect msg |> should (contain "but found 99")
                     | _ -> failwith "Should have failed"
                 )
             ]
             
             describe "contain" [
                 it "passes when item is in collection" (fun () ->
-                    expect [1; 2; 3] |> to' (contain 2)
+                    expect [1; 2; 3] |> should (contain 2)
                 )
                 
                 it "fails when item is not in collection" (fun () ->
                     expect (fun () -> 
-                        expect [1; 2; 3] |> to' (contain 5)
-                    ) |> to' raiseException<AssertionException>
+                        expect [1; 2; 3] |> should (contain 5)
+                    ) |> should raiseException<AssertionException>
                 )
             ]
         ]

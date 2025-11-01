@@ -16,7 +16,7 @@ let mySpec =
     spec {
         describe "Calculator" {
             it "adds two numbers" {
-                expect (2 + 2) |> to' (equal 4)
+                expect (2 + 2) |> should (equal 4)
             }
         }
     }
@@ -26,7 +26,7 @@ let mySpec =
     spec.Run(
         spec.Describe("Calculator",
             spec.Yield("adds two numbers", fun () ->
-                expect (2 + 2) |> to' (equal 4)
+                expect (2 + 2) |> should (equal 4)
             )
         )
     )

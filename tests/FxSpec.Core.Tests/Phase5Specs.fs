@@ -16,14 +16,14 @@ let pendingSpecs =
                         yield xit "pending test" (fun () -> failwith "Should not run")
                     }
                     
-                    expect nodes |> to' (haveLength 1)
+                    expect nodes |> should (haveLength 1)
                     
                     // Execute the test
                     let result = match List.head nodes with
                                  | Example (_, test) -> test()
                                  | _ -> failwith "Expected Example"
                     
-                    expect (TestResult.isSkipped result) |> to' beTrue
+                    expect (TestResult.isSkipped result) |> should beTrue
                 )
             ]
             
@@ -33,14 +33,14 @@ let pendingSpecs =
                         yield pending "pending test" (fun () -> failwith "Should not run")
                     }
                     
-                    expect nodes |> to' (haveLength 1)
+                    expect nodes |> should (haveLength 1)
                     
                     // Execute the test
                     let result = match List.head nodes with
                                  | Example (_, test) -> test()
                                  | _ -> failwith "Expected Example"
                     
-                    expect (TestResult.isSkipped result) |> to' beTrue
+                    expect (TestResult.isSkipped result) |> should beTrue
                 )
             ]
         ]
@@ -57,11 +57,11 @@ let focusedSpecs =
                         yield fit "focused test" (fun () -> ())
                     }
                     
-                    expect nodes |> to' (haveLength 1)
+                    expect nodes |> should (haveLength 1)
                     
                     match List.head nodes with
                     | FocusedExample (desc, _) -> 
-                        expect desc |> to' (equal "focused test")
+                        expect desc |> should (equal "focused test")
                     | _ -> failwith "Expected FocusedExample"
                 )
             ]
@@ -75,12 +75,12 @@ let focusedSpecs =
                         ]
                     }
                     
-                    expect nodes |> to' (haveLength 1)
+                    expect nodes |> should (haveLength 1)
                     
                     match List.head nodes with
                     | FocusedGroup (desc, _, children) ->
-                        expect desc |> to' (equal "focused group")
-                        expect children |> to' (haveLength 2)
+                        expect desc |> should (equal "focused group")
+                        expect children |> should (haveLength 2)
                     | _ -> failwith "Expected FocusedGroup"
                 )
             ]
@@ -93,11 +93,11 @@ let focusedSpecs =
                         ]
                     }
 
-                    expect nodes |> to' (haveLength 1)
+                    expect nodes |> should (haveLength 1)
 
                     match List.head nodes with
                     | FocusedGroup (desc, _, _) ->
-                        expect desc |> to' (equal "focused context")
+                        expect desc |> should (equal "focused context")
                     | _ -> failwith "Expected FocusedGroup"
                 )
             ]
@@ -112,17 +112,17 @@ let focusedFilteringSpecs =
             context "hasFocused" [
                 it "returns true for FocusedExample" (fun () ->
                     let node = FocusedExample ("test", fun () -> TestResult.Pass)
-                    expect (TestNode.hasFocused node) |> to' beTrue
+                    expect (TestNode.hasFocused node) |> should beTrue
                 )
 
                 it "returns true for FocusedGroup" (fun () ->
                     let node = FocusedGroup ("group", GroupHooks.empty, [])
-                    expect (TestNode.hasFocused node) |> to' beTrue
+                    expect (TestNode.hasFocused node) |> should beTrue
                 )
 
                 it "returns false for regular Example" (fun () ->
                     let node = Example ("test", fun () -> TestResult.Pass)
-                    expect (TestNode.hasFocused node) |> to' beFalse
+                    expect (TestNode.hasFocused node) |> should beFalse
                 )
 
                 it "returns true for Group containing focused tests" (fun () ->
@@ -130,7 +130,7 @@ let focusedFilteringSpecs =
                         FocusedExample ("focused", fun () -> TestResult.Pass)
                         Example ("regular", fun () -> TestResult.Pass)
                     ])
-                    expect (TestNode.hasFocused node) |> to' beTrue
+                    expect (TestNode.hasFocused node) |> should beTrue
                 )
             ]
 
@@ -141,7 +141,7 @@ let focusedFilteringSpecs =
                         Example ("test 2", fun () -> TestResult.Pass)
                     ]
                     let filtered = TestNode.filterFocused nodes
-                    expect filtered |> to' (haveLength 2)
+                    expect filtered |> should (haveLength 2)
                 )
 
                 it "filters to only focused tests when they exist" (fun () ->
@@ -150,7 +150,7 @@ let focusedFilteringSpecs =
                         Example ("regular", fun () -> TestResult.Pass)
                     ]
                     let filtered = TestNode.filterFocused nodes
-                    expect filtered |> to' (haveLength 1)
+                    expect filtered |> should (haveLength 1)
                 )
             ]
         ]

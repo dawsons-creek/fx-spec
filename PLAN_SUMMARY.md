@@ -23,7 +23,7 @@ We have created a comprehensive plan including:
 │                         USER CODE                            │
 │  spec {                                                      │
 │    describe "Feature" {                                      │
-│      it "works" { expect x |> to' (equal y) }               │
+│      it "works" { expect x |> should (equal y) }               │
 │    }                                                         │
 │  }                                                           │
 └────────────────────┬────────────────────────────────────────┘
@@ -64,7 +64,7 @@ We have created a comprehensive plan including:
                      ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                 MATCHER SYSTEM                               │
-│  expect actual |> to' matcher                               │
+│  expect actual |> should matcher                               │
 │  - Type-safe matchers                                       │
 │  - MatchResult DU (Pass | Fail)                             │
 │  - Rich failure data                                        │
@@ -253,19 +253,19 @@ let userSpecs =
             context "with valid email" {
                 it "creates user successfully" {
                     let user = get "user" :?> User
-                    expect user.Email |> to' (equal "john@example.com")
+                    expect user.Email |> should (equal "john@example.com")
                 }
                 
                 it "sends welcome email" {
                     let user = get "user" :?> User
-                    expect (emailSent user.Email) |> to' (equal true)
+                    expect (emailSent user.Email) |> should (equal true)
                 }
             }
             
             context "with invalid email" {
                 it "raises validation error" {
                     expect (fun () -> User.create "invalid")
-                    |> to' raiseException<ValidationException>
+                    |> should raiseException<ValidationException>
                 }
             }
         }

@@ -111,7 +111,7 @@ let mySpecs =
         describe "Feature Name" [
             context "when condition" [
                 it "behaves this way" (fun () ->
-                    expect actual |> to' (equal expected)
+                    expect actual |> should (equal expected)
                 )
             ]
         ]

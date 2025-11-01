@@ -38,14 +38,14 @@ let hooksExample =
             context "when newly created" [
                 it "is empty" (fun () ->
                     let stack = Stack<int>()
-                    expect stack.Count |> to' (equal 0)
+                    expect stack.Count |> should (equal 0)
                 )
 
                 it "can have items pushed to it" (fun () ->
                     let stack = Stack<int>()
                     stack.Push(42)
-                    expect stack.Count |> to' (equal 1)
-                    expect stack.Peek() |> to' (equal 42)
+                    expect stack.Count |> should (equal 1)
+                    expect stack.Peek() |> should (equal 42)
                 )
             ]
 
@@ -66,18 +66,18 @@ let hooksExample =
                 )
 
                 it "has items from beforeEach hook" (fun () ->
-                    expect sharedStack.Count |> to' (equal 2)
+                    expect sharedStack.Count |> should (equal 2)
                 )
 
                 it "pops items in LIFO order" (fun () ->
-                    expect (sharedStack.Pop()) |> to' (equal 20)
-                    expect (sharedStack.Pop()) |> to' (equal 10)
+                    expect (sharedStack.Pop()) |> should (equal 20)
+                    expect (sharedStack.Pop()) |> should (equal 10)
                 )
 
                 it "can push additional items" (fun () ->
                     sharedStack.Push(30)
-                    expect sharedStack.Count |> to' (equal 3)
-                    expect sharedStack.Peek() |> to' (equal 30)
+                    expect sharedStack.Count |> should (equal 3)
+                    expect sharedStack.Peek() |> should (equal 30)
                 )
             ]
 
@@ -90,7 +90,7 @@ let hooksExample =
                 )
 
                 it "has value from outer hook" (fun () ->
-                    expect outerValue |> to' (equal 1)
+                    expect outerValue |> should (equal 1)
                 )
 
                 context "inner context" [
@@ -101,12 +101,12 @@ let hooksExample =
 
                     it "has value from both outer and inner hooks" (fun () ->
                         // Outer hook sets to 1, inner hook adds 10
-                        expect outerValue |> to' (equal 11)
+                        expect outerValue |> should (equal 11)
                     )
 
                     it "hooks run for each test" (fun () ->
                         // Fresh execution: outer sets 1, inner adds 10
-                        expect outerValue |> to' (equal 11)
+                        expect outerValue |> should (equal 11)
                     )
                 ]
             ]

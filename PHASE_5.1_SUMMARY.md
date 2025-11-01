@@ -66,20 +66,20 @@ Example:
 ```fsharp
 context "equal" [
     it "passes when values are equal" (fun () ->
-        expect 42 |> to' (equal 42)
+        expect 42 |> should (equal 42)
     )
     
     it "fails when values are not equal" (fun () ->
-        let test () = expect 42 |> to' (equal 43)
-        expect test |> to' raiseException<AssertionException>
+        let test () = expect 42 |> should (equal 43)
+        expect test |> should raiseException<AssertionException>
     )
     
     it "works with strings" (fun () ->
-        expect "hello" |> to' (equal "hello")
+        expect "hello" |> should (equal "hello")
     )
     
     it "works with lists" (fun () ->
-        expect [1; 2; 3] |> to' (equal [1; 2; 3])
+        expect [1; 2; 3] |> should (equal [1; 2; 3])
     )
 ]
 ```

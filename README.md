@@ -7,6 +7,15 @@
 [![.NET](https://img.shields.io/badge/.NET-8.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![F#](https://img.shields.io/badge/F%23-8.0+-blue.svg)](https://fsharp.org/)
 
+## 📚 Documentation
+
+**[View the complete documentation →](https://fxspec.github.io/fx-spec)**
+
+- [Quick Start Guide](https://fxspec.github.io/fx-spec/quick-start)
+- [DSL API Reference](https://fxspec.github.io/fx-spec/reference/dsl-api)
+- [Matchers Reference](https://fxspec.github.io/fx-spec/reference/matchers/core)
+- [Contributing Guide](https://fxspec.github.io/fx-spec/community/contributing)
+
 ## Why FxSpec?
 
 FxSpec combines the **elegant, human-readable syntax of RSpec** with the **compile-time safety and functional purity of F#**. It's not just a port—it's a conceptual enhancement that leverages F#'s unique strengths.
@@ -14,29 +23,30 @@ FxSpec combines the **elegant, human-readable syntax of RSpec** with the **compi
 ### The Vision
 
 ```fsharp
-open FxSpec
+open FxSpec.Core
+open FxSpec.Matchers
 
 [<Tests>]
 let calculatorSpecs =
     spec {
-        describe "Calculator" {
-            context "when adding numbers" {
-                it "adds two positive numbers" {
-                    expect (2 + 2) |> to' (equal 4)
-                }
-                
-                it "handles negative numbers" {
-                    expect (-1 + -1) |> to' (equal -2)
-                }
-            }
-            
-            context "when dividing" {
-                it "raises exception for division by zero" {
-                    expect (fun () -> 10 / 0 |> ignore)
-                    |> to' raiseException<DivideByZeroException>
-                }
-            }
-        }
+        yield describe "Calculator" [
+            context "when adding numbers" [
+                it "adds two positive numbers" (fun () ->
+                    expect (2 + 2) |> should (equal 4)
+                )
+
+                it "handles negative numbers" (fun () ->
+                    expect (-1 + -1) |> should (equal -2)
+                )
+            ]
+
+            context "when dividing" [
+                it "raises exception for division by zero" (fun () ->
+                    let action () = 10 / 0
+                    expect action |> should raiseException
+                )
+            ]
+        ]
     }
 ```
 
@@ -100,16 +110,17 @@ dotnet add package FxSpec
 ### Write Your First Test
 
 ```fsharp
-open FxSpec
+open FxSpec.Core
+open FxSpec.Matchers
 
 [<Tests>]
 let myFirstSpec =
     spec {
-        describe "My Feature" {
-            it "works correctly" {
-                expect true |> to' (equal true)
-            }
-        }
+        yield describe "My Feature" [
+            it "works correctly" (fun () ->
+                expect true |> should beTrue
+            )
+        ]
     }
 ```
 
@@ -126,15 +137,15 @@ dotnet fspec MyTests.dll
 Organize tests hierarchically:
 
 ```fsharp
-describe "User" {
-    context "when newly created" {
-        it "has no posts" { ... }
-    }
-    
-    context "when activated" {
-        it "can log in" { ... }
-    }
-}
+describe "User" [
+    context "when newly created" [
+        it "has no posts" (fun () -> ...)
+    ]
+
+    context "when activated" [
+        it "can log in" (fun () -> ...)
+    ]
+]
 ```
 
 ### 2. Expectations & Matchers
@@ -142,29 +153,34 @@ describe "User" {
 Fluent, type-safe assertions:
 
 ```fsharp
-expect actual |> to' (equal expected)
-expect list |> to' (contain item)
-expect value |> to' beNil
-expect option |> to' (beSome 42)
-expect result |> to' (beOk "success")
+expect actual |> should (equal expected)
+expect list |> should (contain item)
+expect value |> should beNil
+expect option |> should (beSome 42)
+expect result |> should (beOk "success")
 ```
 
-### 3. State Management
+### 3. Hooks & Setup
 
-Lazy-loaded variables and hooks:
+Setup and teardown with hooks:
 
 ```fsharp
-describe "Database" {
-    let' "connection" (fun () -> openConnection())
-    
-    before (fun () -> setupDatabase())
-    after (fun () -> cleanupDatabase())
-    
-    it "saves records" {
-        let conn = get "connection" :?> Connection
-        // Test using connection
-    }
-}
+describe "Database" [
+    let mutable connection = null
+
+    beforeEach (fun () ->
+        connection <- Database.connect()
+    )
+
+    afterEach (fun () ->
+        connection.Dispose()
+    )
+
+    it "saves records" (fun () ->
+        let result = connection.Save(record)
+        expect result |> should beTrue
+    )
+]
 ```
 
 ### 4. Custom Matchers
@@ -177,22 +193,26 @@ let beEven : Matcher<int> =
         if actual % 2 = 0 then Pass
         else Fail($"{actual} is not even", None, Some (box actual))
 
-expect 4 |> to' beEven
+expect 4 |> should beEven
 ```
 
 ## Advanced Features
 
 ### Request Specs (API Testing)
 
+> **Note:** Request specs are a planned feature for future releases.
+
 ```fsharp
+// Future feature - not yet implemented
 requestSpec {
-    describe "Users API" {
-        it "creates a user" {
-            post "/api/users"
-            |> withJson {| Name = "John" |}
-            |> expect |> to' (haveStatusCode 201)
-        }
-    }
+    yield describe "Users API" [
+        it "creates a user" (fun () ->
+            let response =
+                post "/api/users"
+                |> withJson {| Name = "John" |}
+            expect response |> should (haveStatusCode 201)
+        )
+    ]
 }
 ```
 
@@ -239,33 +259,35 @@ Benefits:
 - Composable and testable
 - Impossible to forget failure messages
 
-### Lexical Scoping with Scope Stack
-
-Correctly implements RSpec's scoping semantics:
-- `let'` variables are lazily evaluated
-- Memoized per test execution
-- Hooks execute in correct order
-- Nested contexts inherit outer scope
-
 ## Project Status
 
-🚧 **Currently in Planning Phase** 🚧
+✅ **MVP Complete!** ✅
 
-This project is in active design and planning. We're building the best F# BDD framework by:
+FxSpec is a fully functional F# BDD testing framework with:
 
-1. ✅ Comprehensive architectural design
-2. ✅ Detailed implementation plan
-3. ✅ Technical specifications
-4. 🔄 Core implementation (starting soon)
-5. ⏳ Community feedback and iteration
+1. ✅ Complete DSL implementation (spec, describe, it, context)
+2. ✅ Comprehensive matcher library (50+ matchers)
+3. ✅ Test discovery and execution
+4. ✅ Beautiful console output with Spectre.Console
+5. ✅ Hooks (beforeEach, afterEach, beforeAll, afterAll)
+6. ✅ Focused and pending tests (fit, fdescribe, xit, pending)
+7. ✅ Self-hosting (FxSpec tests itself - 166 tests passing!)
+
+**Ready for:** Early adopters and feedback
 
 ## Documentation
 
-- **[Implementation Plan](IMPLEMENTATION_PLAN.md)** - Detailed roadmap and phases
-- **[Technical Architecture](TECHNICAL_ARCHITECTURE.md)** - Deep dive into design decisions
-- **[Quick Start Guide](QUICKSTART.md)** - Get started quickly
-- **[FxSpec vs RSpec](FXSPEC_VS_RSPEC.md)** - Detailed comparison
-- **[Original Design Doc](docs/Designing%20an%20F%23%20RSpec%20Clone.md)** - Architectural blueprint
+📚 **[Complete Documentation](https://fxspec.github.io/fx-spec)** (Material for MkDocs)
+
+- **[Quick Start Guide](docs/quick-start.md)** - Get started in 5 minutes
+- **[DSL API Reference](docs/reference/dsl-api.md)** - Complete DSL documentation
+- **[Matchers Reference](docs/reference/matchers/core.md)** - All available matchers
+- **[Contributing Guide](docs/community/contributing.md)** - How to contribute
+
+**Design Documents:**
+- [Implementation Plan](IMPLEMENTATION_PLAN.md) - Detailed roadmap and phases
+- [Technical Architecture](TECHNICAL_ARCHITECTURE.md) - Deep dive into design decisions
+- [FxSpec vs RSpec](FXSPEC_VS_RSPEC.md) - Detailed comparison
 
 ## Roadmap
 
@@ -309,18 +331,24 @@ This project is in active design and planning. We're building the best F# BDD fr
 - [x] Automatic focused filtering
 - [x] Skip reason display
 - [x] Legacy test cleanup
-- [ ] beforeEach/afterEach hooks (deferred to Phase 6)
-- [ ] beforeAll/afterAll hooks (deferred to Phase 6)
 
-### Phase 4: Formatters (Weeks 5-6)
-- [ ] Spectre.Console integration
-- [ ] Documentation formatter
-- [ ] Failure messages with diffs
+### Phase 6: Hooks & Code Quality ✅
+- [x] beforeEach/afterEach hooks
+- [x] beforeAll/afterAll hooks
+- [x] Code quality refactoring
+- [x] Input validation for matchers
+- [x] Extract magic numbers to constants
+- [x] Functional refactoring (eliminate mutable variables)
 
-### Phase 5: Extensions (Weeks 6-8)
-- [ ] Request specs
-- [ ] Pending/focused tests
-- [ ] Advanced features
+## Future Enhancements
+
+### Planned Features
+- [ ] Request specs (API testing)
+- [ ] Parallel test execution
+- [ ] Custom formatters API
+- [ ] State management with `let'` and `subject` (experimental)
+- [ ] Property-based testing integration
+- [ ] Code coverage integration
 
 ## Contributing
 
