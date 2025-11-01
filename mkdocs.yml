@@ -165,6 +165,7 @@ nav:
       - Collections: reference/matchers/collections.md
       - Strings: reference/matchers/strings.md
       - Numeric: reference/matchers/numeric.md
+      - Result: reference/matchers/result.md
       - Exceptions: reference/matchers/exceptions.md
 
   - Community:

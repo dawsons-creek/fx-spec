@@ -189,6 +189,216 @@ it "adds two numbers" (fun () ->
 
 ---
 
+### itAsync
+
+**Type:** `string -> Async<unit> -> TestNode`
+
+Defines an asynchronous test case that runs in an async workflow.
+
+**Parameters:**
+
+- `description` - String describing what the test does
+- `test` - Async computation that performs assertions
+
+**Usage:**
+
+```fsharp
+itAsync "description" (async {
+    // async test code
+})
+```
+
+**Example:**
+
+```fsharp
+itAsync "fetches user data" (async {
+    let! user = getUserAsync 123
+    expectOption(user).toBeSome()
+})
+```
+
+**With Task Interop:**
+
+```fsharp
+itAsync "calls HTTP API" (async {
+    use client = new HttpClient()
+    let! response = client.GetAsync("https://api.example.com/users") |> Async.AwaitTask
+    expectHttp(response).toHaveStatusOk()
+})
+```
+
+**With Result Types:**
+
+```fsharp
+itAsync "validates async operation" (async {
+    let! result = processDataAsync(data)
+    expectResult(result).toBeOk()
+})
+```
+
+**Notes:**
+
+- Use for tests that perform I/O operations (database, HTTP, file system)
+- Test runs using `Async.RunSynchronously` internally
+- Can use `let!` to await async operations
+- Can use `Async.AwaitTask` to work with .NET Task-based APIs
+- Compatible with all FxSpec matchers and hooks
+- Can mix `it` and `itAsync` in the same test suite
+
+---
+
+## Async Testing Patterns
+
+### HTTP API Testing
+
+```fsharp
+open System.Net.Http
+open FxSpec.Http
+
+describe "User API" [
+    let client = new HttpClient(BaseAddress = Uri("http://localhost:5000"))
+    
+    itAsync "creates user successfully" (async {
+        let json = """{"name":"John","email":"john@example.com"}"""
+        let content = new StringContent(json, Encoding.UTF8, "application/json")
+        let! response = client.PostAsync("/api/users", content) |> Async.AwaitTask
+        
+        expectHttp(response).toHaveStatusCreated()
+        expectHttp(response).toHaveJsonBody({| id = 1; name = "John" |})
+    })
+    
+    itAsync "retrieves user by ID" (async {
+        let! response = client.GetAsync("/api/users/1") |> Async.AwaitTask
+        expectHttp(response).toHaveStatusOk()
+    })
+]
+```
+
+### Database Operations
+
+```fsharp
+describe "User Repository" [
+    let connectionString = "Server=localhost;Database=test"
+    
+    itAsync "saves user to database" (async {
+        use! connection = openConnectionAsync(connectionString)
+        let! result = repository.SaveAsync(connection, newUser)
+        expectResult(result).toBeOk()
+    })
+    
+    itAsync "retrieves user from database" (async {
+        use! connection = openConnectionAsync(connectionString)
+        let! user = repository.GetAsync(connection, userId)
+        expectOption(user).toBeSome()
+    })
+]
+```
+
+### Async Result Patterns
+
+```fsharp
+describe "Async Result Workflows" [
+    itAsync "handles successful async operation" (async {
+        let! result = fetchDataAsync(validId)
+        expectResult(result).toBeOk()
+    })
+    
+    itAsync "handles async errors" (async {
+        let! result = fetchDataAsync(invalidId)
+        expectResult(result).toBeError()
+    })
+    
+    itAsync "chains async Result operations" (async {
+        let! result = 
+            validateInputAsync(data)
+            |> AsyncResult.bind processDataAsync
+            |> AsyncResult.bind saveToDbAsync
+        
+        expectResult(result).toBeOk()
+    })
+]
+```
+
+### Parallel Async Operations
+
+```fsharp
+describe "Parallel Operations" [
+    itAsync "runs multiple operations in parallel" (async {
+        let! results = 
+            [1..10]
+            |> List.map (fun id -> fetchUserAsync id)
+            |> Async.Parallel
+        
+        expectSeq(results).toHaveLength(10)
+    })
+    
+    itAsync "handles parallel failures gracefully" (async {
+        let operations = [
+            fetchUserAsync 1
+            fetchUserAsync 999  // This will fail
+            fetchUserAsync 3
+        ]
+        
+        let! results = Async.Parallel operations
+        expectSeq(results |> Array.filter Result.isOk).toHaveLength(2)
+    })
+]
+```
+
+### File I/O
+
+```fsharp
+describe "File Operations" [
+    itAsync "reads file asynchronously" (async {
+        let! content = File.ReadAllTextAsync("test.txt") |> Async.AwaitTask
+        expectStr(content).toContain("expected text")
+    })
+    
+    itAsync "writes file asynchronously" (async {
+        let! _ = File.WriteAllTextAsync("output.txt", "test") |> Async.AwaitTask
+        let! content = File.ReadAllTextAsync("output.txt") |> Async.AwaitTask
+        expectStr(content).toEqual("test")
+    })
+]
+```
+
+### Async Hooks
+
+Hooks can be async-aware when working with async tests:
+
+```fsharp
+describe "Integration Tests" [
+    let mutable client = Unchecked.defaultof<HttpClient>
+    
+    beforeEach (fun () ->
+        client <- new HttpClient(BaseAddress = Uri("http://localhost:5000"))
+    )
+    
+    afterEach (fun () ->
+        client.Dispose()
+    )
+    
+    itAsync "test 1" (async {
+        let! response = client.GetAsync("/health") |> Async.AwaitTask
+        expectHttp(response).toHaveStatusOk()
+    })
+    
+    itAsync "test 2" (async {
+        let! response = client.GetAsync("/api/users") |> Async.AwaitTask
+        expectHttp(response).toHaveStatusOk()
+    })
+]
+```
+
+**Notes on Async Testing:**
+- `itAsync` internally uses `Async.RunSynchronously`, so tests still run synchronously at the top level
+- Use `Async.AwaitTask` to convert .NET Tasks to F# Async
+- Async tests can be focused with `fitAsync` or skipped with `xitAsync`
+- Async tests work with all lifecycle hooks (`beforeEach`, `afterEach`, etc.)
+- Mix sync and async tests freely in the same suite
+
+---
+
 ## Focus & Pending
 
 ### fit
@@ -313,14 +523,14 @@ xit "not ready yet" (fun () ->
 
 ```fsharp
 describe "Feature" [
-        it "working test" (fun () ->
-            expectBool(true).toBeTrue()
-        )
+    it "working test" (fun () ->
+        expectBool(true).toBeTrue()
+    )
 
-        xit "broken test" (fun () ->  // Skipped
-            expectBool(false).toBeTrue()
-        )
-    ]
+    xit "broken test" (fun () ->  // Skipped
+        expectBool(false).toBeTrue()
+    )
+]
 ```
 
 **Output:**
@@ -337,6 +547,49 @@ Feature
 - Test function is never executed
 - Skipped tests are reported in the summary
 - Better than commenting out tests (maintains test count)
+
+---
+
+### xitAsync
+
+**Type:** `string -> Async<unit> -> TestNode`
+
+Excluded async test - skips this async test.
+
+**Parameters:**
+
+- `description` - String describing the test
+- `test` - Async computation (not executed)
+
+**Usage:**
+
+```fsharp
+xitAsync "not ready yet" (async {
+    // this code doesn't run
+})
+```
+
+**Example:**
+
+```fsharp
+describe "API Tests" [
+    itAsync "working test" (async {
+        let! response = client.GetAsync("/api/users") |> Async.AwaitTask
+        expectHttp(response).toHaveStatusOk()
+    })
+    
+    xitAsync "broken async test" (async {  // Skipped
+        let! data = failingOperationAsync()
+        expectResult(data).toBeOk()
+    })
+]
+```
+
+**Notes:**
+
+- Same behavior as `xit` but for async tests
+- Use for temporarily disabling broken async tests
+- Test computation is never executed
 
 ---
 
