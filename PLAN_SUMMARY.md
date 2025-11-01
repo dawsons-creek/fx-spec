@@ -90,7 +90,7 @@ We have created a comprehensive plan including:
 
 ## 📋 Implementation Phases
 
-### Phase 1: Core DSL (Weeks 1-2) 🔵
+### Phase 1: Core DSL (Weeks 1-2) ✅
 **Goal**: Build the foundational computation expression
 
 **Key Deliverables**:
@@ -100,11 +100,11 @@ We have created a comprehensive plan including:
 - `let'`, `subject`, `before`, `after` state management
 - Unit tests for tree building
 
-**Success Criteria**: Can write nested specs that build correct tree structure
+**Success Criteria**: Can write nested specs that build correct tree structure ✅
 
 ---
 
-### Phase 2: Assertion System (Weeks 2-3) 🟢
+### Phase 2: Assertion System (Weeks 2-3) ✅
 **Goal**: Type-safe matcher system
 
 **Key Deliverables**:
@@ -114,22 +114,39 @@ We have created a comprehensive plan including:
 - Numeric and collection matchers
 - Custom matcher API and documentation
 
-**Success Criteria**: Comprehensive matcher library with full test coverage
+**Success Criteria**: Comprehensive matcher library with full test coverage ✅
 
 ---
 
-### Phase 3: Test Runner (Weeks 3-5) 🟡
+### Phase 3: Test Runner (Weeks 3-5) 🎯
+
+#### Phase 3.1: Dogfooding (Current)
+**Goal**: Validate framework by using it to test itself
+
+**Key Deliverables**:
+- Rewrite TypesTests using FxSpec DSL and matchers
+- Rewrite SpecBuilderTests using FxSpec DSL and matchers
+- Create custom matchers for testing FxSpec internals
+- Validate all tests pass
+
+**Success Criteria**: FxSpec tests itself using its own DSL and matchers
+
+---
+
+#### Phase 3.2: Test Execution ✅
 **Goal**: Discovery, execution, and CLI
 
 **Key Deliverables**:
 - `TestsAttribute` for discovery
 - Reflection-based assembly scanning
-- Scope stack with let' caching
 - Recursive execution engine
 - `TestResultNode` tree
 - CLI with Argu (filtering, formatting options)
+- Exit codes (0 for success, 1 for failures)
 
-**Success Criteria**: Can discover and execute tests from compiled assembly
+**Success Criteria**: Can discover and execute tests from compiled assembly ✅
+
+**Note**: Scope stack with `let'` caching deferred to Phase 5 (not needed for basic functionality)
 
 ---
 

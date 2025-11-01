@@ -7,13 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="FxSpecMatchers.fs" />
     <Compile Include="TypesTests.fs" />
+    <Compile Include="TypesSpecs.fs" />
     <Compile Include="SpecBuilderTests.fs" />
+    <Compile Include="SpecBuilderSpecs.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\FxSpec.Core\FxSpec.Core.fsproj" />
+    <ProjectReference Include="..\..\src\FxSpec.Matchers\FxSpec.Matchers.fsproj" />
   </ItemGroup>
 
 </Project>

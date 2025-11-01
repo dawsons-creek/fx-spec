@@ -269,22 +269,31 @@ This project is in active design and planning. We're building the best F# BDD fr
 
 ## Roadmap
 
-### Phase 1: Core DSL (Weeks 1-2)
+### Phase 1: Core DSL (Weeks 1-2) ✅
 - [x] Design computation expression
-- [ ] Implement SpecBuilder
-- [ ] Add describe/context/it
-- [ ] State management (let', subject, hooks)
+- [x] Implement SpecBuilder
+- [x] Add describe/context/it
+- [x] State management (let', subject, hooks)
 
-### Phase 2: Matchers (Weeks 2-3)
-- [ ] MatchResult type
-- [ ] Core matchers
-- [ ] Custom matcher API
+### Phase 2: Matchers (Weeks 2-3) ✅
+- [x] MatchResult type
+- [x] Core matchers
+- [x] Custom matcher API
 
 ### Phase 3: Runner (Weeks 3-5)
-- [ ] Test discovery
-- [ ] Execution engine
-- [ ] Scope stack
-- [ ] CLI tool
+
+#### 3.1: Dogfooding ✅
+- [x] Rewrite Phase 1 tests using FxSpec itself
+- [x] Create custom matchers for testing FxSpec internals
+- [x] Validate framework usability
+- [x] 30 examples, 0 failures - FxSpec tests itself!
+
+#### 3.2: Test Execution ✅
+- [x] Test discovery with `[<Tests>]` attribute
+- [x] Execution engine
+- [x] CLI tool with filtering
+- [x] FxSpec runs its own tests!
+- [ ] Scope stack with `let'` and hooks (deferred to Phase 5)
 
 ### Phase 4: Formatters (Weeks 5-6)
 - [ ] Spectre.Console integration

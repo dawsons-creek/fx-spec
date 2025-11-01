@@ -111,18 +111,71 @@ type MatchResult<'a> =
 - `FxSpec.Matchers` library
 - Comprehensive matcher tests
 - Documentation for custom matcher authoring
-- **🎯 Rewrite Phase 1 tests using FxSpec itself (dogfooding begins!)**
 
 ### Phase 3: Test Runner (Week 3-5)
 
 **Goal**: Build discovery, execution, and result aggregation
 
-#### 3.1 Test Discovery
+#### 3.1 Dogfooding - Rewrite Phase 1 Tests Using FxSpec
+
+**Goal**: Validate the framework by using it to test itself
+
+This is a critical milestone where we prove FxSpec is actually usable and pleasant to work with. We'll rewrite all Phase 1 tests using the FxSpec DSL and matchers we've built.
+
+**What to rewrite**:
+- `tests/FxSpec.Core.Tests/TypesTests.fs` - Tests for core types and helper functions
+- `tests/FxSpec.Core.Tests/SpecBuilderTests.fs` - Tests for the spec builder DSL
+
+**Approach**:
+1. Keep existing tests as regression suite initially
+2. Create new FxSpec-based test files alongside old ones
+3. Validate both produce same results
+4. Once confident, replace old tests with new ones
+
+**Example transformation**:
+
+```fsharp
+// OLD: Plain F# with manual assertions
+let testSimpleExample() =
+    let nodes = spec { yield it "test" (fun () -> ()) }
+    match nodes with
+    | [Example(desc, _)] when desc = "test" -> ()
+    | _ -> failwith "Should create Example node"
+
+// NEW: Using FxSpec itself
+let specBuilderSpecs =
+    spec {
+        describe "SpecBuilder" {
+            describe "simple examples" {
+                it "creates an Example node" {
+                    let nodes = spec { yield it "test" (fun () -> ()) }
+                    expect nodes |> to' (haveLength 1)
+                    expect (List.head nodes) |> to' (beExample "test")
+                }
+            }
+        }
+    }
+```
+
+**Benefits**:
+- ✅ Validates the framework works in real-world usage
+- ✅ Ensures the DSL is actually pleasant to use
+- ✅ Catches usability issues early
+- ✅ Serves as comprehensive examples for users
+- ✅ Builds confidence in the framework
+
+**Deliverables**:
+- Rewritten test files using FxSpec DSL
+- Custom matchers for testing FxSpec internals (e.g., `beExample`, `beGroup`)
+- Validation that all tests still pass
+- **🎯 FxSpec now tests itself using its own DSL and matchers!**
+
+#### 3.2 Test Discovery
 - `TestsAttribute` for marking test suites
 - Reflection-based assembly scanning
 - Find all `TestNode` values with attribute
 
-#### 3.2 Execution Context
+#### 3.3 Execution Context
 ```fsharp
 type ExecutionScope = {
     LetBindings: Map<string, Lazy<obj>>
