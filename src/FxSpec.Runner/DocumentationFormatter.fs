@@ -5,6 +5,12 @@ open System
 open FxSpec.Core
 open Spectre.Console
 
+/// Duration threshold (ms) for fast tests (shown in grey)
+let private fastTestThresholdMs = 10.0
+
+/// Duration threshold (ms) for medium tests (shown in yellow)
+let private mediumTestThresholdMs = 100.0
+
 /// Builds the full path to a test (e.g., "SpecBuilder > simple examples > creates a single Example node")
 let rec buildTestPath (path: string list) (node: TestResultNode) : (string * TestResult * TimeSpan) list =
     match node with
@@ -30,11 +36,11 @@ let getResultSymbol = function
 /// Formats duration with color based on speed
 let formatDuration (duration: TimeSpan) =
     let ms = duration.TotalMilliseconds
-    let color = 
-        if ms < 10.0 then Color.Grey
-        elif ms < 100.0 then Color.Yellow
+    let color =
+        if ms < fastTestThresholdMs then Color.Grey
+        elif ms < mediumTestThresholdMs then Color.Yellow
         else Color.Red
-    
+
     Markup(sprintf "[%s](%dms)[/]" (color.ToString().ToLower()) (int ms))
 
 /// Renders a single test result line
@@ -130,14 +136,14 @@ let rec renderNode (indent: int) (pathSoFar: string list) (node: TestResultNode)
 let createSummaryTable (passed: int) (failed: int) (skipped: int) (duration: TimeSpan) =
     let table = Table()
     table.Border <- TableBorder.Rounded
-    table.BorderColor(if failed > 0 then Color.Red else Color.Green)
+    table.BorderColor(if failed > 0 then Color.Red else Color.Green) |> ignore
     
     table.AddColumn(TableColumn("[bold]Total[/]").Centered()) |> ignore
     table.AddColumn(TableColumn("[bold green]Passed[/]").Centered()) |> ignore
     table.AddColumn(TableColumn("[bold red]Failed[/]").Centered()) |> ignore
     table.AddColumn(TableColumn("[bold yellow]Skipped[/]").Centered()) |> ignore
     table.AddColumn(TableColumn("[bold]Duration[/]").Centered()) |> ignore
-    
+
     let total = passed + failed + skipped
     table.AddRow(
         Markup(sprintf "[bold]%d[/]" total),

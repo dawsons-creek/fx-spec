@@ -17,23 +17,17 @@ module CoreMatchers =
     
     /// Matches if the actual value is null.
     /// Usage: expect actual |> to' beNil
-    let beNil<'a when 'a : null> : Matcher<'a> =
-        fun actual ->
-            if obj.ReferenceEquals(actual, null) then
-                Pass
-            else
-                let msg = "Expected null, but found non-null value"
-                Fail (msg, Some null, Some (box actual))
+    let beNil<'a when 'a : null> : Matcher<'a> = function
+        | null -> Pass
+        | actual -> Fail ("Expected null, but found non-null value",
+                         Some null, Some (box actual))
     
     /// Matches if the actual value is not null.
     /// Usage: expect actual |> to' notBeNil
-    let notBeNil<'a when 'a : null> : Matcher<'a> =
-        fun actual ->
-            if not (obj.ReferenceEquals(actual, null)) then
-                Pass
-            else
-                let msg = "Expected non-null value, but found null"
-                Fail (msg, None, Some null)
+    let notBeNil<'a when 'a : null> : Matcher<'a> = function
+        | null -> Fail ("Expected non-null value, but found null",
+                       None, Some null)
+        | _ -> Pass
     
     /// Matches if the actual Option is Some with the expected value.
     /// Usage: expect actual |> to' (beSome 42)
@@ -51,13 +45,10 @@ module CoreMatchers =
     
     /// Matches if the actual Option is None.
     /// Usage: expect actual |> to' beNone
-    let beNone<'a> : Matcher<'a option> =
-        fun actual ->
-            match actual with
-            | None -> Pass
-            | Some value ->
-                let msg = sprintf "Expected None, but found Some %A" value
-                Fail (msg, Some (box None), Some (box value))
+    let beNone<'a> : Matcher<'a option> = function
+        | None -> Pass
+        | Some value -> Fail (sprintf "Expected None, but found Some %A" value,
+                             Some (box None), Some (box value))
     
     /// Matches if the actual Result is Ok with the expected value.
     /// Usage: expect actual |> to' (beOk 42)
@@ -89,23 +80,17 @@ module CoreMatchers =
     
     /// Matches if the actual value is true.
     /// Usage: expect actual |> to' beTrue
-    let beTrue : Matcher<bool> =
-        fun actual ->
-            if actual then
-                Pass
-            else
-                let msg = "Expected true, but found false"
-                Fail (msg, Some (box true), Some (box false))
+    let beTrue : Matcher<bool> = function
+        | true -> Pass
+        | false -> Fail ("Expected true, but found false",
+                        Some (box true), Some (box false))
     
     /// Matches if the actual value is false.
     /// Usage: expect actual |> to' beFalse
-    let beFalse : Matcher<bool> =
-        fun actual ->
-            if not actual then
-                Pass
-            else
-                let msg = "Expected false, but found true"
-                Fail (msg, Some (box false), Some (box true))
+    let beFalse : Matcher<bool> = function
+        | false -> Pass
+        | true -> Fail ("Expected false, but found true",
+                       Some (box false), Some (box true))
     
     /// Matches if the actual value satisfies the predicate.
     /// Usage: expect actual |> to' (satisfy (fun x -> x > 0))

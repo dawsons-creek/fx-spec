@@ -49,6 +49,8 @@ module NumericMatchers =
     /// Matches if the actual value is between min and max (inclusive).
     /// Usage: expect 5 |> to' (beBetween 1 10)
     let beBetween (min: 'a when 'a : comparison) (max: 'a when 'a : comparison) : Matcher<'a> =
+        if min > max then
+            invalidArg (nameof min) "Minimum value must be less than or equal to maximum value"
         fun actual ->
             if actual >= min && actual <= max then
                 Pass
@@ -59,6 +61,12 @@ module NumericMatchers =
     /// Matches if the actual floating-point value is close to the expected value within a tolerance.
     /// Usage: expect 3.14159 |> to' (beCloseTo 3.14 0.01)
     let beCloseTo (expected: float) (tolerance: float) : Matcher<float> =
+        if tolerance < 0.0 then
+            invalidArg (nameof tolerance) "Tolerance must be non-negative"
+        if Double.IsNaN(tolerance) || Double.IsNaN(expected) then
+            invalidArg (nameof expected) "Expected and tolerance must be valid numbers (not NaN)"
+        if Double.IsInfinity(tolerance) || Double.IsInfinity(expected) then
+            invalidArg (nameof expected) "Expected and tolerance must be finite numbers (not infinity)"
         fun actual ->
             let diff = abs (actual - expected)
             if diff <= tolerance then
@@ -123,6 +131,8 @@ module NumericMatchers =
     /// Matches if the actual value is divisible by the expected divisor.
     /// Usage: expect 15 |> to' (beDivisibleBy 5)
     let beDivisibleBy (divisor: int) : Matcher<int> =
+        if divisor = 0 then
+            invalidArg (nameof divisor) "Divisor cannot be zero"
         fun actual ->
             if actual % divisor = 0 then
                 Pass

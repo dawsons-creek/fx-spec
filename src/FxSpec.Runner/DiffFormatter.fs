@@ -4,6 +4,9 @@ module FxSpec.Runner.DiffFormatter
 open System
 open Spectre.Console
 
+/// Maximum number of collection items to show in error messages
+let private maxCollectionItemsToShow = 10
+
 /// Formats a value for display in error messages
 let rec formatValue (value: obj option) =
     match value with
@@ -18,7 +21,7 @@ let rec formatValue (value: obj option) =
         | :? System.Collections.IEnumerable as enumerable ->
             let items =
                 seq { for item in enumerable -> formatValue (Some item) }
-                |> Seq.truncate 10
+                |> Seq.truncate maxCollectionItemsToShow
                 |> String.concat ", "
             sprintf "[%s]" items
         | _ -> v.ToString()
@@ -83,21 +86,15 @@ let compareStrings (expected: string) (actual: string) =
     if expected = actual then
         None
     else
-        // Simple character-by-character comparison
         let maxLen = max expected.Length actual.Length
-        let mutable firstDiff = -1
-        
-        for i in 0 .. maxLen - 1 do
-            let expChar = if i < expected.Length then Some expected.[i] else None
-            let actChar = if i < actual.Length then Some actual.[i] else None
-            
-            if expChar <> actChar && firstDiff = -1 then
-                firstDiff <- i
-        
-        if firstDiff >= 0 then
-            Some (sprintf "First difference at position %d" firstDiff)
-        else
-            None
+        let firstDiff =
+            seq { 0 .. maxLen - 1 }
+            |> Seq.tryFindIndex (fun i ->
+                let expChar = if i < expected.Length then Some expected.[i] else None
+                let actChar = if i < actual.Length then Some actual.[i] else None
+                expChar <> actChar)
+
+        firstDiff |> Option.map (sprintf "First difference at position %d")
 
 /// Creates a rich comparison for strings with character-level diff
 let createStringDiffPanel (expected: string) (actual: string) =

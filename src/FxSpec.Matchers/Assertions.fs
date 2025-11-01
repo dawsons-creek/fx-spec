@@ -29,14 +29,4 @@ module Assertions =
         | Pass ->
             raise (AssertionException("Expected not to match, but it did", None, Some (box actual)))
         | Fail _ -> ()
-    
-    /// Alias for to' to match RSpec's 'should' syntax.
-    /// Usage: expect actual |> should (equal expected)
-    let should (matcher: Matcher<'a>) (actual: 'a) : unit =
-        to' matcher actual
-    
-    /// Alias for notTo' to match RSpec's 'shouldNot' syntax.
-    /// Usage: expect actual |> shouldNot (equal unexpected)
-    let shouldNot (matcher: Matcher<'a>) (actual: 'a) : unit =
-        notTo' matcher actual
 

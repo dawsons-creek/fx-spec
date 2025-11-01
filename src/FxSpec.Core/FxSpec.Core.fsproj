@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Compile Include="Types.fs" />
-    <Compile Include="StateManagement.fs" />
     <Compile Include="SpecBuilder.fs" />
   </ItemGroup>
 

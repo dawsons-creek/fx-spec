@@ -6,21 +6,25 @@ open FxSpec.Core
 /// Simple console formatter for test results.
 /// This is a basic implementation - Phase 4 will add Spectre.Console for beautiful output.
 module SimpleFormatter =
-    
+
+    /// Maximum number of stack trace lines to display in error messages.
+    let private maxStackTraceLines = 3
+
+    /// Maximum number of collection items to show in error messages.
+    let private maxCollectionItemsToShow = 10
+
     /// Formats a test result with a symbol.
-    let formatResult (result: TestResult) : string =
-        match result with
+    let formatResult = function
         | Pass -> "✓"
         | Fail _ -> "✗"
         | Skipped _ -> "⊘"
-    
+
     /// Gets the color for a test result (using ANSI codes).
-    let resultColor (result: TestResult) : string =
-        match result with
+    let resultColor = function
         | Pass -> "\u001b[32m"      // Green
         | Fail _ -> "\u001b[31m"    // Red
         | Skipped _ -> "\u001b[33m" // Yellow
-    
+
     /// ANSI reset code.
     let resetColor = "\u001b[0m"
     
@@ -55,13 +59,13 @@ module SimpleFormatter =
                 if not (String.IsNullOrWhiteSpace(ex.StackTrace)) then
                     let lines = ex.StackTrace.Split('\n')
                     // Take first few lines of stack trace
-                    let relevantLines = 
-                        lines 
-                        |> Array.filter (fun line -> 
+                    let relevantLines =
+                        lines
+                        |> Array.filter (fun line ->
                             not (line.Contains("FxSpec.Runner")) &&
                             not (line.Contains("System.Reflection"))
                         )
-                        |> Array.truncate 3
+                        |> Array.truncate maxStackTraceLines
                     if Array.isEmpty relevantLines then
                         ""
                     else

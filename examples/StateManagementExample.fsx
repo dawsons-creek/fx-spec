@@ -1,5 +1,5 @@
-/// This example demonstrates how to use state management features
-/// like `let'`, `subject`, and hooks (`before`/`after`).
+/// This example demonstrates how to use hooks (beforeEach, afterEach, beforeAll, afterAll)
+/// for test setup and teardown.
 
 #load "../src/FxSpec.Core/bin/Debug/net9.0/FxSpec.Core.dll"
 #load "../src/FxSpec.Matchers/bin/Debug/net9.0/FxSpec.Matchers.dll"
@@ -12,102 +12,110 @@ open FxSpec.Matchers
 type Stack<'a>() =
     let mutable items = []
     member _.Push(item: 'a) = items <- item :: items
-    member _.Pop() = 
+    member _.Pop() =
         match items with
         | [] -> failwith "Stack is empty"
-        | head :: tail -> 
+        | head :: tail ->
             items <- tail
             head
     member _.Peek() = List.head items
     member _.Count = List.length items
     member _.Clear() = items <- []
 
-let statefulSpec =
+/// Example showing hooks for setup and teardown
+[<Tests>]
+let hooksExample =
     spec {
-        describe "A Stack" {
-            // Use `let'` to define a lazy-loaded, memoized variable for the stack.
-            // This factory function is executed only once per test example.
-            let' "stack" (fun () -> Stack<int>())
-
-            // `subject` is syntactic sugar for `let' "subject" ...`
-            // It defines the primary object under test.
-            subject (fun () -> 
-                let stack = StateHelpers.get "stack" |> Option.get :?> Stack<int>
-                stack.Push(1)
-                stack
+        yield describe "A Stack" [
+            beforeAll (fun () ->
+                printfn "-- Setting up test suite (runs once) --"
             )
 
-            context "when newly created" {
-                it "is empty" {
-                    let stack = StateHelpers.get "stack" |> Option.get :?> Stack<int>
-                    expect stack.Count |> to' (equal 0)
-                }
+            afterAll (fun () ->
+                printfn "-- Tearing down test suite (runs once) --"
+            )
 
-                it "can have items pushed to it" {
-                    let stack = StateHelpers.get "stack" |> Option.get :?> Stack<int>
+            context "when newly created" [
+                it "is empty" (fun () ->
+                    let stack = Stack<int>()
+                    expect stack.Count |> to' (equal 0)
+                )
+
+                it "can have items pushed to it" (fun () ->
+                    let stack = Stack<int>()
                     stack.Push(42)
                     expect stack.Count |> to' (equal 1)
                     expect stack.Peek() |> to' (equal 42)
-                }
-            }
+                )
+            ]
 
-            context "with a subject" {
-                it "has one item" {
-                    let stack = StateHelpers.getSubject() |> Option.get :?> Stack<int>
-                    expect stack.Count |> to' (equal 1)
-                }
-            }
+            context "with beforeEach and afterEach hooks" [
+                // Mutable reference to demonstrate hook execution
+                let mutable sharedStack = Stack<int>()
 
-            context "with hooks" {
-                // `before` runs before each test in this context.
-                before (fun () ->
-                    let stack = StateHelpers.get "stack" |> Option.get :?> Stack<int>
-                    stack.Push(10)
-                    stack.Push(20)
-                    printfn "-- Before hook executed --"
+                beforeEach (fun () ->
+                    sharedStack <- Stack<int>()
+                    sharedStack.Push(10)
+                    sharedStack.Push(20)
+                    printfn "-- beforeEach: Stack initialized with 2 items --"
                 )
 
-                // `after` runs after each test in this context.
-                after (fun () ->
-                    let stack = StateHelpers.get "stack" |> Option.get :?> Stack<int>
-                    stack.Clear()
-                    printfn "-- After hook executed --"
+                afterEach (fun () ->
+                    sharedStack.Clear()
+                    printfn "-- afterEach: Stack cleared --"
                 )
 
-                it "has the correct number of items" {
-                    let stack = StateHelpers.get "stack" |> Option.get :?> Stack<int>
-                    // The stack has 2 items from the `before` hook
-                    expect stack.Count |> to' (equal 2)
-                }
+                it "has items from beforeEach hook" (fun () ->
+                    expect sharedStack.Count |> to' (equal 2)
+                )
 
-                it "pops items in LIFO order" {
-                    let stack = StateHelpers.get "stack" |> Option.get :?> Stack<int>
-                    // The stack has 2 items from the `before` hook
-                    expect (stack.Pop()) |> to' (equal 20)
-                    expect (stack.Pop()) |> to' (equal 10)
-                }
-            }
-        }
+                it "pops items in LIFO order" (fun () ->
+                    expect (sharedStack.Pop()) |> to' (equal 20)
+                    expect (sharedStack.Pop()) |> to' (equal 10)
+                )
+
+                it "can push additional items" (fun () ->
+                    sharedStack.Push(30)
+                    expect sharedStack.Count |> to' (equal 3)
+                    expect sharedStack.Peek() |> to' (equal 30)
+                )
+            ]
+
+            context "nested contexts with hooks" [
+                let mutable outerValue = 0
+
+                beforeEach (fun () ->
+                    outerValue <- 1
+                    printfn "-- Outer beforeEach: Set to 1 --"
+                )
+
+                it "has value from outer hook" (fun () ->
+                    expect outerValue |> to' (equal 1)
+                )
+
+                context "inner context" [
+                    beforeEach (fun () ->
+                        outerValue <- outerValue + 10
+                        printfn "-- Inner beforeEach: Added 10 --"
+                    )
+
+                    it "has value from both outer and inner hooks" (fun () ->
+                        // Outer hook sets to 1, inner hook adds 10
+                        expect outerValue |> to' (equal 11)
+                    )
+
+                    it "hooks run for each test" (fun () ->
+                        // Fresh execution: outer sets 1, inner adds 10
+                        expect outerValue |> to' (equal 11)
+                    )
+                ]
+            ]
+        ]
     }
 
-// To run this example, you would typically use the FxSpec runner.
-// For demonstration, we can manually execute parts of it.
-
-printfn "Running stateful spec..."
-
-// In a real scenario, the runner would handle this.
-// This is a simplified execution for demonstration.
-let execute (node: TestNode) =
-    match node with
-    | Example (desc, test) -> 
-        printfn "- %s" desc
-        match test() with
-        | Pass -> printfn "  ✓ Passed"
-        | Fail ex -> printfn "  ✗ Failed: %A" ex
-        | Skipped reason -> printfn "  - Skipped: %s" reason
-    | Group (desc, children) ->
-        printfn "%s" desc
-        children |> List.iter execute
-    | _ -> ()
-
-statefulSpec |> List.iter execute
+printfn "\nThis example demonstrates:"
+printfn "1. beforeAll/afterAll - Run once per describe/context block"
+printfn "2. beforeEach/afterEach - Run before/after each test"
+printfn "3. Hook composition - Inner contexts inherit outer hooks"
+printfn "4. Hooks execute in order: outer-to-inner for before, inner-to-outer for after"
+printfn "\nRun with: dotnet run --project src/FxSpec.Runner -- examples/StateManagementExample.fsx"

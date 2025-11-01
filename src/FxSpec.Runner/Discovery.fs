@@ -6,68 +6,73 @@ open FxSpec.Core
 
 /// Module for discovering tests in assemblies using reflection.
 module Discovery =
-    
+
+    /// Checks if a member has the [<Tests>] attribute.
+    let private hasTestsAttribute (member': MemberInfo) : bool =
+        member'.GetCustomAttributes(typeof<TestsAttribute>, false).Length > 0
+
+    /// Checks if a property type is TestNode list.
+    let private isTestNodeListProperty (prop: PropertyInfo) : bool =
+        prop.PropertyType = typeof<TestNode list>
+
+    /// Checks if a field type is TestNode list.
+    let private isTestNodeListField (field: FieldInfo) : bool =
+        field.FieldType = typeof<TestNode list>
+
+    /// Extracts test nodes from a property value.
+    let private extractPropertyValue (prop: PropertyInfo) : TestNode array =
+        try
+            let value = prop.GetValue(null) :?> TestNode list
+            value |> List.toArray
+        with ex ->
+            printfn "Warning: Could not extract property value from %s: %s" prop.Name ex.Message
+            [||]
+
+    /// Extracts test nodes from a field value.
+    let private extractFieldValue (field: FieldInfo) : TestNode array =
+        try
+            let value = field.GetValue(null) :?> TestNode list
+            value |> List.toArray
+        with ex ->
+            printfn "Warning: Could not extract field value from %s: %s" field.Name ex.Message
+            [||]
+
+    /// Discovers test nodes from properties in a type.
+    let private discoverFromProperties (typ: Type) : TestNode array =
+        let bindingFlags = BindingFlags.Public ||| BindingFlags.Static
+        typ.GetProperties(bindingFlags)
+        |> Array.filter hasTestsAttribute
+        |> Array.filter isTestNodeListProperty
+        |> Array.collect extractPropertyValue
+
+    /// Discovers test nodes from fields in a type.
+    let private discoverFromFields (typ: Type) : TestNode array =
+        let bindingFlags = BindingFlags.Public ||| BindingFlags.Static
+        typ.GetFields(bindingFlags)
+        |> Array.filter hasTestsAttribute
+        |> Array.filter isTestNodeListField
+        |> Array.collect extractFieldValue
+
+    /// Discovers test nodes from a single type.
+    let private discoverFromType (typ: Type) : TestNode array =
+        try
+            let fromProperties = discoverFromProperties typ
+            let fromFields = discoverFromFields typ
+            Array.append fromProperties fromFields
+        with ex ->
+            printfn "Warning: Could not inspect type %s: %s" typ.FullName ex.Message
+            [||]
+
     /// Discovers all test suites in the given assembly.
     /// Looks for static let-bound values of type TestNode list marked with [<Tests>].
     /// Applies focused filtering if any focused tests are found.
     let discoverTests (assembly: Assembly) : TestNode list =
         try
-            // Get all types in the assembly
-            let types = assembly.GetTypes()
-
-            // For each type, find properties/fields marked with [<Tests>]
             let allTests =
-                types
-                |> Array.collect (fun typ ->
-                    try
-                        // Get all public static properties and fields
-                        let bindingFlags = BindingFlags.Public ||| BindingFlags.Static
-                        let properties = typ.GetProperties(bindingFlags)
-                        let fields = typ.GetFields(bindingFlags)
-
-                        // Check properties
-                        let testProperties =
-                            properties
-                            |> Array.filter (fun prop ->
-                                // Check if it has the [<Tests>] attribute
-                                prop.GetCustomAttributes(typeof<TestsAttribute>, false).Length > 0
-                            )
-                            |> Array.filter (fun prop ->
-                                // Check if it returns TestNode list
-                                prop.PropertyType = typeof<TestNode list>
-                            )
-                            |> Array.map (fun prop ->
-                                // Get the value
-                                prop.GetValue(null) :?> TestNode list
-                            )
-                            |> Array.collect (fun nodes -> nodes |> List.toArray)
-
-                        // Check fields
-                        let testFields =
-                            fields
-                            |> Array.filter (fun field ->
-                                // Check if it has the [<Tests>] attribute
-                                field.GetCustomAttributes(typeof<TestsAttribute>, false).Length > 0
-                            )
-                            |> Array.filter (fun field ->
-                                // Check if it's TestNode list
-                                field.FieldType = typeof<TestNode list>
-                            )
-                            |> Array.map (fun field ->
-                                // Get the value
-                                field.GetValue(null) :?> TestNode list
-                            )
-                            |> Array.collect (fun nodes -> nodes |> List.toArray)
-
-                        Array.append testProperties testFields
-                    with ex ->
-                        // If we can't inspect a type, skip it
-                        printfn "Warning: Could not inspect type %s: %s" typ.FullName ex.Message
-                        [||]
-                )
+                assembly.GetTypes()
+                |> Array.collect discoverFromType
                 |> Array.toList
 
-            // Apply focused filtering if any focused tests exist
             TestNode.filterFocused allTests
         with ex ->
             printfn "Error discovering tests: %s" ex.Message
