@@ -25,6 +25,10 @@
          <lastmod>2025-11-01</lastmod>
     </url>
     <url>
+         <loc>https://dawsons-creek.github.io/fx-spec/reference/http/</loc>
+         <lastmod>2025-11-01</lastmod>
+    </url>
+    <url>
          <loc>https://dawsons-creek.github.io/fx-spec/reference/runner/</loc>
          <lastmod>2025-11-01</lastmod>
     </url>
@@ -42,6 +46,10 @@
     </url>
     <url>
          <loc>https://dawsons-creek.github.io/fx-spec/reference/matchers/numeric/</loc>
+         <lastmod>2025-11-01</lastmod>
+    </url>
+    <url>
+         <loc>https://dawsons-creek.github.io/fx-spec/reference/matchers/result/</loc>
          <lastmod>2025-11-01</lastmod>
     </url>
     <url>
