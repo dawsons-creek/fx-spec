@@ -39,42 +39,84 @@ module ExecutionSummary =
 
 /// Module for executing test nodes and producing results.
 module Executor =
-    
-    /// Executes a single test node recursively.
+
+    /// Executes a single example with hooks.
+    let executeExample (description: string) (test: TestExecution) (beforeEachHooks: (unit -> unit) list) (afterEachHooks: (unit -> unit) list) : TestResultNode =
+        let sw = Stopwatch.StartNew()
+        let result =
+            try
+                // Run beforeEach hooks (outer to inner)
+                beforeEachHooks |> List.iter (fun hook -> hook())
+
+                // Run the test
+                let testResult = test()
+
+                // Run afterEach hooks (inner to outer)
+                afterEachHooks |> List.iter (fun hook -> hook())
+
+                testResult
+            with ex ->
+                // Run afterEach hooks even on failure
+                try
+                    afterEachHooks |> List.iter (fun hook -> hook())
+                with _ -> ()  // Ignore hook failures during cleanup
+
+                // Any exception during test execution is a failure
+                Fail (Some ex)
+        sw.Stop()
+        ExampleResult (description, result, sw.Elapsed)
+
+    /// Executes a single test node recursively with accumulated hooks.
     /// Returns a TestResultNode with timing information.
-    let rec executeNode (node: TestNode) : TestResultNode =
+    let rec executeNodeWithHooks (beforeEachHooks: (unit -> unit) list) (afterEachHooks: (unit -> unit) list) (node: TestNode) : TestResultNode =
         match node with
         | Example (description, test) ->
-            let sw = Stopwatch.StartNew()
-            let result =
-                try
-                    test()
-                with ex ->
-                    // Any exception during test execution is a failure
-                    Fail (Some ex)
-            sw.Stop()
-            ExampleResult (description, result, sw.Elapsed)
+            executeExample description test beforeEachHooks afterEachHooks
 
-        | Group (description, children) ->
-            // Execute all children and collect results
-            let results = children |> List.map executeNode
+        | Group (description, hooks, children) ->
+            // Run beforeAll hooks
+            hooks.BeforeAll |> List.iter (fun hook -> hook())
+
+            // Accumulate hooks for children
+            let childBeforeEachHooks = beforeEachHooks @ hooks.BeforeEach
+            let childAfterEachHooks = hooks.AfterEach @ afterEachHooks
+
+            // Execute all children with accumulated hooks
+            let results = children |> List.map (executeNodeWithHooks childBeforeEachHooks childAfterEachHooks)
+
+            // Run afterAll hooks
+            hooks.AfterAll |> List.iter (fun hook -> hook())
+
             GroupResult (description, results)
 
         | FocusedExample (description, test) ->
-            // Focused examples execute the same as regular examples
-            let sw = Stopwatch.StartNew()
-            let result =
-                try
-                    test()
-                with ex ->
-                    Fail (Some ex)
-            sw.Stop()
-            ExampleResult (description, result, sw.Elapsed)
+            executeExample description test beforeEachHooks afterEachHooks
 
-        | FocusedGroup (description, children) ->
-            // Focused groups execute the same as regular groups
-            let results = children |> List.map executeNode
+        | FocusedGroup (description, hooks, children) ->
+            // Run beforeAll hooks
+            hooks.BeforeAll |> List.iter (fun hook -> hook())
+
+            // Accumulate hooks for children
+            let childBeforeEachHooks = beforeEachHooks @ hooks.BeforeEach
+            let childAfterEachHooks = hooks.AfterEach @ afterEachHooks
+
+            // Execute all children with accumulated hooks
+            let results = children |> List.map (executeNodeWithHooks childBeforeEachHooks childAfterEachHooks)
+
+            // Run afterAll hooks
+            hooks.AfterAll |> List.iter (fun hook -> hook())
+
             GroupResult (description, results)
+
+        | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ ->
+            // Hook nodes should have been processed during group construction
+            // If we encounter them here, just skip them
+            GroupResult ("hook", [])
+
+    /// Executes a single test node recursively.
+    /// Returns a TestResultNode with timing information.
+    let rec executeNode (node: TestNode) : TestResultNode =
+        executeNodeWithHooks [] [] node
     
     /// Executes a list of test nodes.
     let executeTests (nodes: TestNode list) : TestResultNode list =

@@ -77,7 +77,7 @@ let testNodeSpecs =
                 )
 
                 it "returns the description for Group nodes" (fun () ->
-                    let group = Group("test group", [])
+                    let group = Group("test group", GroupHooks.empty, [])
                     expect (TestNode.description group) |> to' (equal "test group")
                 )
             ]
@@ -91,15 +91,15 @@ let testNodeSpecs =
                 it "counts examples in a Group" (fun () ->
                     let example1 = Example("test 1", fun () -> TestResult.Pass)
                     let example2 = Example("test 2", fun () -> TestResult.Pass)
-                    let group = Group("group", [example1; example2])
+                    let group = Group("group", GroupHooks.empty, [example1; example2])
                     expect (TestNode.countExamples group) |> to' (equal 2)
                 )
 
                 it "counts examples recursively in nested groups" (fun () ->
                     let example1 = Example("test 1", fun () -> TestResult.Pass)
                     let example2 = Example("test 2", fun () -> TestResult.Pass)
-                    let innerGroup = Group("inner", [example1])
-                    let outerGroup = Group("outer", [innerGroup; example2])
+                    let innerGroup = Group("inner", GroupHooks.empty, [example1])
+                    let outerGroup = Group("outer", GroupHooks.empty, [innerGroup; example2])
                     expect (TestNode.countExamples outerGroup) |> to' (equal 2)
                 )
             ]
@@ -112,14 +112,14 @@ let testNodeSpecs =
 
                 it "counts a single Group as 1" (fun () ->
                     let example = Example("test", fun () -> TestResult.Pass)
-                    let group = Group("group", [example])
+                    let group = Group("group", GroupHooks.empty, [example])
                     expect (TestNode.countGroups group) |> to' (equal 1)
                 )
 
                 it "counts nested groups correctly" (fun () ->
                     let example = Example("test", fun () -> TestResult.Pass)
-                    let innerGroup = Group("inner", [example])
-                    let outerGroup = Group("outer", [innerGroup; example])
+                    let innerGroup = Group("inner", GroupHooks.empty, [example])
+                    let outerGroup = Group("outer", GroupHooks.empty, [innerGroup; example])
                     expect (TestNode.countGroups outerGroup) |> to' (equal 2)
                 )
             ]
