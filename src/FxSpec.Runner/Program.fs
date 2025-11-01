@@ -5,18 +5,25 @@ open System
 /// Command-line interface for the FxSpec test runner.
 module Program =
     
+    /// Output format options.
+    type OutputFormat =
+        | Documentation  // Rich Spectre.Console output (default)
+        | Simple         // Simple text output
+
     /// Command-line options.
     type Options = {
         AssemblyPath: string option
         Filter: string option
         Verbose: bool
+        Format: OutputFormat
     }
-    
+
     /// Default options.
     let defaultOptions = {
         AssemblyPath = None
         Filter = None
         Verbose = false
+        Format = Documentation
     }
     
     /// Parses command-line arguments.
@@ -27,6 +34,12 @@ module Program =
             parseArgs rest { options with Filter = Some filter }
         | "-f" :: filter :: rest ->
             parseArgs rest { options with Filter = Some filter }
+        | "--format" :: "simple" :: rest ->
+            parseArgs rest { options with Format = Simple }
+        | "--format" :: "documentation" :: rest ->
+            parseArgs rest { options with Format = Documentation }
+        | "--format" :: "doc" :: rest ->
+            parseArgs rest { options with Format = Documentation }
         | "--verbose" :: rest ->
             parseArgs rest { options with Verbose = true }
         | "-v" :: rest ->
@@ -37,13 +50,15 @@ module Program =
             printfn "Usage: fxspec <assembly-path> [options]"
             printfn ""
             printfn "Options:"
-            printfn "  --filter, -f <pattern>   Filter tests by description"
-            printfn "  --verbose, -v            Verbose output"
-            printfn "  --help, -h               Show this help"
+            printfn "  --filter, -f <pattern>     Filter tests by description"
+            printfn "  --format <format>          Output format: documentation (default), simple"
+            printfn "  --verbose, -v              Verbose output"
+            printfn "  --help, -h                 Show this help"
             printfn ""
             printfn "Examples:"
             printfn "  fxspec MyTests.dll"
             printfn "  fxspec MyTests.dll --filter \"Calculator\""
+            printfn "  fxspec MyTests.dll --format simple"
             printfn "  fxspec MyTests.dll -f \"User\" -v"
             exit 0
         | path :: rest when not (path.StartsWith("-")) ->
@@ -98,12 +113,14 @@ module Program =
                     else
                         // Execute tests
                         let (results, summary) = Executor.executeWithSummary filteredTests
-                        
-                        // Print results
-                        SimpleFormatter.printResults results summary
-                        
-                        // Return exit code
-                        ExecutionSummary.exitCode summary
+
+                        // Print results based on format
+                        match options.Format with
+                        | Documentation ->
+                            DocumentationFormatter.render results
+                        | Simple ->
+                            SimpleFormatter.printResults results summary
+                            ExecutionSummary.exitCode summary
         with ex ->
             printfn "Fatal error: %s" ex.Message
             if argv |> Array.contains "--verbose" || argv |> Array.contains "-v" then

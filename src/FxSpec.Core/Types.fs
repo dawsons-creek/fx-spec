@@ -19,10 +19,16 @@ type TestNode =
     /// A leaf node representing an individual test case.
     /// Contains a description and the test execution function.
     | Example of description: string * test: TestExecution
-    
+
     /// An internal node representing a group of tests.
     /// Contains a description and a list of child nodes (which can be Groups or Examples).
     | Group of description: string * tests: TestNode list
+
+    /// A focused test example (fit). When any focused tests exist, only focused tests run.
+    | FocusedExample of description: string * test: TestExecution
+
+    /// A focused group (fdescribe). When any focused groups exist, only tests in focused groups run.
+    | FocusedGroup of description: string * tests: TestNode list
 
 /// Represents the result of executing a test node.
 /// This mirrors the TestNode structure but includes execution results.
@@ -62,18 +68,50 @@ module TestNode =
     let description = function
         | Example (desc, _) -> desc
         | Group (desc, _) -> desc
-    
+        | FocusedExample (desc, _) -> desc
+        | FocusedGroup (desc, _) -> desc
+
     /// Recursively counts the number of examples in a test tree.
     let rec countExamples = function
         | Example _ -> 1
+        | FocusedExample _ -> 1
         | Group (_, children) ->
             children |> List.sumBy countExamples
-    
+        | FocusedGroup (_, children) ->
+            children |> List.sumBy countExamples
+
     /// Recursively counts the number of groups in a test tree.
     let rec countGroups = function
         | Example _ -> 0
+        | FocusedExample _ -> 0
         | Group (_, children) ->
             1 + (children |> List.sumBy countGroups)
+        | FocusedGroup (_, children) ->
+            1 + (children |> List.sumBy countGroups)
+
+    /// Checks if a test tree contains any focused tests.
+    let rec hasFocused = function
+        | FocusedExample _ -> true
+        | FocusedGroup _ -> true
+        | Group (_, children) -> children |> List.exists hasFocused
+        | Example _ -> false
+
+    /// Filters a test tree to only include focused tests.
+    /// If no focused tests exist, returns the original tree.
+    let rec filterFocused (nodes: TestNode list) : TestNode list =
+        if nodes |> List.exists hasFocused then
+            nodes |> List.choose (fun node ->
+                match node with
+                | FocusedExample (desc, test) -> Some (Example (desc, test))
+                | FocusedGroup (desc, children) -> Some (Group (desc, filterFocused children))
+                | Group (desc, children) ->
+                    let filtered = filterFocused children
+                    if List.isEmpty filtered then None
+                    else Some (Group (desc, filtered))
+                | Example _ -> None
+            )
+        else
+            nodes
 
 /// Helper module for working with TestResultNode.
 module TestResultNode =

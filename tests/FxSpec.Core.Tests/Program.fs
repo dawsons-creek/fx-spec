@@ -8,12 +8,12 @@ open FxSpec.Core.Tests
 /// Simple test executor that runs a spec tree and reports results
 let rec executeNode (node: TestNode) : TestResultNode =
     match node with
-    | Example (desc, testFn) ->
+    | Example (desc, testFn) | FocusedExample (desc, testFn) ->
         let sw = System.Diagnostics.Stopwatch.StartNew()
         let result = testFn()
         sw.Stop()
         ExampleResult (desc, result, sw.Elapsed)
-    | Group (desc, children) ->
+    | Group (desc, children) | FocusedGroup (desc, children) ->
         let results = children |> List.map executeNode
         GroupResult (desc, results)
 
@@ -88,20 +88,11 @@ let main argv =
     printfn "╔═══════════════════════════════════════════════════════════╗"
     printfn "║           FxSpec.Core Test Suite                          ║"
     printfn "║           Testing FxSpec with FxSpec! 🎯                  ║"
+    printfn "║           (Legacy runner - use FxSpec.Runner instead)     ║"
     printfn "╚═══════════════════════════════════════════════════════════╝"
 
     try
-        // Run old-style tests for validation
-        printfn ""
-        printfn "==================================="
-        printfn "Legacy Tests (for validation)"
-        printfn "==================================="
-        printfn ""
-        TypesTests.runAllTests()
-        printfn ""
-        SpecBuilderTests.runAllTests()
-
-        // Run new FxSpec-based tests (dogfooding!)
+        // Run FxSpec-based tests using simple runner
         let success1 = runSpec "TypesSpecs - Testing FxSpec Types" TypesSpecs.testResultSpecs
         let success2 = runSpec "TypesSpecs - Testing TestNode" TypesSpecs.testNodeSpecs
         let success3 = runSpec "TypesSpecs - Testing TestResultNode" TypesSpecs.testResultNodeSpecs
@@ -117,6 +108,8 @@ let main argv =
             Console.ResetColor()
             printfn "║                                                           ║"
             printfn "║  🎉 FxSpec successfully tests itself using FxSpec! 🎉    ║"
+            printfn "║                                                           ║"
+            printfn "║  💡 Tip: Use ./run-tests.sh for beautiful output!        ║"
             printfn "╚═══════════════════════════════════════════════════════════╝"
             0 // Success
         else

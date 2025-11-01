@@ -10,11 +10,18 @@
     <Compile Include="Discovery.fs" />
     <Compile Include="Executor.fs" />
     <Compile Include="SimpleFormatter.fs" />
+    <Compile Include="DiffFormatter.fs" />
+    <Compile Include="DocumentationFormatter.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FxSpec.Core\FxSpec.Core.fsproj" />
+    <ProjectReference Include="..\FxSpec.Matchers\FxSpec.Matchers.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Spectre.Console" Version="0.53.0" />
   </ItemGroup>
 
 </Project>

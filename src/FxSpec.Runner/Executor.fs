@@ -46,7 +46,7 @@ module Executor =
         match node with
         | Example (description, test) ->
             let sw = Stopwatch.StartNew()
-            let result = 
+            let result =
                 try
                     test()
                 with ex ->
@@ -54,9 +54,25 @@ module Executor =
                     Fail (Some ex)
             sw.Stop()
             ExampleResult (description, result, sw.Elapsed)
-        
+
         | Group (description, children) ->
             // Execute all children and collect results
+            let results = children |> List.map executeNode
+            GroupResult (description, results)
+
+        | FocusedExample (description, test) ->
+            // Focused examples execute the same as regular examples
+            let sw = Stopwatch.StartNew()
+            let result =
+                try
+                    test()
+                with ex ->
+                    Fail (Some ex)
+            sw.Stop()
+            ExampleResult (description, result, sw.Elapsed)
+
+        | FocusedGroup (description, children) ->
+            // Focused groups execute the same as regular groups
             let results = children |> List.map executeNode
             GroupResult (description, results)
     

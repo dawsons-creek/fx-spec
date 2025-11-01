@@ -60,6 +60,40 @@ module SpecHelpers =
     let context description (tests: TestNode list) : TestNode =
         Group(description, tests)
 
+    /// Creates a skipped test example (xit = "exclude it").
+    /// Usage: xit "description" (fun () -> test code)
+    let xit description (test: unit -> unit) : TestNode =
+        let execution () = Skipped "Test marked as pending with xit"
+        Example(description, execution)
+
+    /// Creates a skipped test example (alias for xit).
+    /// Usage: pending "description" (fun () -> test code)
+    let pending description (test: unit -> unit) : TestNode =
+        xit description test
+
+    /// Creates a focused test example (fit = "focused it").
+    /// When any fit is present, only fit tests will run.
+    /// Usage: fit "description" (fun () -> test code)
+    let fit description (test: unit -> unit) : TestNode =
+        let execution () =
+            try
+                test()
+                Pass
+            with ex ->
+                Fail(Some ex)
+        FocusedExample(description, execution)
+
+    /// Creates a focused group (fdescribe = "focused describe").
+    /// When any fdescribe is present, only tests in fdescribe blocks will run.
+    /// Usage: fdescribe "description" [ ... tests ... ]
+    let fdescribe description (tests: TestNode list) : TestNode =
+        FocusedGroup(description, tests)
+
+    /// Creates a focused context (alias for fdescribe).
+    /// Usage: fcontext "description" [ ... tests ... ]
+    let fcontext description (tests: TestNode list) : TestNode =
+        FocusedGroup(description, tests)
+
 /// The global instance of the SpecBuilder.
 /// Users will write: spec { ... }
 [<AutoOpen>]

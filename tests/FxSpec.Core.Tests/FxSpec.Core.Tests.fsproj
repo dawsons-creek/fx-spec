@@ -8,10 +8,9 @@
 
   <ItemGroup>
     <Compile Include="FxSpecMatchers.fs" />
-    <Compile Include="TypesTests.fs" />
     <Compile Include="TypesSpecs.fs" />
-    <Compile Include="SpecBuilderTests.fs" />
     <Compile Include="SpecBuilderSpecs.fs" />
+    <Compile Include="Phase5Specs.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

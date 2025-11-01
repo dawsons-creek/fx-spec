@@ -224,17 +224,18 @@ Total:   ████████░░░░░░░░░░░░  40%
 05c8c63 - feat: Phase 1 complete - Core DSL and tree structure
 ```
 
-## Latest Achievement: Phase 3.2 Complete! 🚀
+## Latest Achievement: Phase 5 Complete! 🎯
 
-**FxSpec now runs its own tests using its own runner!**
+**FxSpec now has pending and focused tests for better development workflow!**
 
-We successfully completed Phase 3.2 (Test Runner):
-- ✅ Test discovery using `[<Tests>]` attribute and reflection
-- ✅ Execution engine that traverses test trees
-- ✅ CLI tool with filtering support
-- ✅ Beautiful console output with colors and timing
-- ✅ Exit codes (0 for success, 1 for failures)
-- ✅ FxSpec discovers and runs all 30 of its own tests!
+We successfully completed Phase 5 (Pending & Focused Tests):
+- ✅ xit/pending for skipping tests during development
+- ✅ fit/fdescribe for focusing on specific tests
+- ✅ Automatic focused filtering in test discovery
+- ✅ Skip reason display in beautiful output
+- ✅ Removed legacy test files (100% FxSpec now)
+- ✅ 41 tests pass (30 existing + 11 new)
+- ✅ Industry-standard naming (matches Jest, RSpec, Jasmine)
 
 **Running FxSpec's own tests**:
 ```bash
