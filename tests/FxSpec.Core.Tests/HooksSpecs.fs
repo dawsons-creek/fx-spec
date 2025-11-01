@@ -4,6 +4,7 @@ module FxSpec.Core.Tests.HooksSpecs
 open System
 open FxSpec.Core
 open FxSpec.Matchers
+open FxSpec.Runner.Executor
 
 /// Specs for beforeEach/afterEach hooks
 [<Tests>]
@@ -33,7 +34,8 @@ let beforeEachAfterEachSpecs =
                     }
 
                     // Execute the tests
-                    // TODO: Need to implement hook execution in runner
+                    nodes |> List.iter (executeNode >> ignore)
+
                     expect test1Ran |> to' beTrue
                     expect test2Ran |> to' beTrue
                     expect setupCount |> to' (equal 2)
@@ -57,6 +59,7 @@ let beforeEachAfterEachSpecs =
                     }
 
                     // Execute and verify order
+                    nodes |> List.iter (executeNode >> ignore)
                     expect executionOrder |> to' (equal ["outer"; "inner"])
                 )
             ]
@@ -82,6 +85,7 @@ let beforeEachAfterEachSpecs =
                     }
 
                     // Execute the tests
+                    nodes |> List.iter (executeNode >> ignore)
                     expect test1Completed |> to' beTrue
                     expect test2Completed |> to' beTrue
                     expect teardownCount |> to' (equal 2)
@@ -103,6 +107,7 @@ let beforeEachAfterEachSpecs =
                     }
 
                     // Execute and verify order
+                    nodes |> List.iter (executeNode >> ignore)
                     expect executionOrder |> to' (equal ["inner"; "outer"])
                 )
 
@@ -120,6 +125,7 @@ let beforeEachAfterEachSpecs =
                     }
 
                     // Execute the test (it should fail but afterEach should still run)
+                    nodes |> List.iter (executeNode >> ignore)
                     expect teardownRan |> to' beTrue
                 )
             ]
@@ -140,6 +146,7 @@ let beforeEachAfterEachSpecs =
                     }
 
                     // Execute and verify order
+                    nodes |> List.iter (executeNode >> ignore)
                     expect executionOrder |> to' (equal ["before"; "test"; "after"])
                 )
             ]
@@ -174,6 +181,7 @@ let beforeAllAfterAllSpecs =
                     }
 
                     // Execute the tests
+                    nodes |> List.iter (executeNode >> ignore)
                     expect test1Ran |> to' beTrue
                     expect test2Ran |> to' beTrue
                     expect setupCount |> to' (equal 1)  // Only ran once
@@ -203,6 +211,7 @@ let beforeAllAfterAllSpecs =
                     }
 
                     // Execute the tests
+                    nodes |> List.iter (executeNode >> ignore)
                     expect test1Completed |> to' beTrue
                     expect test2Completed |> to' beTrue
                     expect teardownCount |> to' (equal 1)  // Ran once after all tests
@@ -226,6 +235,7 @@ let beforeAllAfterAllSpecs =
                     }
 
                     // Execute the tests (they should fail but afterAll should still run)
+                    nodes |> List.iter (executeNode >> ignore)
                     expect teardownRan |> to' beTrue
                 )
             ]
@@ -250,6 +260,7 @@ let beforeAllAfterAllSpecs =
                     }
 
                     // Execute and verify order
+                    nodes |> List.iter (executeNode >> ignore)
                     expect executionOrder |> to' (equal ["beforeAll"; "test1"; "test2"; "afterAll"])
                 )
             ]
@@ -276,6 +287,7 @@ let beforeAllAfterAllSpecs =
                     }
 
                     // Execute and verify order
+                    nodes |> List.iter (executeNode >> ignore)
                     let expected = [
                         "beforeAll"
                         "beforeEach"; "test1"; "afterEach"

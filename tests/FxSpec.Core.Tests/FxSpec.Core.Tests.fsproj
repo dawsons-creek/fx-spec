@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\FxSpec.Core\FxSpec.Core.fsproj" />
     <ProjectReference Include="..\..\src\FxSpec.Matchers\FxSpec.Matchers.fsproj" />
+    <ProjectReference Include="..\..\src\FxSpec.Runner\FxSpec.Runner.fsproj" />
   </ItemGroup>
 
 </Project>
