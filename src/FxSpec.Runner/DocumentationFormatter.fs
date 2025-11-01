@@ -108,11 +108,19 @@ let rec renderNode (indent: int) (pathSoFar: string list) (node: TestResultNode)
     | ExampleResult (desc, result, duration) ->
         let fullPath = (pathSoFar @ [desc]) |> String.concat " > "
         renderTestLine indent desc result duration
-        
+
         // Show failure details if test failed
         if TestResult.isFail result then
             renderFailureDetails indent fullPath result
-    
+
+        // Show skip reason if test was skipped
+        if TestResult.isSkipped result then
+            match result with
+            | TestResult.Skipped reason ->
+                let indentStr = String(' ', (indent + 1) * 2)
+                AnsiConsole.MarkupLine(sprintf "%s[dim]%s[/]" indentStr (Markup.Escape(reason)))
+            | _ -> ()
+
     | GroupResult (desc, children) ->
         renderGroupHeader indent desc
         let newPath = pathSoFar @ [desc]

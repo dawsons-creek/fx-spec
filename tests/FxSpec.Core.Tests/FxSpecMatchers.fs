@@ -84,11 +84,11 @@ let beSkippedWith (expectedReason: string) : Matcher<TestResult> =
 let beExample (expectedDesc: string) : Matcher<TestNode> =
     fun actual ->
         match actual with
-        | Example (desc, _) when desc = expectedDesc -> MatchResult.Pass
-        | Example (desc, _) ->
+        | Example (desc, _) | FocusedExample (desc, _) when desc = expectedDesc -> MatchResult.Pass
+        | Example (desc, _) | FocusedExample (desc, _) ->
             let msg = sprintf "Expected Example with description '%s', but got '%s'" expectedDesc desc
             MatchResult.Fail (msg, Some (box expectedDesc), Some (box desc))
-        | Group (desc, _) ->
+        | Group (desc, _) | FocusedGroup (desc, _) ->
             let msg = sprintf "Expected Example with description '%s', but got Group '%s'" expectedDesc desc
             MatchResult.Fail (msg, Some (box "Example"), Some (box "Group"))
 
@@ -97,11 +97,11 @@ let beExample (expectedDesc: string) : Matcher<TestNode> =
 let beGroup (expectedDesc: string) : Matcher<TestNode> =
     fun actual ->
         match actual with
-        | Group (desc, _) when desc = expectedDesc -> MatchResult.Pass
-        | Group (desc, _) ->
+        | Group (desc, _) | FocusedGroup (desc, _) when desc = expectedDesc -> MatchResult.Pass
+        | Group (desc, _) | FocusedGroup (desc, _) ->
             let msg = sprintf "Expected Group with description '%s', but got '%s'" expectedDesc desc
             MatchResult.Fail (msg, Some (box expectedDesc), Some (box desc))
-        | Example (desc, _) ->
+        | Example (desc, _) | FocusedExample (desc, _) ->
             let msg = sprintf "Expected Group with description '%s', but got Example '%s'" expectedDesc desc
             MatchResult.Fail (msg, Some (box "Group"), Some (box "Example"))
 
@@ -110,14 +110,14 @@ let beGroup (expectedDesc: string) : Matcher<TestNode> =
 let beGroupWithChildren (expectedCount: int) : Matcher<TestNode> =
     fun actual ->
         match actual with
-        | Group (_, children) ->
+        | Group (_, children) | FocusedGroup (_, children) ->
             let actualCount = List.length children
             if actualCount = expectedCount then
                 MatchResult.Pass
             else
                 let msg = sprintf "Expected Group with %d children, but got %d children" expectedCount actualCount
                 MatchResult.Fail (msg, Some (box expectedCount), Some (box actualCount))
-        | Example (desc, _) ->
+        | Example (desc, _) | FocusedExample (desc, _) ->
             let msg = sprintf "Expected Group with %d children, but got Example '%s'" expectedCount desc
             MatchResult.Fail (msg, Some (box "Group"), Some (box "Example"))
 
