@@ -7,14 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="MatchersSpecs.fs" />
-    <Compile Include="ResultMatcherSpecs.fs" />
+    <Compile Include="HttpMatcherSpecs.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\FxSpec.Core\FxSpec.Core.fsproj" />
     <ProjectReference Include="..\..\src\FxSpec.Matchers\FxSpec.Matchers.fsproj" />
+    <ProjectReference Include="..\..\src\FxSpec.Http\FxSpec.Http.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
 </Project>

@@ -117,24 +117,6 @@ type ResultExpectation<'a, 'b when 'a : equality and 'b : equality>(actual: Resu
         | Ok value ->
             let msg = sprintf "Expected Error %A, but found Ok %A" expected value
             raise (AssertionException(msg, Some (box expected), Some (box value)))
-    
-    /// Asserts that the Result is Ok (with any value).
-    /// Usage: expectResult(result).toBeOk()
-    member _.toBeOk() =
-        match actual with
-        | Ok _ -> ()
-        | Error err ->
-            let msg = sprintf "Expected Ok, but found Error %A" err
-            raise (AssertionException(msg, Some (box "Ok"), Some (box err)))
-    
-    /// Asserts that the Result is Error (with any value).
-    /// Usage: expectResult(result).toBeError()
-    member _.toBeError() =
-        match actual with
-        | Error _ -> ()
-        | Ok value ->
-            let msg = sprintf "Expected Error, but found Ok %A" value
-            raise (AssertionException(msg, Some (box "Error"), Some (box value)))
 
 /// Wrapper for boolean expectations.
 type BoolExpectation(actual: bool) =

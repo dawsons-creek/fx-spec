@@ -1,6 +1,5 @@
 // Test runner for FxSpec.Core.Tests
 // This runs both old-style tests (for validation) and new FxSpec-based tests (dogfooding!)
-
 open System
 open FxSpec.Core
 open FxSpec.Core.Tests
@@ -102,10 +101,11 @@ let main argv =
         let success4 = runSpec "SpecBuilderSpecs - Basic Functionality" [SpecBuilderSpecs.specBuilderSpecs]
         let success5 = runSpec "SpecBuilderSpecs - Example Execution" [SpecBuilderSpecs.exampleExecutionSpecs]
         let success6 = runSpec "SpecBuilderSpecs - Complex Nesting" [SpecBuilderSpecs.complexNestingSpecs]
-
+        let success7 = runSpec "AsyncSupportSpecs - Async Test Support" [AsyncSupportSpecs.asyncSupportSpecs]
+        
         printfn ""
         printfn "╔═══════════════════════════════════════════════════════════╗"
-        if success1 && success2 && success3 && success4 && success5 && success6 then
+        if success1 && success2 && success3 && success4 && success5 && success6 && success7 then
             Console.ForegroundColor <- ConsoleColor.Green
             printfn "║                 All tests passed! ✓                       ║"
             Console.ResetColor()
@@ -134,4 +134,3 @@ let main argv =
         printfn "Stack trace:"
         printfn "%s" ex.StackTrace
         1 // Failure
-
