@@ -303,6 +303,15 @@ This project is in active design and planning. We're building the best F# BDD fr
 - [x] Color-coded output
 - [x] Format selection (--format option)
 
+### Phase 5: Pending & Focused Tests (Week 7) ✅
+- [x] xit/pending for skipping tests
+- [x] fit/fdescribe for focused execution
+- [x] Automatic focused filtering
+- [x] Skip reason display
+- [x] Legacy test cleanup
+- [ ] beforeEach/afterEach hooks (deferred to Phase 6)
+- [ ] beforeAll/afterAll hooks (deferred to Phase 6)
+
 ### Phase 4: Formatters (Weeks 5-6)
 - [ ] Spectre.Console integration
 - [ ] Documentation formatter
