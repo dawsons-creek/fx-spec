@@ -62,7 +62,6 @@ let renderTestLine (indent: int) (desc: string) (result: TestResult) (duration: 
     grid.AddRow(markup, formatDuration duration) |> ignore
     
     AnsiConsole.Write(grid)
-    AnsiConsole.WriteLine()
 
 /// Renders a group header
 let renderGroupHeader (indent: int) (desc: string) =
@@ -109,11 +108,12 @@ let renderFailureDetails (indent: int) (fullPath: string) (result: TestResult) =
     | TestResult.Pass -> ()
 
 /// Recursively renders a test result tree
-let rec renderNode (indent: int) (pathSoFar: string list) (node: TestResultNode) =
+let rec renderNode (indent: int) (pathSoFar: string list) (isLast: bool) (node: TestResultNode) =
     match node with
     | ExampleResult (desc, result, duration) ->
         let fullPath = (pathSoFar @ [desc]) |> String.concat " > "
         renderTestLine indent desc result duration
+        AnsiConsole.WriteLine()
 
         // Show failure details if test failed
         if TestResult.isFail result then
@@ -130,7 +130,13 @@ let rec renderNode (indent: int) (pathSoFar: string list) (node: TestResultNode)
     | GroupResult (desc, children) ->
         renderGroupHeader indent desc
         let newPath = pathSoFar @ [desc]
-        children |> List.iter (renderNode (indent + 1) newPath)
+        let childCount = List.length children
+        children |> List.iteri (fun i child -> 
+            renderNode (indent + 1) newPath (i = childCount - 1) child)
+        
+        // Add blank line after group (unless it's the last node)
+        if not isLast then
+            AnsiConsole.WriteLine()
 
 /// Creates a summary table with statistics
 let createSummaryTable (passed: int) (failed: int) (skipped: int) (duration: TimeSpan) =
@@ -160,7 +166,8 @@ let render (results: TestResultNode list) =
     AnsiConsole.WriteLine()
     
     // Render all test results
-    results |> List.iter (renderNode 0 [])
+    let resultCount = List.length results
+    results |> List.iteri (fun i node -> renderNode 0 [] (i = resultCount - 1) node)
     
     // Calculate statistics
     let allResults = results |> List.collect (buildTestPath [])

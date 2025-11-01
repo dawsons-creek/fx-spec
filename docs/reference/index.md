@@ -12,7 +12,7 @@ Complete API reference for FxSpec.
 
     ---
 
-    Complete reference for `spec`, `describe`, `it`, `context`, and all DSL functions.
+    Complete reference for `describe`, `it`, `context`, and all DSL functions.
 
 -   :material-check-circle:{ .lg } **[Matchers](matchers/core.md)**
 
@@ -28,7 +28,6 @@ Complete API reference for FxSpec.
 
 ### Core DSL
 
-- **[spec](dsl-api.md#spec)** - Computation expression builder for test trees
 - **[describe](dsl-api.md#describe)** - Group related tests
 - **[context](dsl-api.md#context)** - Add context to test groups (alias for `describe`)
 - **[it](dsl-api.md#it)** - Define individual test cases
@@ -47,11 +46,18 @@ Complete API reference for FxSpec.
 - **[beforeAll](dsl-api.md#beforeall)** - Run once before all tests in group
 - **[afterAll](dsl-api.md#afterall)** - Run once after all tests in group
 
-### Assertions
+### Expectations
 
-- **[expect](matchers/core.md#expect)** - Start an assertion
-- **[to'](matchers/core.md#to)** - Apply a matcher (positive assertion)
-- **[notTo'](matchers/core.md#notto)** - Apply a matcher (negative assertion)
+- **[expect](matchers/core.md#expect)** - Create a generic expectation
+- **[expectBool](matchers/core.md#expectbool)** - Create a boolean expectation
+- **[expectOption](matchers/core.md#expectoption)** - Create an Option expectation
+- **[expectResult](matchers/core.md#expectresult)** - Create a Result expectation
+- **[expectSeq](matchers/collections.md)** - Create a collection expectation
+- **[expectStr](matchers/strings.md)** - Create a string expectation
+- **[expectNum](matchers/numeric.md)** - Create a numeric expectation
+- **[expectInt](matchers/numeric.md)** - Create an integer expectation
+- **[expectFloat](matchers/numeric.md)** - Create a float expectation
+- **[expectThrows](matchers/exceptions.md)** - Assert an exception is thrown
 
 ---
 

@@ -2,37 +2,13 @@ namespace FxSpec.Core
 
 open System
 
-/// The computation expression builder for creating test specifications.
-/// This builder constructs an immutable TestNode tree from the DSL syntax.
-type SpecBuilder() =
-
-    /// Yields a single test example node.
-    member _.Yield(node: TestNode) : TestNode list =
-        [node]
-
-    /// Yields a list of test nodes.
-    member _.YieldFrom(nodes: TestNode list) : TestNode list =
-        nodes
-
-    /// Combines two lists of test nodes.
-    /// This enables sequential test definitions within a block.
-    member _.Combine(a: TestNode list, b: TestNode list) : TestNode list =
-        a @ b
-
-    /// Delays the evaluation of a computation.
-    /// This is necessary for proper lazy evaluation in the CE.
-    member _.Delay(f: unit -> TestNode list) : TestNode list =
-        f()
-
-    /// Returns an empty list of test nodes.
-    /// This is used for empty blocks.
-    member _.Zero() : TestNode list =
-        []
-
-    /// Runs the computation and returns the final list of test nodes.
-    /// This is the entry point that the compiler calls.
-    member _.Run(nodes: TestNode list) : TestNode list =
-        nodes
+// The SpecBuilder computation expression has been removed.
+// It is no longer needed with the simplified DSL.
+//
+// Old style: spec { yield describe "..." [...] }
+// New style: describe "..." [...]
+//
+// Just use describe/context directly to create test trees.
 
 /// Helper functions for creating test nodes.
 /// These are used directly in the DSL.
@@ -147,10 +123,4 @@ module SpecHelpers =
     /// Usage: afterAll (fun () -> teardown code)
     let afterAll (hook: unit -> unit) : TestNode =
         AfterAllHook hook
-
-/// The global instance of the SpecBuilder.
-/// Users will write: spec { ... }
-[<AutoOpen>]
-module SpecBuilderInstance =
-    let spec = SpecBuilder()
 

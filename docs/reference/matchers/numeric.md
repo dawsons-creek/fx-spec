@@ -15,25 +15,25 @@ Matches if the actual value is greater than the expected value.
 **Usage:**
 
 ```fsharp
-expect actual |> should (beGreaterThan expected)
+expectNum(actual).toBeGreaterThan(expected)
 ```
 
 **Examples:**
 
 ```fsharp
-expect 10 |> should (beGreaterThan 5)
-expect 3.14 |> should (beGreaterThan 3.0)
-expect 100L |> should (beGreaterThan 50L)
+expectNum(10).toBeGreaterThan(5)
+expectNum(3.14).toBeGreaterThan(3.0)
+expectNum(100L).toBeGreaterThan(50L)
 
 // After calculations
 let score = calculateScore()
-expect score |> should (beGreaterThan 0)
+expectNum(score).toBeGreaterThan(0)
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect 5 |> should (beGreaterThan 10)
+expectNum(5).toBeGreaterThan(10)
 // => Expected value to be greater than 10, but found 5
 ```
 
@@ -48,25 +48,25 @@ Matches if the actual value is greater than or equal to the expected value.
 **Usage:**
 
 ```fsharp
-expect actual |> should (beGreaterThanOrEqual expected)
+expectNum(actual).toBeGreaterThanOrEqual(expected)
 ```
 
 **Examples:**
 
 ```fsharp
-expect 10 |> should (beGreaterThanOrEqual 10)  // Equal case
-expect 10 |> should (beGreaterThanOrEqual 5)   // Greater case
-expect 5.0 |> should (beGreaterThanOrEqual 5.0)
+expectNum(10).toBeGreaterThanOrEqual(10)  // Equal case
+expectNum(10).toBeGreaterThanOrEqual(5)   // Greater case
+expectNum(5.0).toBeGreaterThanOrEqual(5.0)
 
 // Minimum validation
 let age = user.Age
-expect age |> should (beGreaterThanOrEqual 18)
+expectNum(age).toBeGreaterThanOrEqual(18)
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect 5 |> should (beGreaterThanOrEqual 10)
+expectNum(5).toBeGreaterThanOrEqual(10)
 // => Expected value to be greater than or equal to 10, but found 5
 ```
 
@@ -81,25 +81,25 @@ Matches if the actual value is less than the expected value.
 **Usage:**
 
 ```fsharp
-expect actual |> should (beLessThan expected)
+expectNum(actual).toBeLessThan(expected)
 ```
 
 **Examples:**
 
 ```fsharp
-expect 5 |> should (beLessThan 10)
-expect 2.5 |> should (beLessThan 3.0)
-expect -10 |> should (beLessThan 0)
+expectNum(5).toBeLessThan(10)
+expectNum(2.5).toBeLessThan(3.0)
+expectNum(-10).toBeLessThan(0)
 
 // Maximum validation
 let count = list.Length
-expect count |> should (beLessThan 100)
+expectNum(count).toBeLessThan(100)
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect 15 |> should (beLessThan 10)
+expectNum(15).toBeLessThan(10)
 // => Expected value to be less than 10, but found 15
 ```
 
@@ -114,25 +114,25 @@ Matches if the actual value is less than or equal to the expected value.
 **Usage:**
 
 ```fsharp
-expect actual |> should (beLessThanOrEqual expected)
+expectNum(actual).toBeLessThanOrEqual(expected)
 ```
 
 **Examples:**
 
 ```fsharp
-expect 5 |> should (beLessThanOrEqual 5)   // Equal case
-expect 5 |> should (beLessThanOrEqual 10)  // Less case
-expect 3.14 |> should (beLessThanOrEqual 4.0)
+expectNum(5).toBeLessThanOrEqual(5)   // Equal case
+expectNum(5).toBeLessThanOrEqual(10)  // Less case
+expectNum(3.14).toBeLessThanOrEqual(4.0)
 
 // Maximum limit
 let responseTime = measureResponseTime()
-expect responseTime |> should (beLessThanOrEqual 1000)  // Max 1000ms
+expectNum(responseTime).toBeLessThanOrEqual(1000)  // Max 1000ms
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect 15 |> should (beLessThanOrEqual 10)
+expectNum(15).toBeLessThanOrEqual(10)
 // => Expected value to be less than or equal to 10, but found 15
 ```
 
@@ -154,29 +154,29 @@ Matches if the actual value is between min and max (inclusive).
 **Usage:**
 
 ```fsharp
-expect actual |> should (beBetween min max)
+expectNum(actual).toBeBetween(min, max)
 ```
 
 **Examples:**
 
 ```fsharp
-expect 5 |> should (beBetween 1 10)    // Within range
-expect 1 |> should (beBetween 1 10)    // Minimum (inclusive)
-expect 10 |> should (beBetween 1 10)   // Maximum (inclusive)
+expectNum(5).toBeBetween(1, 10)    // Within range
+expectNum(1).toBeBetween(1, 10)    // Minimum (inclusive)
+expectNum(10).toBeBetween(1, 10)   // Maximum (inclusive)
 
 // Age validation
 let age = user.Age
-expect age |> should (beBetween 18 65)
+expectNum(age).toBeBetween(18, 65)
 
 // Percentage
 let score = getScore()
-expect score |> should (beBetween 0.0 100.0)
+expectNum(score).toBeBetween(0.0, 100.0)
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect 15 |> should (beBetween 1 10)
+expectNum(15).toBeBetween(1, 10)
 // => Expected value to be between 1 and 10, but found 15
 ```
 
@@ -204,28 +204,28 @@ Matches if the actual floating-point value is close to the expected value within
 **Usage:**
 
 ```fsharp
-expect actual |> should (beCloseTo expected tolerance)
+expectFloat(actual).toBeCloseTo(expected, tolerance)
 ```
 
 **Examples:**
 
 ```fsharp
-expect 3.14159 |> should (beCloseTo 3.14 0.01)     // Within tolerance
-expect 3.14159 |> should (beCloseTo 3.14159 0.0)   // Exact match
+expectFloat(3.14159).toBeCloseTo(3.14, 0.01)     // Within tolerance
+expectFloat(3.14159).toBeCloseTo(3.14159, 0.0)   // Exact match
 
 // Calculation precision
 let result = Math.PI * 2.0
-expect result |> should (beCloseTo 6.283 0.001)
+expectFloat(result).toBeCloseTo(6.283, 0.001)
 
 // Financial calculations
 let total = calculateTotal()
-expect total |> should (beCloseTo 99.99 0.01)
+expectFloat(total).toBeCloseTo(99.99, 0.01)
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect 3.5 |> should (beCloseTo 3.14 0.1)
+expectFloat(3.5).toBeCloseTo(3.14, 0.1)
 // => Expected value to be close to 3.14 (±0.1), but found 3.5 (diff: 0.36)
 ```
 
@@ -249,28 +249,28 @@ Matches if the actual value is positive (> 0).
 **Usage:**
 
 ```fsharp
-expect actual |> should bePositive
+expectNum(actual).toBePositive()
 ```
 
 **Examples:**
 
 ```fsharp
-expect 5 |> should bePositive
-expect 0.1 |> should bePositive
-expect 100L |> should bePositive
+expectNum(5).toBePositive()
+expectNum(0.1).toBePositive()
+expectNum(100L).toBePositive()
 
 // After calculations
 let profit = revenue - expenses
-expect profit |> should bePositive
+expectNum(profit).toBePositive()
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect -5 |> should bePositive
+expectNum(-5).toBePositive()
 // => Expected positive value, but found -5
 
-expect 0 |> should bePositive
+expectNum(0).toBePositive()
 // => Expected positive value, but found 0
 ```
 
@@ -290,29 +290,29 @@ Matches if the actual value is negative (< 0).
 **Usage:**
 
 ```fsharp
-expect actual |> should beNegative
+expectNum(actual).toBeNegative()
 ```
 
 **Examples:**
 
 ```fsharp
-expect -5 |> should beNegative
-expect -0.1 |> should beNegative
-expect -100L |> should beNegative
+expectNum(-5).toBeNegative()
+expectNum(-0.1).toBeNegative()
+expectNum(-100L).toBeNegative()
 
 // Testing debt
 let balance = account.Balance
 if balance < 0 then
-    expect balance |> should beNegative
+    expectNum(balance).toBeNegative()
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect 5 |> should beNegative
+expectNum(5).toBeNegative()
 // => Expected negative value, but found 5
 
-expect 0 |> should beNegative
+expectNum(0).toBeNegative()
 // => Expected negative value, but found 0
 ```
 
@@ -327,25 +327,25 @@ Matches if the actual value is zero.
 **Usage:**
 
 ```fsharp
-expect actual |> should beZero
+expectNum(actual).toBeZero()
 ```
 
 **Examples:**
 
 ```fsharp
-expect 0 |> should beZero
-expect 0.0 |> should beZero
-expect 0L |> should beZero
+expectNum(0).toBeZero()
+expectNum(0.0).toBeZero()
+expectNum(0L).toBeZero()
 
 // After operations
 let remainder = 10 % 2
-expect remainder |> should beZero
+expectNum(remainder).toBeZero()
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect 5 |> should beZero
+expectNum(5).toBeZero()
 // => Expected zero, but found 5
 ```
 
@@ -482,12 +482,12 @@ let mathLibrarySpecs =
                 it "calculates average of numbers" (fun () ->
                     let result = MathHelpers.average [1.0; 2.0; 3.0; 4.0; 5.0]
                     expect result |> should (equal 3.0)
-                    expect result |> should (beGreaterThan 0.0)
+                    expectNum(result).toBeGreaterThan(0.0)
                 )
 
                 it "handles floating-point precision" (fun () ->
                     let result = MathHelpers.average [1.0/3.0; 2.0/3.0; 3.0/3.0]
-                    expect result |> should (beCloseTo 0.666 0.001)
+                    expectFloat(result).toBeCloseTo(0.666, 0.001)
                 )
             ]
 
@@ -495,7 +495,7 @@ let mathLibrarySpecs =
                 it "calculates factorial of positive number" (fun () ->
                     let result = MathHelpers.factorial 5
                     expect result |> should (equal 120)
-                    expect result |> should bePositive
+                    expectNum(result).toBePositive()
                 )
 
                 it "returns 1 for zero" (fun () ->
@@ -527,19 +527,19 @@ let mathLibrarySpecs =
                 it "keeps value within range" (fun () ->
                     let result = MathHelpers.clamp 5 1 10
                     expect result |> should (equal 5)
-                    expect result |> should (beBetween 1 10)
+                    expectNum(result).toBeBetween(1, 10)
                 )
 
                 it "clamps to minimum" (fun () ->
                     let result = MathHelpers.clamp -5 1 10
                     expect result |> should (equal 1)
-                    expect result |> should (beGreaterThanOrEqual 1)
+                    expectNum(result).toBeGreaterThanOrEqual(1)
                 )
 
                 it "clamps to maximum" (fun () ->
                     let result = MathHelpers.clamp 15 1 10
                     expect result |> should (equal 10)
-                    expect result |> should (beLessThanOrEqual 10)
+                    expectNum(result).toBeLessThanOrEqual(10)
                 )
             ]
         ]
@@ -565,13 +565,13 @@ let financialSpecs =
                     let time = 2.0   // 2 years
 
                     let interest = Financial.calculateSimpleInterest principal rate time
-                    expect interest |> should (beCloseTo 100.0 0.01)
-                    expect interest |> should bePositive
+                    expectFloat(interest).toBeCloseTo(100.0, 0.01)
+                    expectNum(interest).toBePositive()
                 )
 
                 it "handles edge case of zero rate" (fun () ->
                     let interest = Financial.calculateSimpleInterest 1000.0 0.0 2.0
-                    expect interest |> should beZero
+                    expectNum(interest).toBeZero()
                 )
             ]
 
@@ -580,15 +580,15 @@ let financialSpecs =
                     let income = 50000.0
                     let tax = Financial.calculateTax income
 
-                    expect tax |> should bePositive
-                    expect tax |> should (beLessThan income)
-                    expect tax |> should (beCloseTo 7500.0 100.0)  // Approximate
+                    expectNum(tax).toBePositive()
+                    expectNum(tax).toBeLessThan(income)
+                    expectFloat(tax).toBeCloseTo(7500.0, 100.0)  // Approximate
                 )
 
                 it "returns zero tax for income below threshold" (fun () ->
                     let income = 5000.0
                     let tax = Financial.calculateTax income
-                    expect tax |> should beZero
+                    expectNum(tax).toBeZero()
                 )
             ]
         ]

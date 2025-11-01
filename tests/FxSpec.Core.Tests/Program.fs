@@ -96,12 +96,12 @@ let main argv =
 
     try
         // Run FxSpec-based tests using simple runner
-        let success1 = runSpec "TypesSpecs - Testing FxSpec Types" TypesSpecs.testResultSpecs
-        let success2 = runSpec "TypesSpecs - Testing TestNode" TypesSpecs.testNodeSpecs
-        let success3 = runSpec "TypesSpecs - Testing TestResultNode" TypesSpecs.testResultNodeSpecs
-        let success4 = runSpec "SpecBuilderSpecs - Basic Functionality" SpecBuilderSpecs.specBuilderSpecs
-        let success5 = runSpec "SpecBuilderSpecs - Example Execution" SpecBuilderSpecs.exampleExecutionSpecs
-        let success6 = runSpec "SpecBuilderSpecs - Complex Nesting" SpecBuilderSpecs.complexNestingSpecs
+        let success1 = runSpec "TypesSpecs - Testing FxSpec Types" [TypesSpecs.testResultSpecs]
+        let success2 = runSpec "TypesSpecs - Testing TestNode" [TypesSpecs.testNodeSpecs]
+        let success3 = runSpec "TypesSpecs - Testing TestResultNode" [TypesSpecs.testResultNodeSpecs]
+        let success4 = runSpec "SpecBuilderSpecs - Basic Functionality" [SpecBuilderSpecs.specBuilderSpecs]
+        let success5 = runSpec "SpecBuilderSpecs - Example Execution" [SpecBuilderSpecs.exampleExecutionSpecs]
+        let success6 = runSpec "SpecBuilderSpecs - Complex Nesting" [SpecBuilderSpecs.complexNestingSpecs]
 
         printfn ""
         printfn "╔═══════════════════════════════════════════════════════════╗"

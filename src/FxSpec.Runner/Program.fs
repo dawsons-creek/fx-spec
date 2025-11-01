@@ -16,6 +16,7 @@ module Program =
         Filter: string option
         Verbose: bool
         Format: OutputFormat
+        Seed: int option
     }
 
     /// Default options.
@@ -24,6 +25,7 @@ module Program =
         Filter = None
         Verbose = false
         Format = Documentation
+        Seed = None
     }
     
     /// Parses command-line arguments.
@@ -44,6 +46,12 @@ module Program =
             parseArgs rest { options with Verbose = true }
         | "-v" :: rest ->
             parseArgs rest { options with Verbose = true }
+        | "--seed" :: seedStr :: rest ->
+            match Int32.TryParse(seedStr) with
+            | true, seedVal -> parseArgs rest { options with Seed = Some seedVal }
+            | _ ->
+                printfn "Warning: Invalid seed value '%s'. Ignoring seed." seedStr
+                parseArgs rest options
         | "--help" :: _ | "-h" :: _ ->
             printfn "FxSpec Test Runner"
             printfn ""
@@ -53,6 +61,7 @@ module Program =
             printfn "  --filter, -f <pattern>     Filter tests by description"
             printfn "  --format <format>          Output format: documentation (default), simple"
             printfn "  --verbose, -v              Verbose output"
+            printfn "  --seed <int>               Seed for randomizing test order"
             printfn "  --help, -h                 Show this help"
             printfn ""
             printfn "Examples:"
@@ -60,6 +69,7 @@ module Program =
             printfn "  fxspec MyTests.dll --filter \"Calculator\""
             printfn "  fxspec MyTests.dll --format simple"
             printfn "  fxspec MyTests.dll -f \"User\" -v"
+            printfn "  fxspec MyTests.dll --seed 12345"
             exit 0
         | path :: rest when not (path.StartsWith("-")) ->
             parseArgs rest { options with AssemblyPath = Some path }
@@ -111,8 +121,22 @@ module Program =
                         printfn "No tests match the filter"
                         0
                     else
+                        // Determine seed for randomization
+                        let seed = 
+                            match options.Seed with
+                            | Some s -> s
+                            | None -> 
+                                let rand = System.Random()
+                                rand.Next()
+
+                        printfn "Running tests with seed: %d" seed
+                        printfn ""
+
+                        // Shuffle tests if a seed is provided
+                        let shuffledTests = Shuffle.shuffle seed filteredTests
+
                         // Execute tests
-                        let (results, summary) = Executor.executeWithSummary filteredTests
+                        let (results, summary) = Executor.executeWithSummary shuffledTests
 
                         // Print results based on format
                         match options.Format with

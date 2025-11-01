@@ -28,26 +28,23 @@ open FxSpec.Matchers
 
 [<Tests>]
 let calculatorSpecs =
-    spec {
-        yield describe "Calculator" [
-            context "when adding numbers" [
-                it "adds two positive numbers" (fun () ->
-                    expect (2 + 2) |> should (equal 4)
-                )
+    describe "Calculator" [
+        context "when adding numbers" [
+            it "adds two positive numbers" (fun () ->
+                expect(2 + 2).toEqual(4)
+            )
 
-                it "handles negative numbers" (fun () ->
-                    expect (-1 + -1) |> should (equal -2)
-                )
-            ]
-
-            context "when dividing" [
-                it "raises exception for division by zero" (fun () ->
-                    let action () = 10 / 0
-                    expect action |> should raiseException
-                )
-            ]
+            it "handles negative numbers" (fun () ->
+                expect(-1 + -1).toEqual(-2)
+            )
         ]
-    }
+
+        context "when dividing" [
+            it "raises exception for division by zero" (fun () ->
+                expectThrows<System.DivideByZeroException>(fun () -> 10 / 0 |> ignore)
+            )
+        ]
+    ]
 ```
 
 **Output:**
@@ -71,20 +68,20 @@ Calculator
 
 ### 🔒 Type-Safe by Design
 - Compile-time error detection
-- Type-constrained matchers
+- Type-specific expectation methods
 - No runtime type surprises
 
-### 🧩 Computation Expression DSL
-- Natural F# syntax
-- Powerful tree-building abstraction
-- Compiler-verified structure
+### 💎 Fluent Assertion API
+- Natural method chaining: `expect(x).toEqual(y)`
+- Reads like English: "expect X to equal Y"
+- Type-specific expectations with IntelliSense support
 
-### 💎 Discriminated Union Results
+### 🎨 Discriminated Union Results
 - Explicit success/failure modeling
 - Rich failure data for debugging
 - Pattern matching support
 
-### 🎨 Beautiful Console Output
+### � Beautiful Console Output
 - Powered by Spectre.Console
 - Nested, colored output
 - Comprehensive failure messages with diffs
@@ -92,7 +89,7 @@ Calculator
 ### 🔧 Functional & Immutable
 - Pure functions throughout
 - Immutable test data
-- Composable matchers
+- Composable test structures
 
 ### 🚀 Pure F# Implementation
 - No dependency on NUnit, xUnit, or MSTest
@@ -115,13 +112,11 @@ open FxSpec.Matchers
 
 [<Tests>]
 let myFirstSpec =
-    spec {
-        yield describe "My Feature" [
-            it "works correctly" (fun () ->
-                expect true |> should beTrue
-            )
-        ]
-    }
+    describe "My Feature" [
+        it "works correctly" (fun () ->
+            expectBool(true).toBeTrue()
+        )
+    ]
 ```
 
 ### Run Tests
@@ -153,11 +148,37 @@ describe "User" [
 Fluent, type-safe assertions:
 
 ```fsharp
-expect actual |> should (equal expected)
-expect list |> should (contain item)
-expect value |> should beNil
-expect option |> should (beSome 42)
-expect result |> should (beOk "success")
+// Basic equality
+expect(actual).toEqual(expected)
+
+// Collections
+expectSeq(list).toContain(item)
+expectSeq(list).toHaveLength(3)
+
+// Options
+expectOption(option).toBeSome(42)
+expectOption(option).toBeNone()
+
+// Results
+expectResult(result).toBeOk("success")
+expectResult(result).toBeError("failure")
+
+// Booleans
+expectBool(value).toBeTrue()
+expectBool(value).toBeFalse()
+
+// Numbers
+expectNum(value).toBeGreaterThan(0)
+expectFloat(value).toBeCloseTo(3.14, 0.01)
+
+// Strings
+expectStr(text).toStartWith("Hello")
+expectStr(text).toContain("world")
+expectStr(text).toMatchRegex(@"\d+")
+
+// Exceptions
+expectThrows<ArgumentException>(fun () -> doSomething())
+expectThrowsWithMessage<InvalidOperationException>("error message", fun () -> doSomething())
 ```
 
 ### 3. Hooks & Setup
@@ -178,86 +199,150 @@ describe "Database" [
 
     it "saves records" (fun () ->
         let result = connection.Save(record)
-        expect result |> should beTrue
+        expectBool(result).toBeTrue()
     )
 ]
 ```
 
-### 4. Custom Matchers
+### 4. Focused and Pending Tests
 
-Simple function-based matchers:
+Control test execution:
 
 ```fsharp
-let beEven : Matcher<int> =
-    fun actual ->
-        if actual % 2 = 0 then Pass
-        else Fail($"{actual} is not even", None, Some (box actual))
-
-expect 4 |> should beEven
+describe "Feature" [
+    fit "runs only this test" (fun () ->
+        expect(1 + 1).toEqual(2)
+    )
+    
+    it "skips this test" (fun () ->
+        expect(2 + 2).toEqual(4)
+    )
+    
+    xit "pending test - not implemented yet" (fun () ->
+        failwith "TODO"
+    )
+]
 ```
 
 ## Advanced Features
 
-### Request Specs (API Testing)
+### Type-Specific Expectations
 
-> **Note:** Request specs are a planned feature for future releases.
+FxSpec provides specialized expectation functions for different types:
 
 ```fsharp
-// Future feature - not yet implemented
-requestSpec {
-    yield describe "Users API" [
-        it "creates a user" (fun () ->
-            let response =
-                post "/api/users"
-                |> withJson {| Name = "John" |}
-            expect response |> should (haveStatusCode 201)
-        )
-    ]
-}
+// Generic expectations
+expect(value).toEqual(expected)
+expect(value).notToEqual(unexpected)
+
+// Numeric expectations (works with any numeric type)
+expectNum(42).toBeGreaterThan(0)
+expectNum(42).toBeLessThan(100)
+
+// Integer-specific
+expectInt(42).toBePositive()
+expectInt(-5).toBeNegative()
+expectInt(0).toBeZero()
+
+// Float-specific
+expectFloat(3.14159).toBeCloseTo(3.14, 0.01)
+expectFloat(1.0).toBePositive()
+
+// String expectations
+expectStr("hello world").toStartWith("hello")
+expectStr("hello world").toEndWith("world")
+expectStr("hello world").toContain("lo wo")
+expectStr("test123").toMatchRegex(@"\w+\d+")
+
+// Collection expectations
+expectSeq([1; 2; 3]).toHaveLength(3)
+expectSeq([1; 2; 3]).toContain(2)
+expectSeq([1; 2; 3]).toContainAll([1; 3])
+expectSeq([]).toBeEmpty()
+
+// Option expectations
+expectOption(Some 42).toBeSome(42)
+expectOption(None).toBeNone()
+
+// Result expectations  
+expectResult(Ok "success").toBeOk("success")
+expectResult(Error "failed").toBeError("failed")
+
+// Boolean expectations
+expectBool(true).toBeTrue()
+expectBool(false).toBeFalse()
+
+// Exception expectations
+expectThrows<ArgumentException>(fun () -> raise (ArgumentException()))
+expectThrowsWithMessage<InvalidOperationException>("error", fun () -> 
+    raise (InvalidOperationException("error"))
+)
+expectNotToThrow(fun () -> printfn "safe operation")
 ```
 
 ### Comprehensive Matchers
 
-- **Equality**: `equal`, `beNil`, `beSome`, `beNone`
-- **Collections**: `contain`, `beEmpty`, `haveLength`
-- **Numeric**: `beGreaterThan`, `beLessThan`, `beCloseTo`
-- **Strings**: `startWith`, `endWith`, `matchRegex`
-- **Exceptions**: `raiseException<T>`
-- **Results**: `beOk`, `beError`
+- **Equality**: `toEqual`, `notToEqual`
+- **Collections**: `toContain`, `toBeEmpty`, `toHaveLength`, `toContainAll`
+- **Numeric**: `toBeGreaterThan`, `toBeLessThan`, `toBeCloseTo`, `toBePositive`, `toBeNegative`, `toBeZero`
+- **Strings**: `toStartWith`, `toEndWith`, `toContain`, `toMatchRegex`, `toHaveLength`
+- **Exceptions**: `expectThrows<T>`, `expectThrowsWithMessage<T>`, `expectNotToThrow`
+- **Options**: `toBeSome`, `toBeNone`
+- **Results**: `toBeOk`, `toBeError`
+- **Booleans**: `toBeTrue`, `toBeFalse`
 
 ## Architecture Highlights
 
-### Computation Expression as Tree Builder
+### Simplified DSL
 
-The `spec` CE builds an immutable tree structure:
+FxSpec uses a clean, straightforward syntax without computation expressions:
+
+```fsharp
+[<Tests>]
+let myTests =
+    describe "Feature" [
+        it "works" (fun () ->
+            expect(result).toEqual(expected)
+        )
+    ]
+```
+
+The DSL builds an immutable tree structure:
 
 ```fsharp
 type TestNode =
     | Example of description: string * test: TestExecution
-    | Group of description: string * tests: TestNode list
+    | Group of description: string * hooks: GroupHooks * tests: TestNode list
+    | FocusedExample of description: string * test: TestExecution
+    | FocusedGroup of description: string * hooks: GroupHooks * tests: TestNode list
+    // ... and more
 ```
 
 This separates **declaration** from **execution**, enabling:
 - Test filtering and selection
 - Multiple output formats
-- Future parallel execution
-- Metaprogramming capabilities
+- Focused and pending test support
+- Beautiful hierarchical output
 
-### Type-Safe Matcher System
+### Type-Safe Fluent API
 
-Matchers return structured results:
+The fluent API uses wrapper types for type-specific operations:
 
 ```fsharp
-type MatchResult =
-    | Pass
-    | Fail of message: string * expected: obj option * actual: obj option
+type Expectation<'a>(actual: 'a) =
+    member _.toEqual(expected: 'a) = ...
+    member _.notToEqual(expected: 'a) = ...
+
+type NumericExpectation<'a when 'a :> IComparable<'a>>(actual: 'a) =
+    member _.toBeGreaterThan(expected: 'a) = ...
+    member _.toBeLessThan(expected: 'a) = ...
 ```
 
 Benefits:
-- Single source of truth
-- Rich failure data
-- Composable and testable
-- Impossible to forget failure messages
+- IntelliSense shows only applicable methods
+- Compile-time type checking
+- Clear, readable test code
+- Impossible to use wrong assertion type
 
 ## Project Status
 
@@ -265,13 +350,14 @@ Benefits:
 
 FxSpec is a fully functional F# BDD testing framework with:
 
-1. ✅ Complete DSL implementation (spec, describe, it, context)
-2. ✅ Comprehensive matcher library (50+ matchers)
-3. ✅ Test discovery and execution
-4. ✅ Beautiful console output with Spectre.Console
-5. ✅ Hooks (beforeEach, afterEach, beforeAll, afterAll)
-6. ✅ Focused and pending tests (fit, fdescribe, xit, pending)
-7. ✅ Self-hosting (FxSpec tests itself - 166 tests passing!)
+1. ✅ Complete DSL implementation (describe, it, context)
+2. ✅ Fluent assertion API with type-specific expectations
+3. ✅ Comprehensive matcher library (50+ assertion methods)
+4. ✅ Test discovery and execution
+5. ✅ Beautiful console output with Spectre.Console
+6. ✅ Hooks (beforeEach, afterEach, beforeAll, afterAll)
+7. ✅ Focused and pending tests (fit, fdescribe, xit, pending)
+8. ✅ Self-hosting (FxSpec tests itself - 52 tests passing!)
 
 **Ready for:** Early adopters and feedback
 
@@ -292,15 +378,17 @@ FxSpec is a fully functional F# BDD testing framework with:
 ## Roadmap
 
 ### Phase 1: Core DSL (Weeks 1-2) ✅
-- [x] Design computation expression
-- [x] Implement SpecBuilder
-- [x] Add describe/context/it
-- [x] State management (let', subject, hooks)
+- [x] Design test tree structure
+- [x] Implement describe/context/it
+- [x] Simple, clean syntax without computation expressions
+- [x] Hooks (beforeEach, afterEach, beforeAll, afterAll)
 
 ### Phase 2: Matchers (Weeks 2-3) ✅
-- [x] MatchResult type
-- [x] Core matchers
-- [x] Custom matcher API
+- [x] Fluent assertion API design
+- [x] Type-specific expectation wrappers
+- [x] Core matchers (equality, collections, numeric, strings)
+- [x] Exception matchers
+- [x] Option and Result matchers
 
 ### Phase 3: Runner (Weeks 3-5)
 
@@ -312,10 +400,10 @@ FxSpec is a fully functional F# BDD testing framework with:
 
 #### 3.2: Test Execution ✅
 - [x] Test discovery with `[<Tests>]` attribute
-- [x] Execution engine
+- [x] Execution engine with hook support
 - [x] CLI tool with filtering
 - [x] FxSpec runs its own tests!
-- [ ] Scope stack with `let'` and hooks (deferred to Phase 5)
+- [x] Support for both TestNode and TestNode list discovery
 
 ### Phase 4: Formatters (Week 5-6) ✅
 - [x] Spectre.Console integration
@@ -337,18 +425,24 @@ FxSpec is a fully functional F# BDD testing framework with:
 - [x] beforeAll/afterAll hooks
 - [x] Code quality refactoring
 - [x] Input validation for matchers
-- [x] Extract magic numbers to constants
-- [x] Functional refactoring (eliminate mutable variables)
+- [x] Functional refactoring
+
+### Phase 7: DSL Modernization ✅
+- [x] Fluent assertion API with method chaining
+- [x] Type-specific expectation wrappers
+- [x] Remove computation expression wrapper
+- [x] Migrate all tests to new syntax
+- [x] Update documentation
 
 ## Future Enhancements
 
 ### Planned Features
-- [ ] Request specs (API testing)
-- [ ] Parallel test execution
 - [ ] Custom formatters API
-- [ ] State management with `let'` and `subject` (experimental)
+- [ ] Parallel test execution
 - [ ] Property-based testing integration
 - [ ] Code coverage integration
+- [ ] Watch mode for continuous testing
+- [ ] Custom assertion messages
 
 ## Contributing
 

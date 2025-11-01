@@ -6,24 +6,26 @@ Complete reference for FxSpec's Domain-Specific Language functions.
 
 ## Overview
 
-FxSpec uses an F# computation expression (`spec`) to build test trees. The DSL provides functions for organizing tests, defining test cases, and managing test lifecycle.
+FxSpec uses a clean, functional DSL to build test trees. The DSL provides functions for organizing tests, defining test cases, and managing test lifecycle with hooks.
 
 ---
 
 ## Core Functions
 
-### spec
+### Test Structure
 
-**Type:** `SpecBuilder`
-
-The computation expression builder that creates test trees.
+FxSpec tests are simple values marked with the `[<Tests>]` attribute. No wrapper is needed.
 
 **Usage:**
 
 ```fsharp
-spec {
-    // Your test definitions
-}
+[<Tests>]
+let myTests =
+    describe "Feature" [
+        it "works" (fun () ->
+            expectBool(true).toBeTrue()
+        )
+    ]
 ```
 
 **Example:**
@@ -31,21 +33,19 @@ spec {
 ```fsharp
 [<Tests>]
 let myTests =
-    spec {
-        describe "Feature" [
-            it "works" (fun () ->
-                expect true |> should beTrue
-            )
-        ]
-    }
+    describe "Feature" [
+        it "works" (fun () ->
+            expectBool(true).toBeTrue()
+        )
+    ]
 ```
 
 **Notes:**
 
-- All tests must be wrapped in a `spec { }` block
-- The `spec` builder creates an immutable test tree
+- Tests are immutable tree structures built at declaration time
 - Tests are not executed during building, only when the runner executes them
 - Mark test functions with `[<Tests>]` attribute for discovery
+- Test discovery works with both `TestNode` and `TestNode list` types
 
 ---
 
@@ -71,21 +71,19 @@ describe "description" [
 **Example:**
 
 ```fsharp
-spec {
-    describe "Calculator" [
-        describe "addition" [
-            it "adds positive numbers" (fun () ->
-                expect (2 + 3) |> should (equal 5)
-            )
-        ]
-
-        describe "subtraction" [
-            it "subtracts numbers" (fun () ->
-                expect (5 - 3) |> should (equal 2)
-            )
-        ]
+describe "Calculator" [
+    describe "addition" [
+        it "adds positive numbers" (fun () ->
+            expect(2 + 3).toEqual(5)
+        )
     ]
-}
+
+    describe "subtraction" [
+        it "subtracts numbers" (fun () ->
+            expect(5 - 3).toEqual(2)
+        )
+    ]
+]
 ```
 
 **Output:**
@@ -128,24 +126,22 @@ context "when something is true" [
 **Example:**
 
 ```fsharp
-spec {
-    describe "Stack" [
-        context "when empty" [
-            it "has zero count" (fun () ->
-                let stack = Stack<int>()
-                expect stack.Count |> should (equal 0)
-            )
-        ]
-
-        context "when not empty" [
-            it "has non-zero count" (fun () ->
-                let stack = Stack<int>()
-                stack.Push(1)
-                expect stack.Count |> should (equal 1)
-            )
-        ]
+describe "Stack" [
+    context "when empty" [
+        it "has zero count" (fun () ->
+            let stack = Stack<int>()
+            expect(stack.Count).toEqual(0)
+        )
     ]
-}
+
+    context "when not empty" [
+        it "has non-zero count" (fun () ->
+            let stack = Stack<int>()
+            stack.Push(1)
+            expect(stack.Count).toEqual(1)
+        )
+    ]
+]
 ```
 
 **Notes:**
@@ -180,7 +176,7 @@ it "description" (fun () ->
 ```fsharp
 it "adds two numbers" (fun () ->
     let result = Calculator.add 2 3
-    expect result |> should (equal 5)
+    expect(result).toEqual(5)
 )
 ```
 
@@ -210,24 +206,22 @@ Focused test - runs only this test when focused tests exist.
 
 ```fsharp
 fit "only run this test" (fun () ->
-    expect true |> should beTrue
+    expectBool(true).toBeTrue()
 )
 ```
 
 **Example:**
 
 ```fsharp
-spec {
-    describe "My Suite" [
-        fit "work on this test" (fun () ->  // Only this runs
-            expect (2 + 2) |> should (equal 4)
-        )
+describe "My Suite" [
+    fit "work on this test" (fun () ->  // Only this runs
+        expect(2 + 2).toEqual(4)
+    )
 
-        it "this is skipped" (fun () ->    // Skipped
-            expect true |> should beTrue
-        )
-    ]
-}
+    it "this is skipped" (fun () ->    // Skipped
+        expectBool(true).toBeTrue()
+    )
+]
 ```
 
 **Output:**
@@ -272,16 +266,16 @@ fdescribe "only run this group" [
 spec {
     fdescribe "Work on Calculator" [  // This group runs
         it "test 1" (fun () ->
-            expect true |> should beTrue
+            expectBool(true).toBeTrue()
         )
         it "test 2" (fun () ->
-            expect true |> should beTrue
+            expectBool(true).toBeTrue()
         )
     ]
 
     describe "Other Feature" [        // This group is skipped
         it "test 3" (fun () ->
-            expect true |> should beTrue
+            expectBool(true).toBeTrue()
         )
     ]
 }
@@ -318,17 +312,15 @@ xit "not ready yet" (fun () ->
 **Example:**
 
 ```fsharp
-spec {
-    describe "Feature" [
+describe "Feature" [
         it "working test" (fun () ->
-            expect true |> should beTrue
+            expectBool(true).toBeTrue()
         )
 
         xit "broken test" (fun () ->  // Skipped
-            expect false |> should beTrue
+            expectBool(false).toBeTrue()
         )
     ]
-}
 ```
 
 **Output:**
@@ -370,17 +362,15 @@ pending "TODO: implement this test" (fun () ->
 **Example:**
 
 ```fsharp
-spec {
-    describe "Feature" [
+describe "Feature" [
         it "implemented test" (fun () ->
-            expect true |> should beTrue
+            expectBool(true).toBeTrue()
         )
 
         pending "write test for edge case" (fun () ->
             ()
         )
     ]
-}
 ```
 
 **Notes:**
@@ -414,8 +404,7 @@ beforeEach (fun () ->
 **Example:**
 
 ```fsharp
-spec {
-    describe "Database Tests" [
+describe "Database Tests" [
         let mutable connection = null
 
         beforeEach (fun () ->
@@ -436,10 +425,9 @@ spec {
         it "inserts data" (fun () ->
             connection.Execute("INSERT INTO users VALUES (1, 'test')")
             let count = connection.Query("SELECT COUNT(*) FROM users")
-            expect count |> should (equal 1)
+            expect(count).toEqual(1)
         )
     ]
-}
 ```
 
 **Execution Order:**
@@ -479,8 +467,7 @@ afterEach (fun () ->
 **Example:**
 
 ```fsharp
-spec {
-    describe "File Tests" [
+describe "File Tests" [
         let testFile = "test.txt"
 
         beforeEach (fun () ->
@@ -494,10 +481,9 @@ spec {
 
         it "reads file" (fun () ->
             let content = File.ReadAllText(testFile)
-            expect content |> should (equal "test content")
+            expect(content).toEqual("test content")
         )
     ]
-}
 ```
 
 **Notes:**
@@ -529,8 +515,7 @@ beforeAll (fun () ->
 **Example:**
 
 ```fsharp
-spec {
-    describe "API Tests" [
+describe "API Tests" [
         let mutable server = null
 
         beforeAll (fun () ->
@@ -544,15 +529,14 @@ spec {
 
         it "test 1" (fun () ->
             let response = server.Get("/api/users")
-            expect response.Status |> should (equal 200)
+            expect(response.Status).toEqual(200)
         )
 
         it "test 2" (fun () ->
             let response = server.Post("/api/users", { Name = "test" })
-            expect response.Status |> should (equal 201)
+            expect(response.Status).toEqual(201)
         )
     ]
-}
 ```
 
 **Execution Order:**
@@ -590,8 +574,7 @@ afterAll (fun () ->
 **Example:**
 
 ```fsharp
-spec {
-    describe "Integration Tests" [
+describe "Integration Tests" [
         let mutable dockerContainer = null
 
         beforeAll (fun () ->
@@ -604,7 +587,6 @@ spec {
 
         // tests...
     ]
-}
 ```
 
 **Notes:**
@@ -649,8 +631,8 @@ let userServiceSpecs =
                 context "when valid data is provided" [
                     it "creates a new user" (fun () ->
                         let user = service.CreateUser("Alice", "alice@example.com")
-                        expect user.Name |> should (equal "Alice")
-                        expect user.Email |> should (equal "alice@example.com")
+                        expect(user.Name).toEqual("Alice")
+                        expect(user.Email).toEqual("alice@example.com")
                     )
 
                     it "assigns a unique ID" (fun () ->
@@ -710,15 +692,13 @@ context "scenario A"
 ### Test Organization
 
 ```fsharp
-spec {
-    describe "FeatureName" [           // Top-level: feature/module/class
+describe "FeatureName" [           // Top-level: feature/module/class
         describe "MethodOrFunction" [   // Second-level: method/function
             context "when condition" [  // Third-level: specific context
                 it "expected behavior" (fun () -> ...)
             ]
         ]
     ]
-}
 ```
 
 ### Hook Usage

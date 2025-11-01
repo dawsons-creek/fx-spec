@@ -25,8 +25,7 @@ type Stack<'a>() =
 /// Example showing hooks for setup and teardown
 [<Tests>]
 let hooksExample =
-    spec {
-        yield describe "A Stack" [
+    describe "A Stack" [
             beforeAll (fun () ->
                 printfn "-- Setting up test suite (runs once) --"
             )
@@ -38,14 +37,14 @@ let hooksExample =
             context "when newly created" [
                 it "is empty" (fun () ->
                     let stack = Stack<int>()
-                    expect stack.Count |> should (equal 0)
+                    expect(stack.Count).toEqual(0)
                 )
 
                 it "can have items pushed to it" (fun () ->
                     let stack = Stack<int>()
                     stack.Push(42)
-                    expect stack.Count |> should (equal 1)
-                    expect stack.Peek() |> should (equal 42)
+                    expect(stack.Count).toEqual(1)
+                    expect(stack.Peek()).toEqual(42)
                 )
             ]
 
@@ -66,18 +65,18 @@ let hooksExample =
                 )
 
                 it "has items from beforeEach hook" (fun () ->
-                    expect sharedStack.Count |> should (equal 2)
+                    expect(sharedStack.Count).toEqual(2)
                 )
 
                 it "pops items in LIFO order" (fun () ->
-                    expect (sharedStack.Pop()) |> should (equal 20)
-                    expect (sharedStack.Pop()) |> should (equal 10)
+                    expect(sharedStack.Pop()).toEqual(20)
+                    expect(sharedStack.Pop()).toEqual(10)
                 )
 
                 it "can push additional items" (fun () ->
                     sharedStack.Push(30)
-                    expect sharedStack.Count |> should (equal 3)
-                    expect sharedStack.Peek() |> should (equal 30)
+                    expect(sharedStack.Count).toEqual(3)
+                    expect(sharedStack.Peek()).toEqual(30)
                 )
             ]
 
@@ -90,7 +89,7 @@ let hooksExample =
                 )
 
                 it "has value from outer hook" (fun () ->
-                    expect outerValue |> should (equal 1)
+                    expect(outerValue).toEqual(1)
                 )
 
                 context "inner context" [
@@ -101,17 +100,17 @@ let hooksExample =
 
                     it "has value from both outer and inner hooks" (fun () ->
                         // Outer hook sets to 1, inner hook adds 10
-                        expect outerValue |> should (equal 11)
+                        expect(outerValue).toEqual(11)
                     )
 
                     it "hooks run for each test" (fun () ->
                         // Fresh execution: outer sets 1, inner adds 10
-                        expect outerValue |> should (equal 11)
+                        expect(outerValue).toEqual(11)
                     )
                 ]
             ]
         ]
-    }
+    ]
 
 printfn "\nThis example demonstrates:"
 printfn "1. beforeAll/afterAll - Run once per describe/context block"

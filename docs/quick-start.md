@@ -52,23 +52,21 @@ open FxSpec.Matchers
 
 [<Tests>]
 let myFirstSpecs =
-    spec {
-        describe "My First Test Suite" [
-            it "passes!" (fun () ->
-                expect true |> should beTrue
-            )
+    describe "My First Test Suite" [
+        it "passes!" (fun () ->
+            expectBool(true).toBeTrue()
+        )
 
-            it "checks equality" (fun () ->
-                let result = 2 + 2
-                expect result |> should (equal 4)
-            )
+        it "checks equality" (fun () ->
+            let result = 2 + 2
+            expect(result).toEqual(4)
+        )
 
-            it "works with strings" (fun () ->
-                let greeting = "Hello, FxSpec!"
-                expect greeting |> should (startWith "Hello")
-            )
-        ]
-    }
+        it "works with strings" (fun () ->
+            let greeting = "Hello, FxSpec!"
+            expectStr(greeting).toStartWith("Hello")
+        )
+    ]
 ```
 
 ### Step 2: Update Your .fsproj
@@ -125,15 +123,17 @@ My First Test Suite
 
 Let's break down what you just wrote:
 
-### The `spec` Builder
+### The Test Structure
 
 ```fsharp
-spec {
-    // Your test definitions go here
-}
+[<Tests>]
+let myFirstSpecs =
+    describe "My First Test Suite" [
+        // Individual tests go here
+    ]
 ```
 
-The `spec` computation expression is the container for all your tests. It builds an immutable test tree.
+FxSpec tests are simple values marked with the `[<Tests>]` attribute. The test discovery system finds these automatically.
 
 ### The `describe` Function
 
@@ -149,7 +149,7 @@ describe "My First Test Suite" [
 
 ```fsharp
 it "passes!" (fun () ->
-    expect true |> should beTrue
+    expectBool(true).toBeTrue()
 )
 ```
 
@@ -158,17 +158,22 @@ it "passes!" (fun () ->
 - First parameter: Test description (string)
 - Second parameter: Test function that makes assertions
 
-### The `expect` Function
+### The Fluent Expectation API
 
 ```fsharp
-expect actual |> should (equal expected)
+expect(actual).toEqual(expected)
+expectBool(value).toBeTrue()
+expectSeq(list).toContain(item)
 ```
 
-`expect` starts an assertion:
+FxSpec provides type-specific expectation functions that return fluent wrappers:
 
-- `actual` - The value you're testing
-- `to'` - Applies a matcher (positive assertion)
-- `equal expected` - The matcher function
+- `expect(value)` - Generic expectations for any type
+- `expectBool(value)` - Boolean assertions
+- `expectNum(value)` - Numeric comparisons
+- `expectSeq(value)` - Collection assertions
+- `expectStr(value)` - String matching
+- And more...
 
 ---
 
@@ -181,58 +186,61 @@ Now that you have FxSpec running, explore more features:
 Use `context` to add more structure:
 
 ```fsharp
-spec {
-    describe "Calculator" [
-        context "when adding positive numbers" [
-            it "returns the sum" (fun () ->
-                expect (2 + 3) |> should (equal 5)
-            )
-        ]
-
-        context "when adding negative numbers" [
-            it "handles negatives correctly" (fun () ->
-                expect (-2 + -3) |> should (equal -5)
-            )
-        ]
+describe "Calculator" [
+    context "when adding positive numbers" [
+        it "returns the sum" (fun () ->
+            expect(2 + 3).toEqual(5)
+        )
     ]
-}
+
+    context "when adding negative numbers" [
+        it "handles negatives correctly" (fun () ->
+            expect(-2 + -3).toEqual(-5)
+        )
+    ]
+]
 ```
 
-### Use More Matchers
+### Use Type-Specific Expectations
 
-Explore the rich matcher library:
+Explore the type-specific expectation functions:
 
 ```fsharp
 // Collections
-expect [1; 2; 3] |> should (contain 2)
-expect [] |> should beEmpty
-expect [1; 2; 3] |> should (haveLength 3)
+expectSeq([1; 2; 3]).toContain(2)
+expectSeq([]).toBeEmpty()
+expectSeq([1; 2; 3]).toHaveLength(3)
 
 // Strings
-expect "hello world" |> should (endWith "world")
-expect "test@example.com" |> should (matchRegex @"^\w+@\w+\.\w+$")
+expectStr("hello world").toEndWith("world")
+expectStr("test@example.com").toMatchRegex(@"^\w+@\w+\.\w+$")
 
 // Numeric
-expect 10 |> should (beGreaterThan 5)
-expect 3.14159 |> should (beCloseTo 3.14 0.01)
+expectNum(10).toBeGreaterThan(5)
+expectFloat(3.14159).toBeCloseTo(3.14, 0.01)
 
 // Options
-expect (Some 42) |> should (beSome 42)
-expect None |> should beNone
+expectOption(Some 42).toBeSome(42)
+expectOption(None).toBeNone()
 
 // Results
-expect (Ok "success") |> should (beOk "success")
-expect (Error "failed") |> should (beError "failed")
+expectResult(Ok "success").toBeOk("success")
+expectResult(Error "failed").toBeError("failed")
+
+// Exceptions
+expectThrows<System.ArgumentException>(fun () -> 
+    invalidArg "param" "message"
+)
 ```
 
 ### Negative Assertions
 
-Use `notTo'` for negative assertions:
+Use `.notTo...` methods for negative assertions:
 
 ```fsharp
-expect 5 |> shouldNot (equal 10)
-expect "hello" |> shouldNot (startWith "bye")
-expect [1; 2; 3] |> shouldNot beEmpty
+expect(5).notToEqual(10)
+expectStr("hello").notToStartWith("bye")
+expectSeq([1; 2; 3]).notToBeEmpty()
 ```
 
 ### Focus on Specific Tests
@@ -240,17 +248,15 @@ expect [1; 2; 3] |> shouldNot beEmpty
 During development, focus on specific tests:
 
 ```fsharp
-spec {
-    describe "My Suite" [
-        fit "only run this test" (fun () ->  // (1)!
-            expect true |> should beTrue
-        )
+describe "My Suite" [
+    fit "only run this test" (fun () ->  // (1)!
+        expectBool(true).toBeTrue()
+    )
 
-        it "this test will be skipped" (fun () ->
-            expect false |> should beTrue
-        )
-    ]
-}
+    it "this test will be skipped" (fun () ->
+        expectBool(false).toBeTrue()
+    )
+]
 ```
 
 1. `fit` (focused it) runs only this test. Use `fdescribe` to focus an entire group.
@@ -260,21 +266,19 @@ spec {
 Mark tests as pending:
 
 ```fsharp
-spec {
-    describe "My Suite" [
-        it "working test" (fun () ->
-            expect true |> should beTrue
-        )
+describe "My Suite" [
+    it "working test" (fun () ->
+        expectBool(true).toBeTrue()
+    )
 
-        xit "not ready yet" (fun () ->  // (1)!
-            expect false |> should beTrue
-        )
+    xit "not ready yet" (fun () ->  // (1)!
+        expectBool(false).toBeTrue()
+    )
 
-        pending "TODO: implement this test" (fun () ->  // (2)!
-            ()
-        )
-    ]
-}
+    pending "TODO: implement this test" (fun () ->  // (2)!
+        ()
+    )
+]
 ```
 
 1. `xit` (excluded it) skips this test
@@ -285,24 +289,22 @@ spec {
 Use hooks for test setup:
 
 ```fsharp
-spec {
-    describe "Database Tests" [
-        let mutable connection = null
+describe "Database Tests" [
+    let mutable connection = null
 
-        beforeEach (fun () ->
-            connection <- Database.connect()
-        )
+    beforeEach (fun () ->
+        connection <- Database.connect()
+    )
 
-        afterEach (fun () ->
-            connection.Dispose()
-        )
+    afterEach (fun () ->
+        connection.Dispose()
+    )
 
-        it "queries the database" (fun () ->
-            let result = connection.Query("SELECT 1")
-            expect result |> shouldNot beEmpty
-        )
-    ]
-}
+    it "queries the database" (fun () ->
+        let result = connection.Query("SELECT 1")
+        expectSeq(result).notToBeEmpty()
+    )
+]
 ```
 
 ---
@@ -334,34 +336,33 @@ open FxSpec.Matchers
 
 [<Tests>]
 let calculatorSpecs =
-    spec {
-        describe "Calculator" [
-            describe "add" [
-                it "adds positive numbers" (fun () ->
-                    expect (Calculator.add 2 3) |> should (equal 5)
-                )
+    describe "Calculator" [
+        describe "add" [
+            it "adds positive numbers" (fun () ->
+                expect(Calculator.add 2 3).toEqual(5)
+            )
 
-                it "adds negative numbers" (fun () ->
-                    expect (Calculator.add -1 -2) |> should (equal -3)
-                )
+            it "adds negative numbers" (fun () ->
+                expect(Calculator.add -1 -2).toEqual(-3)
+            )
 
-                it "adds mixed numbers" (fun () ->
-                    expect (Calculator.add 10 -5) |> should (equal 5)
-                )
-            ]
-
-            describe "divide" [
-                it "divides evenly" (fun () ->
-                    expect (Calculator.divide 10 2) |> should (equal 5)
-                )
-
-                it "raises exception on division by zero" (fun () ->
-                    let action () = Calculator.divide 10 0
-                    expect action |> should raiseException
-                )
-            ]
+            it "adds mixed numbers" (fun () ->
+                expect(Calculator.add 10 -5).toEqual(5)
+            )
         ]
-    }
+
+        describe "divide" [
+            it "divides evenly" (fun () ->
+                expect(Calculator.divide 10 2).toEqual(5)
+            )
+
+            it "raises exception on division by zero" (fun () ->
+                expectThrows<System.ArgumentException>(fun () -> 
+                    Calculator.divide 10 0 |> ignore
+                )
+            )
+        ]
+    ]
 ```
 
 ---
@@ -428,7 +429,7 @@ Make sure your test module has the `[<Tests>]` attribute:
 
 ```fsharp
 [<Tests>]  // Don't forget this!
-let mySpecs = spec { ... }
+let mySpecs = describe "..." [...]
 ```
 
 ### Compilation Errors
@@ -436,8 +437,9 @@ let mySpecs = spec { ... }
 Common issues:
 
 1. **Missing opens**: Make sure you have both `open FxSpec.Core` and `open FxSpec.Matchers`
-2. **Wrong matcher type**: Matchers are type-constrained. You can't use `beEmpty` on a number, for example.
+2. **Wrong expectation type**: Use the appropriate type-specific function (e.g., `expectSeq` for collections, `expectStr` for strings)
 3. **Missing parentheses**: Remember to wrap your test in `fun () ->` for lazy evaluation
+4. **Method not available**: IntelliSense will show you the available methods for each expectation type
 
 ### Need Help?
 

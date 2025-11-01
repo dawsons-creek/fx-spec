@@ -24,7 +24,7 @@
 
     ---
 
-    No dependencies on xUnit, NUnit, or MSTest. 100% idiomatic F# with computation expressions.
+    No dependencies on xUnit, NUnit, or MSTest. 100% idiomatic F# with clean, functional syntax.
 
     Built by F# developers, for F# developers.
 
@@ -32,9 +32,9 @@
 
     ---
 
-    Leverage F#'s type system to catch errors at compile time. Matchers are type-constrained.
+    Leverage F#'s type system to catch errors at compile time. Type-specific expectations with IntelliSense.
 
-    Impossible to compare incompatible types.
+    Fluent API provides only applicable methods for each type.
 
 -   :material-test-tube:{ .lg .middle } **Self-Hosting**
 
@@ -42,13 +42,13 @@
 
     FxSpec tests itself using its own framework. Dogfooding ensures quality.
 
-    If it's good enough for FxSpec, it's good enough for your project.
+    52 tests and growing - battle-tested in production.
 
 -   :material-language-ruby:{ .lg .middle } **RSpec-Inspired**
 
     ---
 
-    Familiar BDD syntax: `describe`, `it`, `expect`, and rich matchers.
+    Familiar BDD syntax: `describe`, `it`, fluent expectations, and rich assertions.
 
     Coming from RSpec, Jest, or pytest? You'll feel at home.
 
@@ -66,33 +66,32 @@ open FxSpec.Matchers
 
 [<Tests>]
 let calculatorSpecs =
-    spec {
-        describe "Calculator" [
-            context "when adding numbers" [
-                it "returns the sum" (fun () ->
-                    let result = Calculator.add 2 3
-                    expect result |> should (equal 5)
-                )
+    describe "Calculator" [
+        context "when adding numbers" [
+            it "returns the sum" (fun () ->
+                let result = Calculator.add 2 3
+                expect(result).toEqual(5)
+            )
 
-                it "handles negative numbers" (fun () ->
-                    let result = Calculator.add -1 -2
-                    expect result |> should (equal -3)
-                )
-            ]
-
-            context "when dividing numbers" [
-                it "returns the quotient" (fun () ->
-                    let result = Calculator.divide 10 2
-                    expect result |> should (equal 5)
-                )
-
-                it "handles division by zero" (fun () ->
-                    let action () = Calculator.divide 10 0
-                    expect action |> should raiseException
-                )
-            ]
+            it "handles negative numbers" (fun () ->
+                let result = Calculator.add -1 -2
+                expect(result).toEqual(-3)
+            )
         ]
-    }
+
+        context "when dividing numbers" [
+            it "returns the quotient" (fun () ->
+                let result = Calculator.divide 10 2
+                expect(result).toEqual(5)
+            )
+
+            it "handles division by zero" (fun () ->
+                expectThrows<System.ArgumentException>(fun () -> 
+                    Calculator.divide 10 0 |> ignore
+                )
+            )
+        ]
+    ]
 ```
 
 ---
@@ -101,17 +100,18 @@ let calculatorSpecs =
 
 ### :material-check-circle:{ .lg } Expressive DSL
 
-Write tests that read like documentation. The `spec` computation expression creates an immutable test tree that's easy to understand and maintain.
+Write tests that read like documentation. The clean syntax creates an immutable test tree that's easy to understand and maintain.
 
-### :material-check-circle:{ .lg } Rich Matchers
+### :material-check-circle:{ .lg } Fluent Expectations
 
-Comprehensive matcher library for all common assertions:
+Comprehensive fluent API for all common assertions:
 
-- **Core matchers**: `equal`, `beNil`, `beSome`, `beTrue`
-- **Collections**: `contain`, `beEmpty`, `haveLength`, `allSatisfy`
-- **Strings**: `startWith`, `endWith`, `matchRegex`
-- **Numeric**: `beGreaterThan`, `beLessThan`, `beCloseTo`
-- **Exceptions**: `raiseException`, `raiseExceptionOfType`
+- **Core expectations**: `expect().toEqual()`, `expect().notToEqual()`
+- **Collections**: `expectSeq().toContain()`, `expectSeq().toBeEmpty()`, `expectSeq().toHaveLength()`
+- **Strings**: `expectStr().toStartWith()`, `expectStr().toEndWith()`, `expectStr().toMatchRegex()`
+- **Numeric**: `expectNum().toBeGreaterThan()`, `expectFloat().toBeCloseTo()`
+- **Exceptions**: `expectThrows<T>()`, `expectNotToThrow()`
+- **Options/Results**: `expectOption().toBeSome()`, `expectResult().toBeOk()`
 
 ### :material-check-circle:{ .lg } Beautiful Output
 
@@ -142,7 +142,7 @@ Lifecycle hooks for test setup and teardown:
 ## Philosophy
 
 !!! quote "Type-Safe Testing"
-    FxSpec leverages F#'s type system to make testing safer and more maintainable. Matchers are type-constrained, computation expressions provide compile-time validation, and the test tree is immutable.
+    FxSpec leverages F#'s type system to make testing safer and more maintainable. Type-specific expectations provide IntelliSense support, and the test tree is immutable and validated at compile-time.
 
 !!! quote "Behavior-Driven Development"
     Tests should describe behavior, not implementation. FxSpec's DSL encourages writing tests that serve as living documentation of your system's behavior.
@@ -204,7 +204,7 @@ FxSpec uses BDD-style testing instead of attribute-based testing:
     ```fsharp
     it "adds two numbers" (fun () ->
         let result = Calculator.add 2 3
-        expect result |> should (equal 5)
+        expect(result).toEqual(5)
     )
     ```
 
@@ -234,7 +234,7 @@ FxSpec's syntax will feel familiar:
     ```fsharp
     describe "Calculator" [
         it "adds numbers" (fun () ->
-            expect (2 + 2) |> should (equal 4)
+            expect(2 + 2).toEqual(4)
         )
     ]
     ```
@@ -252,8 +252,9 @@ FxSpec's syntax will feel familiar:
 **Key differences:**
 
 - F# uses lists `[]` instead of blocks `{}`
-- Matchers use F#'s pipe operator `|>`
+- Fluent API uses method chaining: `expect(x).toEqual(y)`
 - Tests are wrapped in `fun () ->` for lazy evaluation
+- Type-specific expectations: `expectSeq`, `expectStr`, `expectNum`, etc.
 
 ---
 

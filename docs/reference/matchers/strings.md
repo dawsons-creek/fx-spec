@@ -15,24 +15,24 @@ Matches if the string starts with the expected prefix.
 **Usage:**
 
 ```fsharp
-expect string |> should (startWith prefix)
+expectStr(string).toStartWith(prefix)
 ```
 
 **Examples:**
 
 ```fsharp
-expect "hello world" |> should (startWith "hello")
-expect "FxSpec" |> should (startWith "Fx")
-expect "https://example.com" |> should (startWith "https://")
+expectStr("hello world").toStartWith("hello")
+expectStr("FxSpec").toStartWith("Fx")
+expectStr("https://example.com").toStartWith("https://")
 
 // Case-sensitive
-expect "Hello" |> shouldNot (startWith "hello")
+expectStr("Hello").notToStartWith("hello")
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect "hello world" |> should (startWith "goodbye")
+expectStr("hello world").toStartWith("goodbye")
 // => Expected string to start with 'goodbye', but found 'hello world'
 ```
 
@@ -53,25 +53,25 @@ Matches if the string ends with the expected suffix.
 **Usage:**
 
 ```fsharp
-expect string |> should (endWith suffix)
+expectStr(string).toEndWith(suffix)
 ```
 
 **Examples:**
 
 ```fsharp
-expect "hello world" |> should (endWith "world")
-expect "test.txt" |> should (endWith ".txt")
-expect "FxSpec" |> should (endWith "Spec")
+expectStr("hello world").toEndWith("world")
+expectStr("test.txt").toEndWith(".txt")
+expectStr("FxSpec").toEndWith("Spec")
 
 // File extensions
 let filename = "document.pdf"
-expect filename |> should (endWith ".pdf")
+expectStr(filename).toEndWith(".pdf")
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect "hello world" |> should (endWith ".txt")
+expectStr("hello world").toEndWith(".txt")
 // => Expected string to end with '.txt', but found 'hello world'
 ```
 
@@ -88,26 +88,26 @@ Matches if the string contains the expected substring.
 **Usage:**
 
 ```fsharp
-expect string |> should (containSubstring substring)
+expectStr(string).toContainSubstring(substring)
 ```
 
 **Examples:**
 
 ```fsharp
-expect "hello world" |> should (containSubstring "lo wo")
-expect "FxSpec is great" |> should (containSubstring "Spec")
-expect "error: file not found" |> should (containSubstring "error:")
+expectStr("hello world").toContainSubstring("lo wo")
+expectStr("FxSpec is great").toContainSubstring("Spec")
+expectStr("error: file not found").toContainSubstring("error:")
 
 // Search in logs
 let logMessage = "2025-01-01 10:00:00 INFO User logged in"
-expect logMessage |> should (containSubstring "INFO")
-expect logMessage |> should (containSubstring "logged in")
+expectStr(logMessage).toContainSubstring("INFO")
+expectStr(logMessage).toContainSubstring("logged in")
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect "hello world" |> should (containSubstring "goodbye")
+expectStr("hello world").toContainSubstring("goodbye")
 // => Expected string to contain 'goodbye', but found 'hello world'
 ```
 
@@ -124,32 +124,32 @@ Matches if the string matches the regular expression pattern.
 **Usage:**
 
 ```fsharp
-expect string |> should (matchRegex pattern)
+expectStr(string).toMatchRegex(pattern)
 ```
 
 **Examples:**
 
 ```fsharp
 // Email validation
-expect "test@example.com" |> should (matchRegex @"^\w+@\w+\.\w+$")
+expectStr("test@example.com").toMatchRegex(@"^\w+@\w+\.\w+$")
 
 // Phone numbers
-expect "555-1234" |> should (matchRegex @"^\d{3}-\d{4}$")
+expectStr("555-1234").toMatchRegex(@"^\d{3}-\d{4}$")
 
 // Dates
-expect "2025-01-01" |> should (matchRegex @"^\d{4}-\d{2}-\d{2}$")
+expectStr("2025-01-01").toMatchRegex(@"^\d{4}-\d{2}-\d{2}$")
 
 // Contains digits
-expect "hello123" |> should (matchRegex @"\d+")
+expectStr("hello123").toMatchRegex(@"\d+")
 
 // Starts with uppercase
-expect "Hello" |> should (matchRegex @"^[A-Z]")
+expectStr("Hello").toMatchRegex(@"^[A-Z]")
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect "hello" |> should (matchRegex @"^\d+$")
+expectStr("hello").toMatchRegex(@"^\d+$")
 // => Expected string to match pattern '^\d+$', but found 'hello'
 ```
 
@@ -172,27 +172,27 @@ Matches if the string is empty (`""`).
 **Usage:**
 
 ```fsharp
-expect string |> should beEmptyString
+expectStr(string).toBeEmpty()
 ```
 
 **Examples:**
 
 ```fsharp
-expect "" |> should beEmptyString
-expect String.Empty |> should beEmptyString
+expectStr("").toBeEmpty()
+expectStr(String.Empty).toBeEmpty()
 
 // After operations
 let trimmed = "   ".Trim()
-expect trimmed |> should beEmptyString
+expectStr(trimmed).toBeEmpty()
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect "hello" |> should beEmptyString
+expectStr("hello").toBeEmpty()
 // => Expected empty string, but found 'hello'
 
-expect null |> should beEmptyString
+expectStr(null).toBeEmpty()
 // => Expected empty string, but found null
 ```
 
@@ -278,28 +278,28 @@ Matches if the string has the expected length.
 **Usage:**
 
 ```fsharp
-expect string |> should (haveStringLength length)
+expectStr(string).toHaveLength(length)
 ```
 
 **Examples:**
 
 ```fsharp
-expect "hello" |> should (haveStringLength 5)
-expect "" |> should (haveStringLength 0)
-expect "FxSpec" |> should (haveStringLength 6)
+expectStr("hello").toHaveLength(5)
+expectStr("").toHaveLength(0)
+expectStr("FxSpec").toHaveLength(6)
 
 // Password validation
 let password = "secret123"
-expect password |> should (haveStringLength 9)
+expectStr(password).toHaveLength(9)
 ```
 
 **Failure Message:**
 
 ```fsharp
-expect "hello" |> should (haveStringLength 10)
+expectStr("hello").toHaveLength(10)
 // => Expected string of length 10, but found length 5 ('hello')
 
-expect null |> should (haveStringLength 5)
+expectStr(null).toHaveLength(5)
 // => Expected string of length 5, but found null
 ```
 
@@ -443,31 +443,31 @@ let urlValidationSpecs =
                 context "when URL is valid" [
                     it "accepts https URLs" (fun () ->
                         let url = "https://example.com"
-                        expect url |> should (startWith "https://")
-                        expect url |> should (matchRegex @"^https?://[\w\-]+(\.[\w\-]+)+[/#?]?.*$")
+                        expectStr(url).toStartWith("https://")
+                        expectStr(url).toMatchRegex(@"^https?://[\w\-]+(\.[\w\-]+)+[/#?]?.*$")
                     )
 
                     it "accepts http URLs" (fun () ->
                         let url = "http://example.com/path?query=value"
-                        expect url |> should (startWith "http://")
-                        expect url |> should (containSubstring "example.com")
+                        expectStr(url).toStartWith("http://")
+                        expectStr(url).toContainSubstring("example.com")
                     )
 
                     it "accepts URLs with paths" (fun () ->
                         let url = "https://example.com/api/users"
-                        expect url |> should (containSubstring "/api/users")
-                        expect url |> should (endWith "/users")
+                        expectStr(url).toContainSubstring("/api/users")
+                        expectStr(url).toEndWith("/users")
                     )
                 ]
 
                 context "when URL is invalid" [
                     it "rejects empty strings" (fun () ->
-                        expect "" |> should beEmptyString
-                        expect "" |> shouldNot (startWith "http")
+                        expectStr("").toBeEmpty()
+                        expectStr("").notToStartWith("http")
                     )
 
                     it "rejects non-URL strings" (fun () ->
-                        expect "not a url" |> shouldNot (matchRegex @"^https?://")
+                        expectStr("not a url").notToMatchRegex(@"^https?://")
                     )
                 ]
             ]
@@ -497,14 +497,14 @@ let stringTransformationSpecs =
                 it "replaces spaces with hyphens" (fun () ->
                     let result = StringHelpers.slugify "My Blog Post"
                     expect result |> should (equal "my-blog-post")
-                    expect result |> shouldNot (containSubstring " ")
+                    expectStr(result).notToContainSubstring(" ")
                 )
 
                 it "removes special characters" (fun () ->
                     let result = StringHelpers.slugify "Hello, World!"
                     expect result |> should (equal "hello-world")
                     expect result |> should beAlphabetic  // False, contains hyphen
-                    expect result |> should (matchRegex @"^[a-z\-]+$")
+                    expectStr(result).toMatchRegex(@"^[a-z\-]+$")
                 )
             ]
 
@@ -512,13 +512,13 @@ let stringTransformationSpecs =
                 it "trims whitespace" (fun () ->
                     let result = StringHelpers.sanitize "  hello  "
                     expect result |> should (equal "hello")
-                    expect result |> shouldNot (startWith " ")
-                    expect result |> shouldNot (endWith " ")
+                    expectStr(result).notToStartWith(" ")
+                    expectStr(result).notToEndWith(" ")
                 )
 
                 it "returns empty string for whitespace-only input" (fun () ->
                     let result = StringHelpers.sanitize "   "
-                    expect result |> should beEmptyString
+                    expectStr(result).toBeEmpty()
                 )
             ]
         ]
