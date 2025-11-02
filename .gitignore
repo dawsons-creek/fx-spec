@@ -68,3 +68,9 @@ paket-files/
 # Ionide
 .ionide/
 
+# Claude Code
+.claude/
+
+# MkDocs build output
+site/
+design/
