@@ -8,121 +8,19 @@ open FxSpec.Matchers
 [<AutoOpen>]
 module HttpMatchers =
 
-    // ===== OLD API (Deprecated - for backwards compatibility) =====
-    
-    /// Status code matchers for fluent HTTP assertions
-    type StatusCodeMatcher =
-        | Be of int
-        | BeOk
-        | BeCreated
-        | BeNoContent
-        | BeBadRequest
-        | BeNotFound
-        | BeUnauthorized
-        | BeUnprocessableEntity
-        | BeInternalServerError
+    // Legacy `should (haveStatus ...)` API has been removed.
+    // Use the modern expectHttp() API instead:
+    //
+    // Old: response |> should (haveStatus beOk)
+    // New: expectHttp(response).toHaveStatusOk()
+    //
+    // Old: response |> should (haveHeader "X-Foo" "bar")
+    // New: expectHttp(response).toHaveHeader("X-Foo", "bar")
+    //
+    // Old: response |> should (haveBody "content")
+    // New: expectHttp(response).toHaveBody("content")
 
-    /// Get the integer status code from a matcher
-    let private getStatusCode = function
-        | Be code -> code
-        | BeOk -> 200
-        | BeCreated -> 201
-        | BeNoContent -> 204
-        | BeBadRequest -> 400
-        | BeNotFound -> 404
-        | BeUnauthorized -> 401
-        | BeUnprocessableEntity -> 422
-        | BeInternalServerError -> 500
-
-    /// Response matcher type
-    type ResponseMatcher =
-        | HaveStatus of StatusCodeMatcher
-        | HaveHeader of string * string
-        | HaveBody of string
-        | HaveJsonBody of obj
-
-    /// Apply a response matcher to an HTTP response (deprecated)
-    let should (matcher: ResponseMatcher) (response: HttpResponseMessage) =
-        match matcher with
-        | HaveStatus statusMatcher ->
-            let expected = getStatusCode statusMatcher
-            let actual = int response.StatusCode
-            if expected <> actual then
-                failwith $"Expected status {expected}, got {actual}"
-
-        | HaveHeader (name, value) ->
-            let headers = response.Headers
-            let contentHeaders = response.Content.Headers
-
-            let found =
-                if headers.Contains(name) then
-                    headers.GetValues(name) |> Seq.tryFind ((=) value)
-                elif contentHeaders.Contains(name) then
-                    contentHeaders.GetValues(name) |> Seq.tryFind ((=) value)
-                else
-                    None
-
-            if Option.isNone found then
-                failwith $"Expected header '{name}: {value}' not found"
-
-        | HaveBody expectedBody ->
-            let actualBody = response.Content.ReadAsStringAsync() |> Async.AwaitTask |> Async.RunSynchronously
-            if expectedBody <> actualBody then
-                failwith "Response body mismatch"
-
-        | HaveJsonBody expected ->
-            let actualBody = response.Content.ReadAsStringAsync() |> Async.AwaitTask |> Async.RunSynchronously
-            let expectedJson = JsonSerializer.Serialize(expected, JsonSerializerOptions(WriteIndented = false))
-            if expectedJson <> actualBody then
-                failwith "Response JSON body mismatch"
-
-    // Fluent matcher constructors (deprecated)
-    let haveStatus status = HaveStatus status
-    let haveHeader name value = HaveHeader (name, value)
-    let haveBody body = HaveBody body
-    let haveJsonBody body = HaveJsonBody body
-
-    // Status code helpers (deprecated)
-    let beOk = BeOk
-    let beCreated = BeCreated
-    let beNoContent = BeNoContent
-    let beBadRequest = BeBadRequest
-    let beNotFound = BeNotFound
-    let beUnauthorized = BeUnauthorized
-    let beUnprocessableEntity = BeUnprocessableEntity
-    let beInternalServerError = BeInternalServerError
-    let be code = Be code
-
-    // Quick assertion helpers for common patterns (deprecated)
-    let shouldBeOk response =
-        response |> should (haveStatus beOk)
-        response
-
-    let shouldBeCreated response =
-        response |> should (haveStatus beCreated)
-        response
-
-    let shouldBeNotFound response =
-        response |> should (haveStatus beNotFound)
-        response
-
-    let shouldBeBadRequest response =
-        response |> should (haveStatus beBadRequest)
-        response
-
-    let shouldBeUnauthorized response =
-        response |> should (haveStatus beUnauthorized)
-        response
-
-    let shouldHaveHeader name value response =
-        response |> should (haveHeader name value)
-        response
-
-    let shouldHaveJsonBody expected response =
-        response |> should (haveJsonBody expected)
-        response
-
-    // ===== NEW FLUENT API (expectHttp) =====
+    // ===== FLUENT API (expectHttp) =====
     
     /// Fluent HTTP response expectation type
     /// Follows the same pattern as ResultExpectation, OptionExpectation, etc.

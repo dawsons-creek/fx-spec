@@ -13,6 +13,7 @@
     <Compile Include="AsyncSupportSpecs.fs" />
     <Compile Include="Phase5Specs.fs" />
     <Compile Include="HooksSpecs.fs" />
+    <Compile Include="HookErrorHandlingSpecs.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

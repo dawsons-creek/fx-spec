@@ -9,8 +9,6 @@
   <ItemGroup>
     <Compile Include="MatchResult.fs" />
     <Compile Include="Assertions.fs" />
-    <Compile Include="CoreMatchers.fs" />
-    <Compile Include="CollectionMatchers.fs" />
     <Compile Include="NumericMatchers.fs" />
     <Compile Include="StringMatchers.fs" />
     <Compile Include="ExceptionMatchers.fs" />

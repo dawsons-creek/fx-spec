@@ -74,39 +74,93 @@ module Executor =
             executeExample description test beforeEachHooks afterEachHooks
 
         | Group (description, hooks, children) ->
-            // Run beforeAll hooks
-            hooks.BeforeAll |> List.iter (fun hook -> hook())
+            // Run beforeAll hooks, catching failures
+            let beforeAllResults =
+                hooks.BeforeAll
+                |> List.map (fun hook ->
+                    let sw = Stopwatch.StartNew()
+                    try
+                        hook()
+                        sw.Stop()
+                        None  // Success
+                    with ex ->
+                        sw.Stop()
+                        let wrappedEx = System.Exception($"beforeAll hook failed: {ex.Message}", ex)
+                        Some (ExampleResult ($"beforeAll hook", Fail (Some wrappedEx), sw.Elapsed))
+                )
+                |> List.choose id
 
             // Accumulate hooks for children
             let childBeforeEachHooks = beforeEachHooks @ hooks.BeforeEach
             let childAfterEachHooks = hooks.AfterEach @ afterEachHooks
 
             // Execute all children with accumulated hooks
-            let results = children |> List.map (executeNodeWithHooks childBeforeEachHooks childAfterEachHooks)
+            let childResults = children |> List.map (executeNodeWithHooks childBeforeEachHooks childAfterEachHooks)
 
-            // Run afterAll hooks
-            hooks.AfterAll |> List.iter (fun hook -> hook())
+            // Run afterAll hooks, catching failures
+            let afterAllResults =
+                hooks.AfterAll
+                |> List.map (fun hook ->
+                    let sw = Stopwatch.StartNew()
+                    try
+                        hook()
+                        sw.Stop()
+                        None  // Success
+                    with ex ->
+                        sw.Stop()
+                        let wrappedEx = System.Exception($"afterAll hook failed: {ex.Message}", ex)
+                        Some (ExampleResult ($"afterAll hook", Fail (Some wrappedEx), sw.Elapsed))
+                )
+                |> List.choose id
 
-            GroupResult (description, results)
+            // Combine all results: beforeAll failures + child results + afterAll failures
+            GroupResult (description, beforeAllResults @ childResults @ afterAllResults)
 
         | FocusedExample (description, test) ->
             executeExample description test beforeEachHooks afterEachHooks
 
         | FocusedGroup (description, hooks, children) ->
-            // Run beforeAll hooks
-            hooks.BeforeAll |> List.iter (fun hook -> hook())
+            // Run beforeAll hooks, catching failures
+            let beforeAllResults =
+                hooks.BeforeAll
+                |> List.map (fun hook ->
+                    let sw = Stopwatch.StartNew()
+                    try
+                        hook()
+                        sw.Stop()
+                        None  // Success
+                    with ex ->
+                        sw.Stop()
+                        let wrappedEx = System.Exception($"beforeAll hook failed: {ex.Message}", ex)
+                        Some (ExampleResult ($"beforeAll hook", Fail (Some wrappedEx), sw.Elapsed))
+                )
+                |> List.choose id
 
             // Accumulate hooks for children
             let childBeforeEachHooks = beforeEachHooks @ hooks.BeforeEach
             let childAfterEachHooks = hooks.AfterEach @ afterEachHooks
 
             // Execute all children with accumulated hooks
-            let results = children |> List.map (executeNodeWithHooks childBeforeEachHooks childAfterEachHooks)
+            let childResults = children |> List.map (executeNodeWithHooks childBeforeEachHooks childAfterEachHooks)
 
-            // Run afterAll hooks
-            hooks.AfterAll |> List.iter (fun hook -> hook())
+            // Run afterAll hooks, catching failures
+            let afterAllResults =
+                hooks.AfterAll
+                |> List.map (fun hook ->
+                    let sw = Stopwatch.StartNew()
+                    try
+                        hook()
+                        sw.Stop()
+                        None  // Success
+                    with ex ->
+                        sw.Stop()
+                        let wrappedEx = System.Exception($"afterAll hook failed: {ex.Message}", ex)
+                        Some (ExampleResult ($"afterAll hook", Fail (Some wrappedEx), sw.Elapsed))
+                )
+                |> List.choose id
 
-            GroupResult (description, results)
+            // Combine all results: beforeAll failures + child results + afterAll failures
+            GroupResult (description, beforeAllResults @ childResults @ afterAllResults)
 
         | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ ->
             // Hook nodes should have been processed during group construction

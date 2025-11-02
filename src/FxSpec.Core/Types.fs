@@ -147,43 +147,9 @@ module TestNode =
         | Example _ -> false
         | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ -> false
 
-    /// Processes hook nodes and attaches them to their parent group.
-    let rec processHooks (nodes: TestNode list) : TestNode list =
-        let hooks, nonHooks =
-            nodes |> List.partition (function
-                | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ -> true
-                | _ -> false)
-
-        let groupHooks =
-            hooks |> List.fold (fun acc node ->
-                match node with
-                | BeforeAllHook h -> GroupHooks.addBeforeAll h acc
-                | BeforeEachHook h -> GroupHooks.addBeforeEach h acc
-                | AfterEachHook h -> GroupHooks.addAfterEach h acc
-                | AfterAllHook h -> GroupHooks.addAfterAll h acc
-                | _ -> acc
-            ) GroupHooks.empty
-
-        // Process children recursively and attach hooks
-        nonHooks |> List.map (function
-            | Group (desc, existingHooks, children) ->
-                let mergedHooks = {
-                    BeforeAll = existingHooks.BeforeAll @ groupHooks.BeforeAll
-                    BeforeEach = existingHooks.BeforeEach @ groupHooks.BeforeEach
-                    AfterEach = existingHooks.AfterEach @ groupHooks.AfterEach
-                    AfterAll = existingHooks.AfterAll @ groupHooks.AfterAll
-                }
-                Group (desc, mergedHooks, processHooks children)
-            | FocusedGroup (desc, existingHooks, children) ->
-                let mergedHooks = {
-                    BeforeAll = existingHooks.BeforeAll @ groupHooks.BeforeAll
-                    BeforeEach = existingHooks.BeforeEach @ groupHooks.BeforeEach
-                    AfterEach = existingHooks.AfterEach @ groupHooks.AfterEach
-                    AfterAll = existingHooks.AfterAll @ groupHooks.AfterAll
-                }
-                FocusedGroup (desc, mergedHooks, processHooks children)
-            | other -> other
-        )
+    // Note: Hook processing is handled inline by describe/fdescribe functions
+    // in SpecBuilder.fs. Hooks are never standalone nodes in the tree - they're
+    // always processed and attached to their parent group during construction.
 
     /// Filters a test tree to only include focused tests.
     /// If no focused tests exist, returns the original tree.

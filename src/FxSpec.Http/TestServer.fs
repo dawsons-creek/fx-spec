@@ -15,18 +15,26 @@ type TestServerConfig = {
 
 /// Test server for HTTP integration testing
 /// Manages server lifecycle and provides HTTP client for testing
-type TestServer private (port: int, runServer: CancellationToken -> Task, cts: CancellationTokenSource) =
+type TestServer private (port: int, runServer: CancellationToken -> Task, cts: CancellationTokenSource, startupDelayMs: int) =
     let mutable started = false
     let mutable serverTask: Task option = None
+    let mutable httpClient: HttpClient option = None
 
     member _.Port = port
     member _.BaseUrl = $"http://localhost:{port}"
-    member _.Client = new HttpClient(BaseAddress = Uri($"http://localhost:{port}"))
+
+    member _.Client =
+        match httpClient with
+        | Some client -> client
+        | None ->
+            let client = new HttpClient(BaseAddress = Uri($"http://localhost:{port}"))
+            httpClient <- Some client
+            client
 
     member _.Start() =
         if not started then
             serverTask <- Some (Task.Run(fun () -> runServer cts.Token))
-            Task.Delay(100).Wait() // Brief startup delay
+            Task.Delay(startupDelayMs).Wait()
             started <- true
 
     member _.Stop() =
@@ -34,7 +42,8 @@ type TestServer private (port: int, runServer: CancellationToken -> Task, cts: C
             cts.Cancel()
             match serverTask with
             | Some task ->
-                try task.Wait(TimeSpan.FromSeconds(5.0)) |> ignore
+                try
+                    task.Wait(TimeSpan.FromSeconds(5.0)) |> ignore
                 with _ -> ()
             | None -> ()
             started <- false
@@ -42,14 +51,18 @@ type TestServer private (port: int, runServer: CancellationToken -> Task, cts: C
     interface IDisposable with
         member this.Dispose() =
             this.Stop()
+            match httpClient with
+            | Some client -> client.Dispose()
+            | None -> ()
             cts.Dispose()
 
     /// Create a test server with a custom run function
     /// runServer: CancellationToken -> Task
     static member Create(runServer: CancellationToken -> Task, ?port: int, ?startupDelay: int) =
         let actualPort = defaultArg port (Random().Next(5000, 9000))
+        let actualStartupDelay = defaultArg startupDelay 100
         let cts = new CancellationTokenSource()
-        new TestServer(actualPort, runServer, cts)
+        new TestServer(actualPort, runServer, cts, actualStartupDelay)
 
 [<AutoOpen>]
 module TestServerHelpers =

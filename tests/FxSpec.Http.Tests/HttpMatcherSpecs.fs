@@ -292,7 +292,7 @@ let httpMatcherSpecs =
                     expectStr(ex.Message).toContain("200")
                     expectStr(ex.Message).toContain("404")
             )
-            
+
             it "provides clear error for header mismatch" (fun () ->
                 let response = createResponse HttpStatusCode.OK [("X-Custom", "actual")] ""
                 try
@@ -303,7 +303,7 @@ let httpMatcherSpecs =
                     expectStr(ex.Message).toContain("X-Custom")
                     expectStr(ex.Message).toContain("expected")
             )
-            
+
             it "provides clear error for missing header" (fun () ->
                 let response = createResponse HttpStatusCode.OK [] ""
                 try
@@ -313,5 +313,243 @@ let httpMatcherSpecs =
                 | :? AssertionException as ex ->
                     expectStr(ex.Message).toContain("X-Missing")
             )
+        ]
+    ]
+
+[<Tests>]
+let requestBuilderSpecs =
+    describe "RequestBuilder - Fluent API Chaining" [
+
+        context "WithHeader chaining" [
+            itAsync "preserves single header when chained with Send" (async {
+                let port = System.Random().Next(8000, 9000)
+                use server = createTestServerWithPort port (fun ct -> task {
+                    use listener = new System.Net.HttpListener()
+                    listener.Prefixes.Add($"http://localhost:{port}/")
+                    listener.Start()
+
+                    while not ct.IsCancellationRequested do
+                        try
+                            let! context = listener.GetContextAsync()
+                            let hasHeader = context.Request.Headers.["X-Test-Header"] <> null
+                            if hasHeader then
+                                context.Response.StatusCode <- 200
+                                context.Response.Close()
+                            else
+                                context.Response.StatusCode <- 400
+                                context.Response.Close()
+                        with _ -> ()
+                })
+                server.Start()
+
+                let response =
+                    (request server)
+                        .Get("/test")
+                        .WithHeader("X-Test-Header", "test-value")
+                        .Send()
+
+                expectHttp(response).toHaveStatusOk()
+            })
+
+            itAsync "preserves multiple headers when chained" (async {
+                let port = System.Random().Next(8000, 9000)
+                use server = createTestServerWithPort port (fun ct -> task {
+                    use listener = new System.Net.HttpListener()
+                    listener.Prefixes.Add($"http://localhost:{port}/")
+                    listener.Start()
+
+                    while not ct.IsCancellationRequested do
+                        try
+                            let! context = listener.GetContextAsync()
+                            let hasHeader1 = context.Request.Headers.["X-Header-1"] = "value1"
+                            let hasHeader2 = context.Request.Headers.["X-Header-2"] = "value2"
+
+                            if hasHeader1 && hasHeader2 then
+                                context.Response.StatusCode <- 200
+                            else
+                                context.Response.StatusCode <- 400
+                            context.Response.Close()
+                        with _ -> ()
+                })
+                server.Start()
+
+                let response =
+                    (request server)
+                        .Get("/test")
+                        .WithHeader("X-Header-1", "value1")
+                        .WithHeader("X-Header-2", "value2")
+                        .Send()
+
+                expectHttp(response).toHaveStatusOk()
+            })
+
+            itAsync "preserves headers when using WithHeaders" (async {
+                let port = System.Random().Next(8000, 9000)
+                use server = createTestServerWithPort port (fun ct -> task {
+                    use listener = new System.Net.HttpListener()
+                    listener.Prefixes.Add($"http://localhost:{port}/")
+                    listener.Start()
+
+                    while not ct.IsCancellationRequested do
+                        try
+                            let! context = listener.GetContextAsync()
+                            let hasHeader1 = context.Request.Headers.["X-Multi-1"] = "m1"
+                            let hasHeader2 = context.Request.Headers.["X-Multi-2"] = "m2"
+
+                            if hasHeader1 && hasHeader2 then
+                                context.Response.StatusCode <- 200
+                            else
+                                context.Response.StatusCode <- 400
+                            context.Response.Close()
+                        with _ -> ()
+                })
+                server.Start()
+
+                let response =
+                    (request server)
+                        .Get("/test")
+                        .WithHeaders([("X-Multi-1", "m1"); ("X-Multi-2", "m2")])
+                        .Send()
+
+                expectHttp(response).toHaveStatusOk()
+            })
+        ]
+
+        context "WithBody chaining" [
+            itAsync "preserves body when chained with headers" (async {
+                let port = System.Random().Next(8000, 9000)
+                use server = createTestServerWithPort port (fun ct -> task {
+                    use listener = new System.Net.HttpListener()
+                    listener.Prefixes.Add($"http://localhost:{port}/")
+                    listener.Start()
+
+                    while not ct.IsCancellationRequested do
+                        try
+                            let! context = listener.GetContextAsync()
+                            use reader = new System.IO.StreamReader(context.Request.InputStream)
+                            let! body = reader.ReadToEndAsync()
+                            let hasHeader = context.Request.Headers.["X-Custom"] = "test"
+
+                            if hasHeader && body.Contains("\"name\"") then
+                                context.Response.StatusCode <- 200
+                            else
+                                context.Response.StatusCode <- 400
+                            context.Response.Close()
+                        with _ -> ()
+                })
+                server.Start()
+
+                let response =
+                    (request server)
+                        .Post("/test")
+                        .WithHeader("X-Custom", "test")
+                        .WithBody({| name = "John" |})
+                        .Send()
+
+                expectHttp(response).toHaveStatusOk()
+            })
+        ]
+
+        context "WithQueryParam chaining" [
+            itAsync "preserves single query parameter" (async {
+                let port = System.Random().Next(8000, 9000)
+                use server = createTestServerWithPort port (fun ct -> task {
+                    use listener = new System.Net.HttpListener()
+                    listener.Prefixes.Add($"http://localhost:{port}/")
+                    listener.Start()
+
+                    while not ct.IsCancellationRequested do
+                        try
+                            let! context = listener.GetContextAsync()
+                            let hasParam = context.Request.QueryString.["key"] = "value"
+
+                            if hasParam then
+                                context.Response.StatusCode <- 200
+                            else
+                                context.Response.StatusCode <- 400
+                            context.Response.Close()
+                        with _ -> ()
+                })
+                server.Start()
+
+                let response =
+                    (request server)
+                        .Get("/test")
+                        .WithQueryParam("key", "value")
+                        .Send()
+
+                expectHttp(response).toHaveStatusOk()
+            })
+
+            itAsync "preserves multiple query parameters when chained" (async {
+                let port = System.Random().Next(8000, 9000)
+                use server = createTestServerWithPort port (fun ct -> task {
+                    use listener = new System.Net.HttpListener()
+                    listener.Prefixes.Add($"http://localhost:{port}/")
+                    listener.Start()
+
+                    while not ct.IsCancellationRequested do
+                        try
+                            let! context = listener.GetContextAsync()
+                            let hasParam1 = context.Request.QueryString.["foo"] = "bar"
+                            let hasParam2 = context.Request.QueryString.["baz"] = "qux"
+
+                            if hasParam1 && hasParam2 then
+                                context.Response.StatusCode <- 200
+                            else
+                                context.Response.StatusCode <- 400
+                            context.Response.Close()
+                        with _ -> ()
+                })
+                server.Start()
+
+                let response =
+                    (request server)
+                        .Get("/test")
+                        .WithQueryParam("foo", "bar")
+                        .WithQueryParam("baz", "qux")
+                        .Send()
+
+                expectHttp(response).toHaveStatusOk()
+            })
+        ]
+
+        context "complex chaining scenarios" [
+            itAsync "preserves all configurations when fully chained" (async {
+                let port = System.Random().Next(8000, 9000)
+                use server = createTestServerWithPort port (fun ct -> task {
+                    use listener = new System.Net.HttpListener()
+                    listener.Prefixes.Add($"http://localhost:{port}/")
+                    listener.Start()
+
+                    while not ct.IsCancellationRequested do
+                        try
+                            let! context = listener.GetContextAsync()
+                            use reader = new System.IO.StreamReader(context.Request.InputStream)
+                            let! body = reader.ReadToEndAsync()
+
+                            let hasHeader = context.Request.Headers.["Authorization"] = "Bearer token123"
+                            let hasParam = context.Request.QueryString.["filter"] = "active"
+                            let hasBody = body.Contains("\"data\"")
+
+                            if hasHeader && hasParam && hasBody then
+                                context.Response.StatusCode <- 201
+                            else
+                                context.Response.StatusCode <- 400
+                            context.Response.Close()
+                        with _ -> ()
+                })
+                server.Start()
+
+                let response =
+                    (request server)
+                        .Post("/api/items")
+                        .WithHeader("Authorization", "Bearer token123")
+                        .WithQueryParam("filter", "active")
+                        .WithJsonBody({| data = "test" |})
+                        .Send()
+
+                expectHttp(response).toHaveStatusCreated()
+            })
         ]
     ]
