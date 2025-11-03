@@ -4,16 +4,14 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'docs/**'
-      - 'mkdocs.yml'
-      - '.github/workflows/docs.yml'
 
   # Allow manual trigger
   workflow_dispatch:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   deploy:
@@ -42,7 +40,7 @@ jobs:
       - name: Install dependencies
         run: |
           source $HOME/.cargo/env
-          uv pip install mkdocs-material mkdocs-macros-plugin mkdocs-mermaid2-plugin mkdocs-git-revision-date-localized-plugin pymdown-extensions
+          uv sync
 
       - name: Configure Git
         run: |
