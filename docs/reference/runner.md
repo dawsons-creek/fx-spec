@@ -108,6 +108,31 @@ SpecBuilder
 └───────┴────────┴────────┴─────────┴──────────┘
 ```
 
+**Error Output with Stack Traces:**
+
+When tests fail due to exceptions in your code, FxSpec provides rich, actionable error information:
+
+```
+  ✗ processes user data   (2ms)
+
+    Calculator > processes user data
+
+    DivideByZeroException: Attempted to divide by zero.
+
+    Stack trace:
+      at Calculator.divide(Int32 x, Int32 y)
+         in Calculator.fs:42 (Calculator)
+      at Calculator.processUserData(User user)
+         in Calculator.fs:67 (Calculator)
+```
+
+**Features:**
+- 🎯 Clear exception type and message
+- 🔍 Filtered stack traces showing only YOUR code (framework internals removed)
+- 🔗 Clickable file links (Cmd/Ctrl+Click in supported terminals to jump to the error)
+- 📍 Precise file names and line numbers
+- 🎨 Color-coded for visual clarity
+
 **Simple Format:**
 
 ```

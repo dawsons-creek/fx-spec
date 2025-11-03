@@ -54,16 +54,20 @@ module SimpleFormatter =
     let formatFailureDetails (result: TestResult) : string option =
         match result with
         | Fail (Some ex) ->
-            let msg = sprintf "  Error: %s" ex.Message
+            let exType = ex.GetType().Name
+            let msg = sprintf "  %s: %s" exType ex.Message
             let stackTrace = 
                 if not (String.IsNullOrWhiteSpace(ex.StackTrace)) then
                     let lines = ex.StackTrace.Split('\n')
-                    // Take first few lines of stack trace
+                    // Take first few lines of stack trace, filtering out framework code
                     let relevantLines =
                         lines
                         |> Array.filter (fun line ->
                             not (line.Contains("FxSpec.Runner")) &&
-                            not (line.Contains("System.Reflection"))
+                            not (line.Contains("FxSpec.Core.SpecHelpers")) &&
+                            not (line.Contains("System.Reflection")) &&
+                            not (line.Contains("System.Runtime")) &&
+                            not (line.Contains("Microsoft.FSharp.Core"))
                         )
                         |> Array.truncate maxStackTraceLines
                     if Array.isEmpty relevantLines then

@@ -94,8 +94,8 @@ let renderFailureDetails (indent: int) (fullPath: string) (result: TestResult) =
             DiffFormatter.renderFailure message expected actual
             AnsiConsole.WriteLine()
         | _ ->
-            // Regular exception - just show the message
-            AnsiConsole.MarkupLine(sprintf "%s[red]%s[/]" indentStr (Markup.Escape(ex.Message)))
+            // Regular exception - show message and formatted stack trace
+            StackTraceFormatter.createExceptionPanel (indent + 1) ex
             AnsiConsole.WriteLine()
     | TestResult.Fail None ->
         let indentStr = String(' ', (indent + 1) * 2)
@@ -113,14 +113,15 @@ let rec renderNode (indent: int) (pathSoFar: string list) (isLast: bool) (node: 
     | ExampleResult (desc, result, duration) ->
         let fullPath = (pathSoFar @ [desc]) |> String.concat " > "
         renderTestLine indent desc result duration
-        AnsiConsole.WriteLine()
 
         // Show failure details if test failed
         if TestResult.isFail result then
+            AnsiConsole.WriteLine()
             renderFailureDetails indent fullPath result
 
-        // Show skip reason if test was skipped
+        // Show skip reason if test was skipped  
         if TestResult.isSkipped result then
+            AnsiConsole.WriteLine()
             match result with
             | TestResult.Skipped reason ->
                 let indentStr = String(' ', (indent + 1) * 2)

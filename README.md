@@ -1,7 +1,7 @@
-# FxSpec: The Best F# RSpec-like BDD Test Library
+# FxSpec
 
-> **Behavior-Driven Development meets Type Safety**  
-> An elegant, powerful, and fully type-safe BDD testing framework for F#, inspired by RSpec
+> **Behavior-Driven Development meets Type Safety**
+> An elegant, powerful, and fully type-safe BDD testing framework for F#
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET-8.0+-purple.svg)](https://dotnet.microsoft.com/)
@@ -9,16 +9,16 @@
 
 ## 📚 Documentation
 
-**[View the complete documentation →](https://fxspec.github.io/fx-spec)**
+**[View the complete documentation →](https://dawsons-creek.github.io/fx-spec)**
 
-- [Quick Start Guide](https://fxspec.github.io/fx-spec/quick-start)
-- [DSL API Reference](https://fxspec.github.io/fx-spec/reference/dsl-api)
-- [Matchers Reference](https://fxspec.github.io/fx-spec/reference/matchers/core)
-- [Contributing Guide](https://fxspec.github.io/fx-spec/community/contributing)
+- [Quick Start Guide](https://dawsons-creek.github.io/fx-spec/quick-start)
+- [DSL API Reference](https://dawsons-creek.github.io/fx-spec/reference/dsl-api)
+- [Matchers Reference](https://dawsons-creek.github.io/fx-spec/reference/matchers/core)
+- [Contributing Guide](https://dawsons-creek.github.io/fx-spec/community/contributing)
 
 ## Why FxSpec?
 
-FxSpec combines the **elegant, human-readable syntax of RSpec** with the **compile-time safety and functional purity of F#**. It's not just a port—it's a conceptual enhancement that leverages F#'s unique strengths.
+FxSpec brings **elegant, human-readable BDD syntax** together with the **compile-time safety and functional purity of F#**. Write tests that read like specifications while maintaining the type safety and composability that F# developers expect.
 
 ### The Vision
 
@@ -61,8 +61,8 @@ Calculator
 
 ## Key Features
 
-### 🎯 RSpec-Inspired Syntax
-- Familiar `describe`, `context`, and `it` blocks
+### 🎯 Expressive BDD Syntax
+- Intuitive `describe`, `context`, and `it` blocks
 - Nested test organization
 - Readable, specification-style tests
 
@@ -81,10 +81,12 @@ Calculator
 - Rich failure data for debugging
 - Pattern matching support
 
-### � Beautiful Console Output
+### 🎨 Beautiful Console Output
 - Powered by Spectre.Console
 - Nested, colored output
 - Comprehensive failure messages with diffs
+- **Rich stack traces with clickable file links** - Jump directly to errors in your code
+- Filtered stack traces showing only YOUR code, not framework internals
 
 ### 🔧 Functional & Immutable
 - Pure functions throughout
@@ -337,6 +339,39 @@ describe "User API" [
 ]
 ```
 
+### Exceptional Developer Experience
+
+When errors occur in your code under test, FxSpec provides **outstanding debugging support**:
+
+**Beautiful, Actionable Error Output:**
+```
+  ✗ processes user data
+
+    Calculator > processes user data
+
+    DivideByZeroException: Attempted to divide by zero.
+
+    Stack trace:
+      at Calculator.divide(Int32 x, Int32 y)
+         in Calculator.fs:42 (Calculator)
+      at Calculator.processUserData(User user)
+         in Calculator.fs:67 (Calculator)
+```
+
+**Key Features:**
+- 🎯 **Clear exception type and message** - Know exactly what went wrong
+- 🔍 **Filtered stack traces** - See only YOUR code, not framework internals  
+- 🔗 **Clickable file links** - Cmd/Ctrl+Click to jump directly to the error in VS Code
+- 📍 **Precise line numbers** - No hunting for the source of the problem
+- 🎨 **Color-coded output** - Visual hierarchy for quick scanning
+
+FxSpec automatically filters out:
+- Framework internals (FxSpec.Core, FxSpec.Runner)
+- .NET runtime frames (System.Reflection, System.Runtime)
+- F# compiler-generated code noise
+
+This means **you see only the relevant parts of the stack trace from YOUR code**, making debugging fast and efficient.
+
 ### Comprehensive Matchers
 
 - **Equality**: `toEqual`, `notToEqual`
@@ -413,88 +448,14 @@ FxSpec is a fully functional F# BDD testing framework with:
 3. ✅ Comprehensive matcher library (50+ assertion methods)
 4. ✅ Test discovery and execution
 5. ✅ Beautiful console output with Spectre.Console
-6. ✅ Hooks (beforeEach, afterEach, beforeAll, afterAll)
-7. ✅ Focused and pending tests (fit, fdescribe, xit, pending)
-8. ✅ Self-hosting (FxSpec tests itself - 52 tests passing!)
+6. ✅ **Rich error output with clickable file links and filtered stack traces**
+7. ✅ Hooks (beforeEach, afterEach, beforeAll, afterAll)
+8. ✅ Focused and pending tests (fit, fdescribe, xit, pending)
+9. ✅ Self-hosting (FxSpec tests itself - 71 tests passing!)
 
 **Ready for:** Early adopters and feedback
 
-## Documentation
-
-📚 **[Complete Documentation](https://fxspec.github.io/fx-spec)** (Material for MkDocs)
-
-- **[Quick Start Guide](docs/quick-start.md)** - Get started in 5 minutes
-- **[DSL API Reference](docs/reference/dsl-api.md)** - Complete DSL documentation
-- **[Matchers Reference](docs/reference/matchers/core.md)** - All available matchers
-- **[Contributing Guide](docs/community/contributing.md)** - How to contribute
-
-**Design Documents:**
-- [Implementation Plan](IMPLEMENTATION_PLAN.md) - Detailed roadmap and phases
-- [Technical Architecture](TECHNICAL_ARCHITECTURE.md) - Deep dive into design decisions
-- [FxSpec vs RSpec](FXSPEC_VS_RSPEC.md) - Detailed comparison
-
-## Roadmap
-
-### Phase 1: Core DSL (Weeks 1-2) ✅
-- [x] Design test tree structure
-- [x] Implement describe/context/it
-- [x] Simple, clean syntax without computation expressions
-- [x] Hooks (beforeEach, afterEach, beforeAll, afterAll)
-
-### Phase 2: Matchers (Weeks 2-3) ✅
-- [x] Fluent assertion API design
-- [x] Type-specific expectation wrappers
-- [x] Core matchers (equality, collections, numeric, strings)
-- [x] Exception matchers
-- [x] Option and Result matchers
-
-### Phase 3: Runner (Weeks 3-5)
-
-#### 3.1: Dogfooding ✅
-- [x] Rewrite Phase 1 tests using FxSpec itself
-- [x] Create custom matchers for testing FxSpec internals
-- [x] Validate framework usability
-- [x] 30 examples, 0 failures - FxSpec tests itself!
-
-#### 3.2: Test Execution ✅
-- [x] Test discovery with `[<Tests>]` attribute
-- [x] Execution engine with hook support
-- [x] CLI tool with filtering
-- [x] FxSpec runs its own tests!
-- [x] Support for both TestNode and TestNode list discovery
-
-### Phase 4: Formatters (Week 5-6) ✅
-- [x] Spectre.Console integration
-- [x] Expected vs Actual diffs
-- [x] Full test path in failures
-- [x] Beautiful tables and panels
-- [x] Color-coded output
-- [x] Format selection (--format option)
-
-### Phase 5: Pending & Focused Tests (Week 7) ✅
-- [x] xit/pending for skipping tests
-- [x] fit/fdescribe for focused execution
-- [x] Automatic focused filtering
-- [x] Skip reason display
-- [x] Legacy test cleanup
-
-### Phase 6: Hooks & Code Quality ✅
-- [x] beforeEach/afterEach hooks
-- [x] beforeAll/afterAll hooks
-- [x] Code quality refactoring
-- [x] Input validation for matchers
-- [x] Functional refactoring
-
-### Phase 7: DSL Modernization ✅
-- [x] Fluent assertion API with method chaining
-- [x] Type-specific expectation wrappers
-- [x] Remove computation expression wrapper
-- [x] Migrate all tests to new syntax
-- [x] Update documentation
-
 ## Future Enhancements
-
-### Planned Features
 - [ ] Custom formatters API
 - [ ] Parallel test execution
 - [ ] Property-based testing integration
@@ -521,12 +482,14 @@ We welcome contributions! This is an ambitious project and we'd love your help.
 4. **Composable Over Monolithic**: Small, reusable pieces
 5. **Beautiful Over Minimal**: Great UX matters
 
-## Inspiration & Credits
+## Inspired By
 
-- **RSpec** - The gold standard for BDD testing
-- **F# for Fun and Profit** - Computation expression insights
+FxSpec draws inspiration from the best in class:
+
+- **RSpec** - The gold standard for BDD testing in Ruby
+- **Expecto** - F# testing framework philosophy
 - **Spectre.Console** - Beautiful console output
-- **The F# Community** - For building an amazing language
+- **F# for Fun and Profit** - Functional programming insights
 
 ## License
 
@@ -534,8 +497,8 @@ MIT License - see [LICENSE](LICENSE) for details
 
 ## Contact
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/fxspec/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/fxspec/discussions)
+- **Issues**: [GitHub Issues](https://github.com/dawsons-creek/fx-spec/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/dawsons-creek/fx-spec/discussions)
 
 ---
 
