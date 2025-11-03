@@ -838,18 +838,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#naming-conventions" class="md-nav__link">
+  <a href="#writing-specifications-as-documentation" class="md-nav__link">
     <span class="md-ellipsis">
-      Naming Conventions
+      Writing Specifications as Documentation
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#test-organization" class="md-nav__link">
+  <a href="#organizing-specifications" class="md-nav__link">
     <span class="md-ellipsis">
-      Test Organization
+      Organizing Specifications
     </span>
   </a>
   
@@ -1531,18 +1531,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#naming-conventions" class="md-nav__link">
+  <a href="#writing-specifications-as-documentation" class="md-nav__link">
     <span class="md-ellipsis">
-      Naming Conventions
+      Writing Specifications as Documentation
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#test-organization" class="md-nav__link">
+  <a href="#organizing-specifications" class="md-nav__link">
     <span class="md-ellipsis">
-      Test Organization
+      Organizing Specifications
     </span>
   </a>
   
@@ -1603,7 +1603,8 @@
 <p>Complete reference for FxSpec's Domain-Specific Language functions.</p>
 <hr />
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>FxSpec uses a clean, functional DSL to build test trees. The DSL provides functions for organizing tests, defining test cases, and managing test lifecycle with hooks.</p>
+<p>FxSpec uses a clean, functional DSL to build specification trees. The DSL provides functions for organizing specifications, defining behavioral requirements, and managing test lifecycle with hooks.</p>
+<p>Think of your tests as <strong>living documentation</strong> - they describe what your system does, not just verify it works.</p>
 <hr />
 <h2 id="core-functions">Core Functions<a class="headerlink" href="#core-functions" title="Permanent link">&para;</a></h2>
 <h3 id="test-structure">Test Structure<a class="headerlink" href="#test-structure" title="Permanent link">&para;</a></h3>
@@ -1716,28 +1717,40 @@
 <hr />
 <h3 id="it">it<a class="headerlink" href="#it" title="Permanent link">&para;</a></h3>
 <p><strong>Type:</strong> <code>string -&gt; (unit -&gt; unit) -&gt; TestNode</code></p>
-<p>Defines an individual test case.</p>
+<p>Defines an individual specification that describes a single behavior.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>description</code> - String describing what the test does</li>
-<li><code>test</code> - Function that performs assertions</li>
+<li><code>description</code> - String describing the expected behavior (reads like documentation)</li>
+<li><code>test</code> - Function that verifies the behavior</li>
 </ul>
 <p><strong>Usage:</strong></p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;description&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="c1">// test code and assertions</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;description of expected behavior&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="c1">// verification code</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="o">)</span>
 </span></code></pre></div>
 <p><strong>Example:</strong></p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;adds two numbers&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;calculates the sum of two positive integers&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Calculator</span><span class="p">.</span><span class="n">add</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="n">expect</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="o">)</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;raises an exception when input is invalid&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="n">expectThrows</span><span class="o">&lt;</span><span class="n">ArgumentException</span><span class="o">&gt;(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">        </span><span class="nn">Calculator</span><span class="p">.</span><span class="n">divide</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">ignore</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="o">)</span>
 </span></code></pre></div>
+<p><strong>Writing Good Specifications:</strong></p>
+<ul>
+<li>Describe <strong>what</strong> the code does, not <strong>how</strong> it does it</li>
+<li>Write complete sentences: "returns X when Y" not just "test add"</li>
+<li>Focus on one behavior per specification</li>
+<li>Use business/domain language, not technical jargon</li>
+</ul>
 <p><strong>Notes:</strong></p>
 <ul>
 <li>Test function must be wrapped in <code>fun () -&gt;</code> for lazy evaluation</li>
-<li>Descriptions should start with a verb (e.g., "returns", "throws", "creates")</li>
-<li>Tests should focus on one behavior</li>
+<li>Descriptions should start with a verb (e.g., "returns", "throws", "creates", "validates")</li>
 <li>If the test function throws an exception, the test fails</li>
 </ul>
 <hr />
@@ -2261,7 +2274,7 @@
 </ul>
 <hr />
 <h2 id="complete-example">Complete Example<a class="headerlink" href="#complete-example" title="Permanent link">&para;</a></h2>
-<p>Here's a comprehensive example using all DSL features:</p>
+<p>Here's a comprehensive example using all DSL features with specification-focused descriptions:</p>
 <div class="language-fsharp highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="k">module</span><span class="w"> </span><span class="nn">UserServiceSpecs</span>
 </span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>
 </span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Core</span>
@@ -2269,89 +2282,107 @@
 </span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>
 </span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
 </span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a><span class="k">let</span><span class="w"> </span><span class="nv">userServiceSpecs</span><span class="w"> </span><span class="o">=</span>
-</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a><span class="w">    </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-41-9"><a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a><span class="w">        </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;UserService&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-41-10"><a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a><span class="w">            </span><span class="k">let</span><span class="w"> </span><span class="nv">mutable</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span>
-</span><span id="__span-41-11"><a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a><span class="w">            </span><span class="k">let</span><span class="w"> </span><span class="nv">mutable</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span>
-</span><span id="__span-41-12"><a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a>
-</span><span id="__span-41-13"><a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a><span class="w">            </span><span class="n">beforeAll</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-41-14"><a id="__codelineno-41-14" name="__codelineno-41-14" href="#__codelineno-41-14"></a><span class="w">                </span><span class="n">db</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nn">Database</span><span class="p">.</span><span class="n">createInMemory</span><span class="bp">()</span>
-</span><span id="__span-41-15"><a id="__codelineno-41-15" name="__codelineno-41-15" href="#__codelineno-41-15"></a><span class="w">            </span><span class="o">)</span>
-</span><span id="__span-41-16"><a id="__codelineno-41-16" name="__codelineno-41-16" href="#__codelineno-41-16"></a>
-</span><span id="__span-41-17"><a id="__codelineno-41-17" name="__codelineno-41-17" href="#__codelineno-41-17"></a><span class="w">            </span><span class="n">afterAll</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-41-18"><a id="__codelineno-41-18" name="__codelineno-41-18" href="#__codelineno-41-18"></a><span class="w">                </span><span class="n">db</span><span class="o">.</span><span class="n">Dispose</span><span class="bp">()</span>
-</span><span id="__span-41-19"><a id="__codelineno-41-19" name="__codelineno-41-19" href="#__codelineno-41-19"></a><span class="w">            </span><span class="o">)</span>
-</span><span id="__span-41-20"><a id="__codelineno-41-20" name="__codelineno-41-20" href="#__codelineno-41-20"></a>
-</span><span id="__span-41-21"><a id="__codelineno-41-21" name="__codelineno-41-21" href="#__codelineno-41-21"></a><span class="w">            </span><span class="n">beforeEach</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-41-22"><a id="__codelineno-41-22" name="__codelineno-41-22" href="#__codelineno-41-22"></a><span class="w">                </span><span class="n">db</span><span class="o">.</span><span class="n">Clear</span><span class="bp">()</span>
-</span><span id="__span-41-23"><a id="__codelineno-41-23" name="__codelineno-41-23" href="#__codelineno-41-23"></a><span class="w">                </span><span class="n">service</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">UserService</span><span class="o">(</span><span class="n">db</span><span class="o">)</span>
-</span><span id="__span-41-24"><a id="__codelineno-41-24" name="__codelineno-41-24" href="#__codelineno-41-24"></a><span class="w">            </span><span class="o">)</span>
-</span><span id="__span-41-25"><a id="__codelineno-41-25" name="__codelineno-41-25" href="#__codelineno-41-25"></a>
-</span><span id="__span-41-26"><a id="__codelineno-41-26" name="__codelineno-41-26" href="#__codelineno-41-26"></a><span class="w">            </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;CreateUser&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-41-27"><a id="__codelineno-41-27" name="__codelineno-41-27" href="#__codelineno-41-27"></a><span class="w">                </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;when valid data is provided&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-41-28"><a id="__codelineno-41-28" name="__codelineno-41-28" href="#__codelineno-41-28"></a><span class="w">                    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;creates a new user&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-41-29"><a id="__codelineno-41-29" name="__codelineno-41-29" href="#__codelineno-41-29"></a><span class="w">                        </span><span class="k">let</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">CreateUser</span><span class="o">(</span><span class="s">&quot;Alice&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;alice@example.com&quot;</span><span class="o">)</span>
-</span><span id="__span-41-30"><a id="__codelineno-41-30" name="__codelineno-41-30" href="#__codelineno-41-30"></a><span class="w">                        </span><span class="n">expect</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="n">Name</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="s">&quot;Alice&quot;</span><span class="o">)</span>
-</span><span id="__span-41-31"><a id="__codelineno-41-31" name="__codelineno-41-31" href="#__codelineno-41-31"></a><span class="w">                        </span><span class="n">expect</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="n">Email</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="s">&quot;alice@example.com&quot;</span><span class="o">)</span>
-</span><span id="__span-41-32"><a id="__codelineno-41-32" name="__codelineno-41-32" href="#__codelineno-41-32"></a><span class="w">                    </span><span class="o">)</span>
-</span><span id="__span-41-33"><a id="__codelineno-41-33" name="__codelineno-41-33" href="#__codelineno-41-33"></a>
-</span><span id="__span-41-34"><a id="__codelineno-41-34" name="__codelineno-41-34" href="#__codelineno-41-34"></a><span class="w">                    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;assigns a unique ID&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-41-35"><a id="__codelineno-41-35" name="__codelineno-41-35" href="#__codelineno-41-35"></a><span class="w">                        </span><span class="k">let</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">CreateUser</span><span class="o">(</span><span class="s">&quot;Bob&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;bob@example.com&quot;</span><span class="o">)</span>
-</span><span id="__span-41-36"><a id="__codelineno-41-36" name="__codelineno-41-36" href="#__codelineno-41-36"></a><span class="w">                        </span><span class="n">expect</span><span class="w"> </span><span class="n">user</span><span class="o">.</span><span class="n">Id</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="o">(</span><span class="n">beGreaterThan</span><span class="w"> </span><span class="mi">0</span><span class="o">)</span>
-</span><span id="__span-41-37"><a id="__codelineno-41-37" name="__codelineno-41-37" href="#__codelineno-41-37"></a><span class="w">                    </span><span class="o">)</span>
-</span><span id="__span-41-38"><a id="__codelineno-41-38" name="__codelineno-41-38" href="#__codelineno-41-38"></a><span class="w">                </span><span class="o">]</span>
-</span><span id="__span-41-39"><a id="__codelineno-41-39" name="__codelineno-41-39" href="#__codelineno-41-39"></a>
-</span><span id="__span-41-40"><a id="__codelineno-41-40" name="__codelineno-41-40" href="#__codelineno-41-40"></a><span class="w">                </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;when invalid data is provided&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-41-41"><a id="__codelineno-41-41" name="__codelineno-41-41" href="#__codelineno-41-41"></a><span class="w">                    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;raises exception for empty name&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-41-42"><a id="__codelineno-41-42" name="__codelineno-41-42" href="#__codelineno-41-42"></a><span class="w">                        </span><span class="k">let</span><span class="w"> </span><span class="nv">action</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">CreateUser</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;test@example.com&quot;</span><span class="o">)</span>
-</span><span id="__span-41-43"><a id="__codelineno-41-43" name="__codelineno-41-43" href="#__codelineno-41-43"></a><span class="w">                        </span><span class="n">expect</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">raiseException</span>
-</span><span id="__span-41-44"><a id="__codelineno-41-44" name="__codelineno-41-44" href="#__codelineno-41-44"></a><span class="w">                    </span><span class="o">)</span>
+</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;UserService user management&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-41-9"><a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a><span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">mutable</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span>
+</span><span id="__span-41-10"><a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a><span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">mutable</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span>
+</span><span id="__span-41-11"><a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a>
+</span><span id="__span-41-12"><a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a><span class="w">        </span><span class="n">beforeAll</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-41-13"><a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a><span class="w">            </span><span class="n">db</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nn">Database</span><span class="p">.</span><span class="n">createInMemory</span><span class="bp">()</span>
+</span><span id="__span-41-14"><a id="__codelineno-41-14" name="__codelineno-41-14" href="#__codelineno-41-14"></a><span class="w">        </span><span class="o">)</span>
+</span><span id="__span-41-15"><a id="__codelineno-41-15" name="__codelineno-41-15" href="#__codelineno-41-15"></a>
+</span><span id="__span-41-16"><a id="__codelineno-41-16" name="__codelineno-41-16" href="#__codelineno-41-16"></a><span class="w">        </span><span class="n">afterAll</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-41-17"><a id="__codelineno-41-17" name="__codelineno-41-17" href="#__codelineno-41-17"></a><span class="w">            </span><span class="n">db</span><span class="o">.</span><span class="n">Dispose</span><span class="bp">()</span>
+</span><span id="__span-41-18"><a id="__codelineno-41-18" name="__codelineno-41-18" href="#__codelineno-41-18"></a><span class="w">        </span><span class="o">)</span>
+</span><span id="__span-41-19"><a id="__codelineno-41-19" name="__codelineno-41-19" href="#__codelineno-41-19"></a>
+</span><span id="__span-41-20"><a id="__codelineno-41-20" name="__codelineno-41-20" href="#__codelineno-41-20"></a><span class="w">        </span><span class="n">beforeEach</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-41-21"><a id="__codelineno-41-21" name="__codelineno-41-21" href="#__codelineno-41-21"></a><span class="w">            </span><span class="n">db</span><span class="o">.</span><span class="n">Clear</span><span class="bp">()</span>
+</span><span id="__span-41-22"><a id="__codelineno-41-22" name="__codelineno-41-22" href="#__codelineno-41-22"></a><span class="w">            </span><span class="n">service</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">UserService</span><span class="o">(</span><span class="n">db</span><span class="o">)</span>
+</span><span id="__span-41-23"><a id="__codelineno-41-23" name="__codelineno-41-23" href="#__codelineno-41-23"></a><span class="w">        </span><span class="o">)</span>
+</span><span id="__span-41-24"><a id="__codelineno-41-24" name="__codelineno-41-24" href="#__codelineno-41-24"></a>
+</span><span id="__span-41-25"><a id="__codelineno-41-25" name="__codelineno-41-25" href="#__codelineno-41-25"></a><span class="w">        </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;when creating a new user account&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-41-26"><a id="__codelineno-41-26" name="__codelineno-41-26" href="#__codelineno-41-26"></a><span class="w">            </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;with valid registration data&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-41-27"><a id="__codelineno-41-27" name="__codelineno-41-27" href="#__codelineno-41-27"></a><span class="w">                </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;creates a user account with the provided name and email&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-41-28"><a id="__codelineno-41-28" name="__codelineno-41-28" href="#__codelineno-41-28"></a><span class="w">                    </span><span class="k">let</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">CreateUser</span><span class="o">(</span><span class="s">&quot;Alice&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;alice@example.com&quot;</span><span class="o">)</span>
+</span><span id="__span-41-29"><a id="__codelineno-41-29" name="__codelineno-41-29" href="#__codelineno-41-29"></a><span class="w">                    </span><span class="n">expect</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="n">Name</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="s">&quot;Alice&quot;</span><span class="o">)</span>
+</span><span id="__span-41-30"><a id="__codelineno-41-30" name="__codelineno-41-30" href="#__codelineno-41-30"></a><span class="w">                    </span><span class="n">expect</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="n">Email</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="s">&quot;alice@example.com&quot;</span><span class="o">)</span>
+</span><span id="__span-41-31"><a id="__codelineno-41-31" name="__codelineno-41-31" href="#__codelineno-41-31"></a><span class="w">                </span><span class="o">)</span>
+</span><span id="__span-41-32"><a id="__codelineno-41-32" name="__codelineno-41-32" href="#__codelineno-41-32"></a>
+</span><span id="__span-41-33"><a id="__codelineno-41-33" name="__codelineno-41-33" href="#__codelineno-41-33"></a><span class="w">                </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;assigns a unique identifier to the new user&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-41-34"><a id="__codelineno-41-34" name="__codelineno-41-34" href="#__codelineno-41-34"></a><span class="w">                    </span><span class="k">let</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">CreateUser</span><span class="o">(</span><span class="s">&quot;Bob&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;bob@example.com&quot;</span><span class="o">)</span>
+</span><span id="__span-41-35"><a id="__codelineno-41-35" name="__codelineno-41-35" href="#__codelineno-41-35"></a><span class="w">                    </span><span class="n">expectNum</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="n">Id</span><span class="o">).</span><span class="n">toBeGreaterThan</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+</span><span id="__span-41-36"><a id="__codelineno-41-36" name="__codelineno-41-36" href="#__codelineno-41-36"></a><span class="w">                </span><span class="o">)</span>
+</span><span id="__span-41-37"><a id="__codelineno-41-37" name="__codelineno-41-37" href="#__codelineno-41-37"></a><span class="w">            </span><span class="o">]</span>
+</span><span id="__span-41-38"><a id="__codelineno-41-38" name="__codelineno-41-38" href="#__codelineno-41-38"></a>
+</span><span id="__span-41-39"><a id="__codelineno-41-39" name="__codelineno-41-39" href="#__codelineno-41-39"></a><span class="w">            </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;with invalid registration data&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-41-40"><a id="__codelineno-41-40" name="__codelineno-41-40" href="#__codelineno-41-40"></a><span class="w">                </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;rejects registration when name is empty&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-41-41"><a id="__codelineno-41-41" name="__codelineno-41-41" href="#__codelineno-41-41"></a><span class="w">                    </span><span class="n">expectThrows</span><span class="o">&lt;</span><span class="n">ArgumentException</span><span class="o">&gt;(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-41-42"><a id="__codelineno-41-42" name="__codelineno-41-42" href="#__codelineno-41-42"></a><span class="w">                        </span><span class="n">service</span><span class="o">.</span><span class="n">CreateUser</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;test@example.com&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">ignore</span>
+</span><span id="__span-41-43"><a id="__codelineno-41-43" name="__codelineno-41-43" href="#__codelineno-41-43"></a><span class="w">                    </span><span class="o">)</span>
+</span><span id="__span-41-44"><a id="__codelineno-41-44" name="__codelineno-41-44" href="#__codelineno-41-44"></a><span class="w">                </span><span class="o">)</span>
 </span><span id="__span-41-45"><a id="__codelineno-41-45" name="__codelineno-41-45" href="#__codelineno-41-45"></a>
-</span><span id="__span-41-46"><a id="__codelineno-41-46" name="__codelineno-41-46" href="#__codelineno-41-46"></a><span class="w">                    </span><span class="n">xit</span><span class="w"> </span><span class="s">&quot;validates email format&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-41-47"><a id="__codelineno-41-47" name="__codelineno-41-47" href="#__codelineno-41-47"></a><span class="w">                        </span><span class="c1">// TODO: implement email validation</span>
-</span><span id="__span-41-48"><a id="__codelineno-41-48" name="__codelineno-41-48" href="#__codelineno-41-48"></a><span class="w">                        </span><span class="k">let</span><span class="w"> </span><span class="nv">action</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">CreateUser</span><span class="o">(</span><span class="s">&quot;Test&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;invalid-email&quot;</span><span class="o">)</span>
-</span><span id="__span-41-49"><a id="__codelineno-41-49" name="__codelineno-41-49" href="#__codelineno-41-49"></a><span class="w">                        </span><span class="n">expect</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">raiseException</span>
+</span><span id="__span-41-46"><a id="__codelineno-41-46" name="__codelineno-41-46" href="#__codelineno-41-46"></a><span class="w">                </span><span class="n">xit</span><span class="w"> </span><span class="s">&quot;validates email format before accepting registration&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-41-47"><a id="__codelineno-41-47" name="__codelineno-41-47" href="#__codelineno-41-47"></a><span class="w">                    </span><span class="c1">// TODO: implement email validation</span>
+</span><span id="__span-41-48"><a id="__codelineno-41-48" name="__codelineno-41-48" href="#__codelineno-41-48"></a><span class="w">                    </span><span class="n">expectThrows</span><span class="o">&lt;</span><span class="n">ArgumentException</span><span class="o">&gt;(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-41-49"><a id="__codelineno-41-49" name="__codelineno-41-49" href="#__codelineno-41-49"></a><span class="w">                        </span><span class="n">service</span><span class="o">.</span><span class="n">CreateUser</span><span class="o">(</span><span class="s">&quot;Test&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;invalid-email&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">ignore</span>
 </span><span id="__span-41-50"><a id="__codelineno-41-50" name="__codelineno-41-50" href="#__codelineno-41-50"></a><span class="w">                    </span><span class="o">)</span>
-</span><span id="__span-41-51"><a id="__codelineno-41-51" name="__codelineno-41-51" href="#__codelineno-41-51"></a><span class="w">                </span><span class="o">]</span>
+</span><span id="__span-41-51"><a id="__codelineno-41-51" name="__codelineno-41-51" href="#__codelineno-41-51"></a><span class="w">                </span><span class="o">)</span>
 </span><span id="__span-41-52"><a id="__codelineno-41-52" name="__codelineno-41-52" href="#__codelineno-41-52"></a><span class="w">            </span><span class="o">]</span>
-</span><span id="__span-41-53"><a id="__codelineno-41-53" name="__codelineno-41-53" href="#__codelineno-41-53"></a>
-</span><span id="__span-41-54"><a id="__codelineno-41-54" name="__codelineno-41-54" href="#__codelineno-41-54"></a><span class="w">            </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;GetUser&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-41-55"><a id="__codelineno-41-55" name="__codelineno-41-55" href="#__codelineno-41-55"></a><span class="w">                </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;returns existing user&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-41-56"><a id="__codelineno-41-56" name="__codelineno-41-56" href="#__codelineno-41-56"></a><span class="w">                    </span><span class="k">let</span><span class="w"> </span><span class="nv">created</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">CreateUser</span><span class="o">(</span><span class="s">&quot;Charlie&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;charlie@example.com&quot;</span><span class="o">)</span>
-</span><span id="__span-41-57"><a id="__codelineno-41-57" name="__codelineno-41-57" href="#__codelineno-41-57"></a><span class="w">                    </span><span class="k">let</span><span class="w"> </span><span class="nv">retrieved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">GetUser</span><span class="o">(</span><span class="n">created</span><span class="o">.</span><span class="n">Id</span><span class="o">)</span>
-</span><span id="__span-41-58"><a id="__codelineno-41-58" name="__codelineno-41-58" href="#__codelineno-41-58"></a><span class="w">                    </span><span class="n">expect</span><span class="w"> </span><span class="n">retrieved</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="o">(</span><span class="n">beSome</span><span class="w"> </span><span class="n">created</span><span class="o">)</span>
-</span><span id="__span-41-59"><a id="__codelineno-41-59" name="__codelineno-41-59" href="#__codelineno-41-59"></a><span class="w">                </span><span class="o">)</span>
-</span><span id="__span-41-60"><a id="__codelineno-41-60" name="__codelineno-41-60" href="#__codelineno-41-60"></a>
-</span><span id="__span-41-61"><a id="__codelineno-41-61" name="__codelineno-41-61" href="#__codelineno-41-61"></a><span class="w">                </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;returns None for non-existent user&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-41-62"><a id="__codelineno-41-62" name="__codelineno-41-62" href="#__codelineno-41-62"></a><span class="w">                    </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">GetUser</span><span class="o">(</span><span class="mi">9999</span><span class="o">)</span>
-</span><span id="__span-41-63"><a id="__codelineno-41-63" name="__codelineno-41-63" href="#__codelineno-41-63"></a><span class="w">                    </span><span class="n">expect</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">beNone</span>
-</span><span id="__span-41-64"><a id="__codelineno-41-64" name="__codelineno-41-64" href="#__codelineno-41-64"></a><span class="w">                </span><span class="o">)</span>
-</span><span id="__span-41-65"><a id="__codelineno-41-65" name="__codelineno-41-65" href="#__codelineno-41-65"></a><span class="w">            </span><span class="o">]</span>
+</span><span id="__span-41-53"><a id="__codelineno-41-53" name="__codelineno-41-53" href="#__codelineno-41-53"></a><span class="w">        </span><span class="o">]</span>
+</span><span id="__span-41-54"><a id="__codelineno-41-54" name="__codelineno-41-54" href="#__codelineno-41-54"></a>
+</span><span id="__span-41-55"><a id="__codelineno-41-55" name="__codelineno-41-55" href="#__codelineno-41-55"></a><span class="w">        </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;when retrieving user information&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-41-56"><a id="__codelineno-41-56" name="__codelineno-41-56" href="#__codelineno-41-56"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;returns the user account when ID exists in system&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-41-57"><a id="__codelineno-41-57" name="__codelineno-41-57" href="#__codelineno-41-57"></a><span class="w">                </span><span class="k">let</span><span class="w"> </span><span class="nv">created</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">CreateUser</span><span class="o">(</span><span class="s">&quot;Charlie&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;charlie@example.com&quot;</span><span class="o">)</span>
+</span><span id="__span-41-58"><a id="__codelineno-41-58" name="__codelineno-41-58" href="#__codelineno-41-58"></a><span class="w">                </span><span class="k">let</span><span class="w"> </span><span class="nv">retrieved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">GetUser</span><span class="o">(</span><span class="n">created</span><span class="o">.</span><span class="n">Id</span><span class="o">)</span>
+</span><span id="__span-41-59"><a id="__codelineno-41-59" name="__codelineno-41-59" href="#__codelineno-41-59"></a><span class="w">                </span><span class="n">expectOption</span><span class="o">(</span><span class="n">retrieved</span><span class="o">).</span><span class="n">toBeSome</span><span class="o">(</span><span class="n">created</span><span class="o">)</span>
+</span><span id="__span-41-60"><a id="__codelineno-41-60" name="__codelineno-41-60" href="#__codelineno-41-60"></a><span class="w">            </span><span class="o">)</span>
+</span><span id="__span-41-61"><a id="__codelineno-41-61" name="__codelineno-41-61" href="#__codelineno-41-61"></a>
+</span><span id="__span-41-62"><a id="__codelineno-41-62" name="__codelineno-41-62" href="#__codelineno-41-62"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;returns None when requested user ID does not exist&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-41-63"><a id="__codelineno-41-63" name="__codelineno-41-63" href="#__codelineno-41-63"></a><span class="w">                </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">GetUser</span><span class="o">(</span><span class="mi">9999</span><span class="o">)</span>
+</span><span id="__span-41-64"><a id="__codelineno-41-64" name="__codelineno-41-64" href="#__codelineno-41-64"></a><span class="w">                </span><span class="n">expectOption</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toBeNone</span><span class="bp">()</span>
+</span><span id="__span-41-65"><a id="__codelineno-41-65" name="__codelineno-41-65" href="#__codelineno-41-65"></a><span class="w">            </span><span class="o">)</span>
 </span><span id="__span-41-66"><a id="__codelineno-41-66" name="__codelineno-41-66" href="#__codelineno-41-66"></a><span class="w">        </span><span class="o">]</span>
-</span><span id="__span-41-67"><a id="__codelineno-41-67" name="__codelineno-41-67" href="#__codelineno-41-67"></a><span class="w">    </span><span class="o">}</span>
+</span><span id="__span-41-67"><a id="__codelineno-41-67" name="__codelineno-41-67" href="#__codelineno-41-67"></a><span class="w">    </span><span class="o">]</span>
 </span></code></pre></div>
 <hr />
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
-<h3 id="naming-conventions">Naming Conventions<a class="headerlink" href="#naming-conventions" title="Permanent link">&para;</a></h3>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="c1">// Good</span>
-</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;UserService&quot;</span>
-</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;creates a new user&quot;</span>
-</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="n">context</span><span class="w"> </span><span class="s">&quot;when user is authenticated&quot;</span>
-</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>
-</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a><span class="c1">// Avoid</span>
-</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Test Suite 1&quot;</span>
-</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;test1&quot;</span>
-</span><span id="__span-42-9"><a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a><span class="n">context</span><span class="w"> </span><span class="s">&quot;scenario A&quot;</span>
+<h3 id="writing-specifications-as-documentation">Writing Specifications as Documentation<a class="headerlink" href="#writing-specifications-as-documentation" title="Permanent link">&para;</a></h3>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="c1">// Good - Reads like documentation</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;User authentication system&quot;</span>
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;allows login with valid credentials&quot;</span>
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;locks account after three failed login attempts&quot;</span>
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a><span class="n">context</span><span class="w"> </span><span class="s">&quot;when password has expired&quot;</span>
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a><span class="c1">// Avoid - Too technical or vague</span>
+</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;AuthService tests&quot;</span>
+</span><span id="__span-42-9"><a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;test_login&quot;</span>
+</span><span id="__span-42-10"><a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;edge case 1&quot;</span>
+</span><span id="__span-42-11"><a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a><span class="n">context</span><span class="w"> </span><span class="s">&quot;scenario A&quot;</span>
 </span></code></pre></div>
-<h3 id="test-organization">Test Organization<a class="headerlink" href="#test-organization" title="Permanent link">&para;</a></h3>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;FeatureName&quot;</span><span class="w"> </span><span class="o">[</span><span class="w">           </span><span class="c1">// Top-level: feature/module/class</span>
-</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="w">        </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;MethodOrFunction&quot;</span><span class="w"> </span><span class="o">[</span><span class="w">   </span><span class="c1">// Second-level: method/function</span>
-</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="w">            </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;when condition&quot;</span><span class="w"> </span><span class="o">[</span><span class="w">  </span><span class="c1">// Third-level: specific context</span>
-</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="w">                </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;expected behavior&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
-</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a><span class="w">            </span><span class="o">]</span>
-</span><span id="__span-43-6"><a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a><span class="w">        </span><span class="o">]</span>
-</span><span id="__span-43-7"><a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a><span class="w">    </span><span class="o">]</span>
+<p><strong>Tips for good specifications:</strong>
+- Use business domain language
+- Write what the system does, not what the code does
+- Complete sentences that non-developers can understand
+- Focus on behavior, not implementation</p>
+<h3 id="organizing-specifications">Organizing Specifications<a class="headerlink" href="#organizing-specifications" title="Permanent link">&para;</a></h3>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Feature or Component Name&quot;</span><span class="w"> </span><span class="o">[</span><span class="w">     </span><span class="c1">// Top: What you&#39;re documenting</span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="w">    </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;under specific conditions&quot;</span><span class="w"> </span><span class="o">[</span><span class="w">  </span><span class="c1">// Middle: When/where</span>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;expected observable behavior&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span><span class="w"> </span><span class="c1">// Bottom: What happens</span>
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="w">    </span><span class="o">]</span>
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a><span class="o">]</span>
 </span></code></pre></div>
+<p><strong>Example hierarchy:</strong>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Shopping cart&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="w">    </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;when cart is empty&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;displays a message prompting user to add items&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;disables the checkout button&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a><span class="w">    </span><span class="o">]</span>
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a><span class="w">    </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;when cart contains items&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-44-8"><a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;calculates the correct total including tax&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-44-9"><a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;enables the checkout button&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">...)</span>
+</span><span id="__span-44-10"><a id="__codelineno-44-10" name="__codelineno-44-10" href="#__codelineno-44-10"></a><span class="w">    </span><span class="o">]</span>
+</span><span id="__span-44-11"><a id="__codelineno-44-11" name="__codelineno-44-11" href="#__codelineno-44-11"></a><span class="o">]</span>
+</span></code></pre></div></p>
 <h3 id="hook-usage">Hook Usage<a class="headerlink" href="#hook-usage" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Use <code>beforeEach</code>/<code>afterEach</code> for test isolation</li>
@@ -2395,7 +2426,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 1, 2025 23:00:26 UTC"><span class="timeago" datetime="2025-11-01T23:00:26+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 1, 2025 23:00:26 UTC">2025-11-01</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 3, 2025 17:45:03 UTC"><span class="timeago" datetime="2025-11-03T17:45:03+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 3, 2025 17:45:03 UTC">2025-11-03</span>
   </span>
 
     

@@ -497,19 +497,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#your-first-test" class="md-nav__link">
+  <a href="#your-first-specification" class="md-nav__link">
     <span class="md-ellipsis">
-      Your First Test
+      Your First Specification
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Your First Test">
+    <nav class="md-nav" aria-label="Your First Specification">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-1-create-a-test-file" class="md-nav__link">
+  <a href="#step-1-create-a-specification-file" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 1: Create a Test File
+      Step 1: Create a Specification File
     </span>
   </a>
   
@@ -558,9 +558,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#the-test-structure" class="md-nav__link">
+  <a href="#the-specification-structure" class="md-nav__link">
     <span class="md-ellipsis">
-      The Test Structure
+      The Specification Structure
     </span>
   </a>
   
@@ -570,6 +570,15 @@
   <a href="#the-describe-function" class="md-nav__link">
     <span class="md-ellipsis">
       The describe Function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-context-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      The context Function
     </span>
   </a>
   
@@ -1323,19 +1332,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#your-first-test" class="md-nav__link">
+  <a href="#your-first-specification" class="md-nav__link">
     <span class="md-ellipsis">
-      Your First Test
+      Your First Specification
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Your First Test">
+    <nav class="md-nav" aria-label="Your First Specification">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-1-create-a-test-file" class="md-nav__link">
+  <a href="#step-1-create-a-specification-file" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 1: Create a Test File
+      Step 1: Create a Specification File
     </span>
   </a>
   
@@ -1384,9 +1393,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#the-test-structure" class="md-nav__link">
+  <a href="#the-specification-structure" class="md-nav__link">
     <span class="md-ellipsis">
-      The Test Structure
+      The Specification Structure
     </span>
   </a>
   
@@ -1396,6 +1405,15 @@
   <a href="#the-describe-function" class="md-nav__link">
     <span class="md-ellipsis">
       The describe Function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-context-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      The context Function
     </span>
   </a>
   
@@ -1642,7 +1660,7 @@
 
 
 <h1 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h1>
-<p>Get your first FxSpec test running in 5 minutes.</p>
+<p>Get your first FxSpec specification running in 5 minutes and start documenting your code's behavior.</p>
 <hr />
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1668,36 +1686,43 @@
 <p>FxSpec packages are not yet published to NuGet. For now, you'll need to build from source or reference the local projects.</p>
 </div>
 <hr />
-<h2 id="your-first-test">Your First Test<a class="headerlink" href="#your-first-test" title="Permanent link">&para;</a></h2>
-<h3 id="step-1-create-a-test-file">Step 1: Create a Test File<a class="headerlink" href="#step-1-create-a-test-file" title="Permanent link">&para;</a></h3>
-<p>Create a new file called <code>MyFirstSpecs.fs</code> in your test project:</p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">module</span><span class="w"> </span><span class="nn">MyFirstSpecs</span>
+<h2 id="your-first-specification">Your First Specification<a class="headerlink" href="#your-first-specification" title="Permanent link">&para;</a></h2>
+<h3 id="step-1-create-a-specification-file">Step 1: Create a Specification File<a class="headerlink" href="#step-1-create-a-specification-file" title="Permanent link">&para;</a></h3>
+<p>Create a new file called <code>CalculatorSpecs.fs</code> in your test project. Note how the tests read like documentation:</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">module</span><span class="w"> </span><span class="nn">CalculatorSpecs</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Core</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Matchers</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">let</span><span class="w"> </span><span class="nv">myFirstSpecs</span><span class="w"> </span><span class="o">=</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;My First Test Suite&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;passes!&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">            </span><span class="n">expectBool</span><span class="o">(</span><span class="k">true</span><span class="o">).</span><span class="n">toBeTrue</span><span class="bp">()</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">        </span><span class="o">)</span>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;checks equality&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">            </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span>
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">            </span><span class="n">expect</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">4</span><span class="o">)</span>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">        </span><span class="o">)</span>
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
-</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;works with strings&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">            </span><span class="k">let</span><span class="w"> </span><span class="nv">greeting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello, FxSpec!&quot;</span>
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">            </span><span class="n">expectStr</span><span class="o">(</span><span class="n">greeting</span><span class="o">).</span><span class="n">toStartWith</span><span class="o">(</span><span class="s">&quot;Hello&quot;</span><span class="o">)</span>
-</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">        </span><span class="o">)</span>
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">    </span><span class="o">]</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">let</span><span class="w"> </span><span class="nv">calculatorSpecs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Calculator arithmetic operations&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">        </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;when adding numbers&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;returns the sum of two positive integers&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">                </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">                </span><span class="n">expect</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">            </span><span class="o">)</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;handles negative numbers correctly&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">                </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">                </span><span class="n">expect</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(-</span><span class="mi">2</span><span class="o">)</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">            </span><span class="o">)</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">        </span><span class="o">]</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">        </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;when dividing numbers&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;raises an exception when dividing by zero&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">                </span><span class="n">expectThrows</span><span class="o">&lt;</span><span class="nn">System</span><span class="p">.</span><span class="n">DivideByZeroException</span><span class="o">&gt;(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">                    </span><span class="k">let</span><span class="w"> </span><span class="nv">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">0</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">                    </span><span class="bp">()</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">                </span><span class="o">)</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="w">            </span><span class="o">)</span>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">        </span><span class="o">]</span>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="w">    </span><span class="o">]</span>
 </span></code></pre></div>
 <h3 id="step-2-update-your-fsproj">Step 2: Update Your .fsproj<a class="headerlink" href="#step-2-update-your-fsproj" title="Permanent link">&para;</a></h3>
-<p>Make sure your test file is included in the project:</p>
+<p>Make sure your specification file is included in the project:</p>
 <div class="language-xml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">&lt;ItemGroup&gt;</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&lt;Compile</span><span class="w"> </span><span class="na">Include=</span><span class="s">&quot;MyFirstSpecs.fs&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&lt;Compile</span><span class="w"> </span><span class="na">Include=</span><span class="s">&quot;CalculatorSpecs.fs&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&lt;Compile</span><span class="w"> </span><span class="na">Include=</span><span class="s">&quot;Program.fs&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nt">&lt;/ItemGroup&gt;</span>
 </span></code></pre></div>
@@ -1713,52 +1738,62 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>dotnet<span class="w"> </span>build
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>dotnet<span class="w"> </span>run
 </span></code></pre></div>
-<p>You should see beautiful output like this:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>My First Test Suite
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  ✓ passes! (2ms)
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  ✓ checks equality (1ms)
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  ✓ works with strings (1ms)
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>┌─────┬────────┬────────┬─────────┬──────────┐
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>│ ... │ Passed │ Failed │ Skipped │ Duration │
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>│  3  │   3    │   0    │    0    │  0.01s   │
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>└─────┴────────┴────────┴─────────┴──────────┘
+<p>You should see beautiful, hierarchical output that documents your calculator's behavior:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Calculator arithmetic operations
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  when adding numbers
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    ✓ returns the sum of two positive integers (2ms)
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    ✓ handles negative numbers correctly (1ms)
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>  when dividing numbers
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    ✓ raises an exception when dividing by zero (1ms)
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>┌─────┬────────┬────────┬─────────┬──────────┐
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>│ ... │ Passed │ Failed │ Skipped │ Duration │
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>│  3  │   3    │   0    │    0    │  0.01s   │
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>└─────┴────────┴────────┴─────────┴──────────┘
 </span></code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Congratulations!</p>
-<p>You've just written and run your first FxSpec tests!</p>
+<p>You've just created executable documentation for your code! These specifications serve as both tests and documentation.</p>
 </div>
 <hr />
 <h2 id="understanding-the-basics">Understanding the Basics<a class="headerlink" href="#understanding-the-basics" title="Permanent link">&para;</a></h2>
 <p>Let's break down what you just wrote:</p>
-<h3 id="the-test-structure">The Test Structure<a class="headerlink" href="#the-test-structure" title="Permanent link">&para;</a></h3>
+<h3 id="the-specification-structure">The Specification Structure<a class="headerlink" href="#the-specification-structure" title="Permanent link">&para;</a></h3>
 <div class="language-fsharp highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">let</span><span class="w"> </span><span class="nv">myFirstSpecs</span><span class="w"> </span><span class="o">=</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;My First Test Suite&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">        </span><span class="c1">// Individual tests go here</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">let</span><span class="w"> </span><span class="nv">calculatorSpecs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Calculator arithmetic operations&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">        </span><span class="c1">// Individual specifications go here</span>
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="o">]</span>
 </span></code></pre></div>
-<p>FxSpec tests are simple values marked with the <code>[&lt;Tests&gt;]</code> attribute. The test discovery system finds these automatically.</p>
+<p>FxSpec specifications are simple values marked with the <code>[&lt;Tests&gt;]</code> attribute. The test discovery system finds these automatically.</p>
 <h3 id="the-describe-function">The <code>describe</code> Function<a class="headerlink" href="#the-describe-function" title="Permanent link">&para;</a></h3>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;My First Test Suite&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="c1">// Individual tests go here</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Calculator arithmetic operations&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="c1">// Specifications for this feature</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="o">]</span>
 </span></code></pre></div>
-<p><code>describe</code> groups related tests together. You can nest multiple <code>describe</code> blocks to create a hierarchy.</p>
-<h3 id="the-it-function">The <code>it</code> Function<a class="headerlink" href="#the-it-function" title="Permanent link">&para;</a></h3>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;passes!&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="n">expectBool</span><span class="o">(</span><span class="k">true</span><span class="o">).</span><span class="n">toBeTrue</span><span class="bp">()</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="o">)</span>
+<p><code>describe</code> groups related specifications together. It names the feature or behavior you're documenting. You can nest multiple <code>describe</code> blocks to create hierarchical documentation.</p>
+<h3 id="the-context-function">The <code>context</code> Function<a class="headerlink" href="#the-context-function" title="Permanent link">&para;</a></h3>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">context</span><span class="w"> </span><span class="s">&quot;when adding numbers&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="c1">// Specifications for this specific scenario</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="o">]</span>
 </span></code></pre></div>
-<p><code>it</code> defines an individual test case:</p>
+<p><code>context</code> describes specific conditions or scenarios. Use it to organize specifications by state, input, or situation.</p>
+<h3 id="the-it-function">The <code>it</code> Function<a class="headerlink" href="#the-it-function" title="Permanent link">&para;</a></h3>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;returns the sum of two positive integers&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="n">expect</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="o">)</span>
+</span></code></pre></div>
+<p><code>it</code> defines an individual specification:</p>
 <ul>
-<li>First parameter: Test description (string)</li>
-<li>Second parameter: Test function that makes assertions</li>
+<li>First parameter: Describes the expected behavior (reads like documentation)</li>
+<li>Second parameter: Function that verifies the behavior</li>
 </ul>
+<p><strong>Tip:</strong> Write <code>it</code> descriptions as complete sentences describing what the code should do.</p>
 <h3 id="the-fluent-expectation-api">The Fluent Expectation API<a class="headerlink" href="#the-fluent-expectation-api" title="Permanent link">&para;</a></h3>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">expect</span><span class="o">(</span><span class="n">actual</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="n">expected</span><span class="o">)</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">expectBool</span><span class="o">(</span><span class="n">value</span><span class="o">).</span><span class="n">toBeTrue</span><span class="bp">()</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">expectSeq</span><span class="o">(</span><span class="kt">list</span><span class="o">).</span><span class="n">toContain</span><span class="o">(</span><span class="n">item</span><span class="o">)</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">expect</span><span class="o">(</span><span class="n">actual</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="n">expected</span><span class="o">)</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">expectBool</span><span class="o">(</span><span class="n">value</span><span class="o">).</span><span class="n">toBeTrue</span><span class="bp">()</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">expectSeq</span><span class="o">(</span><span class="kt">list</span><span class="o">).</span><span class="n">toContain</span><span class="o">(</span><span class="n">item</span><span class="o">)</span>
 </span></code></pre></div>
 <p>FxSpec provides type-specific expectation functions that return fluent wrappers:</p>
 <ul>
@@ -1774,84 +1809,84 @@
 <p>Now that you have FxSpec running, explore more features:</p>
 <h3 id="organize-with-context">Organize with Context<a class="headerlink" href="#organize-with-context" title="Permanent link">&para;</a></h3>
 <p>Use <code>context</code> to add more structure:</p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Calculator&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;when adding positive numbers&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;returns the sum&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">            </span><span class="n">expect</span><span class="o">(</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">        </span><span class="o">)</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="o">]</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;when adding negative numbers&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;handles negatives correctly&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">            </span><span class="n">expect</span><span class="o">(-</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(-</span><span class="mi">5</span><span class="o">)</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">        </span><span class="o">)</span>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">    </span><span class="o">]</span>
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="o">]</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Calculator&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;when adding positive numbers&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;returns the sum&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">            </span><span class="n">expect</span><span class="o">(</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">        </span><span class="o">)</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="o">]</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="n">context</span><span class="w"> </span><span class="s">&quot;when adding negative numbers&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;handles negatives correctly&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">            </span><span class="n">expect</span><span class="o">(-</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(-</span><span class="mi">5</span><span class="o">)</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">        </span><span class="o">)</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">    </span><span class="o">]</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="o">]</span>
 </span></code></pre></div>
 <h3 id="use-type-specific-expectations">Use Type-Specific Expectations<a class="headerlink" href="#use-type-specific-expectations" title="Permanent link">&para;</a></h3>
 <p>Explore the type-specific expectation functions:</p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">// Collections</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">expectSeq</span><span class="o">([</span><span class="mi">1</span><span class="o">;</span><span class="w"> </span><span class="mi">2</span><span class="o">;</span><span class="w"> </span><span class="mi">3</span><span class="o">]).</span><span class="n">toContain</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">expectSeq</span><span class="o">(</span><span class="bp">[]</span><span class="o">).</span><span class="n">toBeEmpty</span><span class="bp">()</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">expectSeq</span><span class="o">([</span><span class="mi">1</span><span class="o">;</span><span class="w"> </span><span class="mi">2</span><span class="o">;</span><span class="w"> </span><span class="mi">3</span><span class="o">]).</span><span class="n">toHaveLength</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="c1">// Strings</span>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="n">expectStr</span><span class="o">(</span><span class="s">&quot;hello world&quot;</span><span class="o">).</span><span class="n">toEndWith</span><span class="o">(</span><span class="s">&quot;world&quot;</span><span class="o">)</span>
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="n">expectStr</span><span class="o">(</span><span class="s">&quot;test@example.com&quot;</span><span class="o">).</span><span class="n">toMatchRegex</span><span class="o">(</span><span class="s">@&quot;^\w+@\w+\.\w+$&quot;</span><span class="o">)</span>
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
-</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="c1">// Numeric</span>
-</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="n">expectNum</span><span class="o">(</span><span class="mi">10</span><span class="o">).</span><span class="n">toBeGreaterThan</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
-</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="n">expectFloat</span><span class="o">(</span><span class="mi">3</span><span class="o">.</span><span class="mi">14159</span><span class="o">).</span><span class="n">toBeCloseTo</span><span class="o">(</span><span class="mi">3</span><span class="o">.</span><span class="mi">14</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">01</span><span class="o">)</span>
-</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>
-</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="c1">// Options</span>
-</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="n">expectOption</span><span class="o">(</span><span class="n">Some</span><span class="w"> </span><span class="mi">42</span><span class="o">).</span><span class="n">toBeSome</span><span class="o">(</span><span class="mi">42</span><span class="o">)</span>
-</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="n">expectOption</span><span class="o">(</span><span class="n">None</span><span class="o">).</span><span class="n">toBeNone</span><span class="bp">()</span>
-</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>
-</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="c1">// Results</span>
-</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="n">expectResult</span><span class="o">(</span><span class="n">Ok</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="o">).</span><span class="n">toBeOk</span><span class="o">(</span><span class="s">&quot;success&quot;</span><span class="o">)</span>
-</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="n">expectResult</span><span class="o">(</span><span class="n">Error</span><span class="w"> </span><span class="s">&quot;failed&quot;</span><span class="o">).</span><span class="n">toBeError</span><span class="o">(</span><span class="s">&quot;failed&quot;</span><span class="o">)</span>
-</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>
-</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="c1">// Exceptions</span>
-</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="n">expectThrows</span><span class="o">&lt;</span><span class="nn">System</span><span class="p">.</span><span class="n">ArgumentException</span><span class="o">&gt;(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
-</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="w">    </span><span class="n">invalidArg</span><span class="w"> </span><span class="s">&quot;param&quot;</span><span class="w"> </span><span class="s">&quot;message&quot;</span>
-</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="o">)</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">// Collections</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">expectSeq</span><span class="o">([</span><span class="mi">1</span><span class="o">;</span><span class="w"> </span><span class="mi">2</span><span class="o">;</span><span class="w"> </span><span class="mi">3</span><span class="o">]).</span><span class="n">toContain</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">expectSeq</span><span class="o">(</span><span class="bp">[]</span><span class="o">).</span><span class="n">toBeEmpty</span><span class="bp">()</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">expectSeq</span><span class="o">([</span><span class="mi">1</span><span class="o">;</span><span class="w"> </span><span class="mi">2</span><span class="o">;</span><span class="w"> </span><span class="mi">3</span><span class="o">]).</span><span class="n">toHaveLength</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="c1">// Strings</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="n">expectStr</span><span class="o">(</span><span class="s">&quot;hello world&quot;</span><span class="o">).</span><span class="n">toEndWith</span><span class="o">(</span><span class="s">&quot;world&quot;</span><span class="o">)</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="n">expectStr</span><span class="o">(</span><span class="s">&quot;test@example.com&quot;</span><span class="o">).</span><span class="n">toMatchRegex</span><span class="o">(</span><span class="s">@&quot;^\w+@\w+\.\w+$&quot;</span><span class="o">)</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="c1">// Numeric</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="n">expectNum</span><span class="o">(</span><span class="mi">10</span><span class="o">).</span><span class="n">toBeGreaterThan</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="n">expectFloat</span><span class="o">(</span><span class="mi">3</span><span class="o">.</span><span class="mi">14159</span><span class="o">).</span><span class="n">toBeCloseTo</span><span class="o">(</span><span class="mi">3</span><span class="o">.</span><span class="mi">14</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">01</span><span class="o">)</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="c1">// Options</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="n">expectOption</span><span class="o">(</span><span class="n">Some</span><span class="w"> </span><span class="mi">42</span><span class="o">).</span><span class="n">toBeSome</span><span class="o">(</span><span class="mi">42</span><span class="o">)</span>
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="n">expectOption</span><span class="o">(</span><span class="n">None</span><span class="o">).</span><span class="n">toBeNone</span><span class="bp">()</span>
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="c1">// Results</span>
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="n">expectResult</span><span class="o">(</span><span class="n">Ok</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="o">).</span><span class="n">toBeOk</span><span class="o">(</span><span class="s">&quot;success&quot;</span><span class="o">)</span>
+</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="n">expectResult</span><span class="o">(</span><span class="n">Error</span><span class="w"> </span><span class="s">&quot;failed&quot;</span><span class="o">).</span><span class="n">toBeError</span><span class="o">(</span><span class="s">&quot;failed&quot;</span><span class="o">)</span>
+</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>
+</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a><span class="c1">// Exceptions</span>
+</span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a><span class="n">expectThrows</span><span class="o">&lt;</span><span class="nn">System</span><span class="p">.</span><span class="n">ArgumentException</span><span class="o">&gt;(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
+</span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a><span class="w">    </span><span class="n">invalidArg</span><span class="w"> </span><span class="s">&quot;param&quot;</span><span class="w"> </span><span class="s">&quot;message&quot;</span>
+</span><span id="__span-13-25"><a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a><span class="o">)</span>
 </span></code></pre></div>
 <h3 id="negative-assertions">Negative Assertions<a class="headerlink" href="#negative-assertions" title="Permanent link">&para;</a></h3>
 <p>Use <code>.notTo...</code> methods for negative assertions:</p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">expect</span><span class="o">(</span><span class="mi">5</span><span class="o">).</span><span class="n">notToEqual</span><span class="o">(</span><span class="mi">10</span><span class="o">)</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">expectStr</span><span class="o">(</span><span class="s">&quot;hello&quot;</span><span class="o">).</span><span class="n">notToStartWith</span><span class="o">(</span><span class="s">&quot;bye&quot;</span><span class="o">)</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">expectSeq</span><span class="o">([</span><span class="mi">1</span><span class="o">;</span><span class="w"> </span><span class="mi">2</span><span class="o">;</span><span class="w"> </span><span class="mi">3</span><span class="o">]).</span><span class="n">notToBeEmpty</span><span class="bp">()</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">expect</span><span class="o">(</span><span class="mi">5</span><span class="o">).</span><span class="n">notToEqual</span><span class="o">(</span><span class="mi">10</span><span class="o">)</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">expectStr</span><span class="o">(</span><span class="s">&quot;hello&quot;</span><span class="o">).</span><span class="n">notToStartWith</span><span class="o">(</span><span class="s">&quot;bye&quot;</span><span class="o">)</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">expectSeq</span><span class="o">([</span><span class="mi">1</span><span class="o">;</span><span class="w"> </span><span class="mi">2</span><span class="o">;</span><span class="w"> </span><span class="mi">3</span><span class="o">]).</span><span class="n">notToBeEmpty</span><span class="bp">()</span>
 </span></code></pre></div>
 <h3 id="focus-on-specific-tests">Focus on Specific Tests<a class="headerlink" href="#focus-on-specific-tests" title="Permanent link">&para;</a></h3>
 <p>During development, focus on specific tests:</p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;My Suite&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="n">fit</span><span class="w"> </span><span class="s">&quot;only run this test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">  </span><span class="c1">// (1)!</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">        </span><span class="n">expectBool</span><span class="o">(</span><span class="k">true</span><span class="o">).</span><span class="n">toBeTrue</span><span class="bp">()</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="o">)</span>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;this test will be skipped&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">        </span><span class="n">expectBool</span><span class="o">(</span><span class="k">false</span><span class="o">).</span><span class="n">toBeTrue</span><span class="bp">()</span>
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">    </span><span class="o">)</span>
-</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="o">]</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;My Suite&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="n">fit</span><span class="w"> </span><span class="s">&quot;only run this test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">  </span><span class="c1">// (1)!</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">        </span><span class="n">expectBool</span><span class="o">(</span><span class="k">true</span><span class="o">).</span><span class="n">toBeTrue</span><span class="bp">()</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;this test will be skipped&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">        </span><span class="n">expectBool</span><span class="o">(</span><span class="k">false</span><span class="o">).</span><span class="n">toBeTrue</span><span class="bp">()</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="o">]</span>
 </span></code></pre></div>
 <ol>
 <li><code>fit</code> (focused it) runs only this test. Use <code>fdescribe</code> to focus an entire group.</li>
 </ol>
 <h3 id="skip-tests-temporarily">Skip Tests Temporarily<a class="headerlink" href="#skip-tests-temporarily" title="Permanent link">&para;</a></h3>
 <p>Mark tests as pending:</p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;My Suite&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;working test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">        </span><span class="n">expectBool</span><span class="o">(</span><span class="k">true</span><span class="o">).</span><span class="n">toBeTrue</span><span class="bp">()</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="o">)</span>
-</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
-</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="n">xit</span><span class="w"> </span><span class="s">&quot;not ready yet&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">  </span><span class="c1">// (1)!</span>
-</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">        </span><span class="n">expectBool</span><span class="o">(</span><span class="k">false</span><span class="o">).</span><span class="n">toBeTrue</span><span class="bp">()</span>
-</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">    </span><span class="o">)</span>
-</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
-</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">    </span><span class="n">pending</span><span class="w"> </span><span class="s">&quot;TODO: implement this test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">  </span><span class="c1">// (2)!</span>
-</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">        </span><span class="bp">()</span>
-</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">    </span><span class="o">)</span>
-</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="o">]</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;My Suite&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;working test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">        </span><span class="n">expectBool</span><span class="o">(</span><span class="k">true</span><span class="o">).</span><span class="n">toBeTrue</span><span class="bp">()</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">    </span><span class="n">xit</span><span class="w"> </span><span class="s">&quot;not ready yet&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">  </span><span class="c1">// (1)!</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">        </span><span class="n">expectBool</span><span class="o">(</span><span class="k">false</span><span class="o">).</span><span class="n">toBeTrue</span><span class="bp">()</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">    </span><span class="n">pending</span><span class="w"> </span><span class="s">&quot;TODO: implement this test&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">  </span><span class="c1">// (2)!</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">        </span><span class="bp">()</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="o">]</span>
 </span></code></pre></div>
 <ol>
 <li><code>xit</code> (excluded it) skips this test</li>
@@ -1859,110 +1894,110 @@
 </ol>
 <h3 id="setup-and-teardown">Setup and Teardown<a class="headerlink" href="#setup-and-teardown" title="Permanent link">&para;</a></h3>
 <p>Use hooks for test setup:</p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Database Tests&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">mutable</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">    </span><span class="n">beforeEach</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">        </span><span class="n">connection</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nn">Database</span><span class="p">.</span><span class="n">connect</span><span class="bp">()</span>
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">    </span><span class="o">)</span>
-</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>
-</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">    </span><span class="n">afterEach</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">        </span><span class="n">connection</span><span class="o">.</span><span class="n">Dispose</span><span class="bp">()</span>
-</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">    </span><span class="o">)</span>
-</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>
-</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;queries the database&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="o">.</span><span class="n">Query</span><span class="o">(</span><span class="s">&quot;SELECT 1&quot;</span><span class="o">)</span>
-</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">        </span><span class="n">expectSeq</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">notToBeEmpty</span><span class="bp">()</span>
-</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="w">    </span><span class="o">)</span>
-</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="o">]</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Database Tests&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">mutable</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">    </span><span class="n">beforeEach</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">        </span><span class="n">connection</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nn">Database</span><span class="p">.</span><span class="n">connect</span><span class="bp">()</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">    </span><span class="n">afterEach</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">        </span><span class="n">connection</span><span class="o">.</span><span class="n">Dispose</span><span class="bp">()</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;queries the database&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="o">.</span><span class="n">Query</span><span class="o">(</span><span class="s">&quot;SELECT 1&quot;</span><span class="o">)</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="w">        </span><span class="n">expectSeq</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">notToBeEmpty</span><span class="bp">()</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="w">    </span><span class="o">)</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="o">]</span>
 </span></code></pre></div>
 <hr />
 <h2 id="testing-your-own-code">Testing Your Own Code<a class="headerlink" href="#testing-your-own-code" title="Permanent link">&para;</a></h2>
 <p>Here's a complete example testing a simple calculator:</p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">// Calculator.fs</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="k">module</span><span class="w"> </span><span class="nn">Calculator</span>
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="k">let</span><span class="w"> </span><span class="nv">add</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span>
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="k">let</span><span class="w"> </span><span class="nv">subtract</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y</span>
-</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="k">let</span><span class="w"> </span><span class="nv">multiply</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span>
-</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="k">let</span><span class="w"> </span><span class="nv">divide</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span>
-</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">then</span>
-</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">        </span><span class="n">invalidArg</span><span class="w"> </span><span class="o">(</span><span class="n">nameof</span><span class="w"> </span><span class="n">y</span><span class="o">)</span><span class="w"> </span><span class="s">&quot;Cannot divide by zero&quot;</span>
-</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">    </span><span class="k">else</span>
-</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">y</span>
-</span></code></pre></div>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">// CalculatorSpecs.fs</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="k">module</span><span class="w"> </span><span class="nn">CalculatorSpecs</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">// Calculator.fs</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="k">module</span><span class="w"> </span><span class="nn">Calculator</span>
 </span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Core</span>
-</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Matchers</span>
-</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
-</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
-</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="k">let</span><span class="w"> </span><span class="nv">calculatorSpecs</span><span class="w"> </span><span class="o">=</span>
-</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Calculator&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">        </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;add&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;adds positive numbers&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">                </span><span class="n">expect</span><span class="o">(</span><span class="nn">Calculator</span><span class="p">.</span><span class="n">add</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
-</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">            </span><span class="o">)</span>
-</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>
-</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;adds negative numbers&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">                </span><span class="n">expect</span><span class="o">(</span><span class="nn">Calculator</span><span class="p">.</span><span class="n">add</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(-</span><span class="mi">3</span><span class="o">)</span>
-</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="w">            </span><span class="o">)</span>
-</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>
-</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;adds mixed numbers&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="w">                </span><span class="n">expect</span><span class="o">(</span><span class="nn">Calculator</span><span class="p">.</span><span class="n">add</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">-</span><span class="mi">5</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
-</span><span id="__span-18-21"><a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="w">            </span><span class="o">)</span>
-</span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="w">        </span><span class="o">]</span>
-</span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a>
-</span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="w">        </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;divide&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-18-25"><a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;divides evenly&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a><span class="w">                </span><span class="n">expect</span><span class="o">(</span><span class="nn">Calculator</span><span class="p">.</span><span class="n">divide</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">2</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
-</span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="w">            </span><span class="o">)</span>
-</span><span id="__span-18-28"><a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a>
-</span><span id="__span-18-29"><a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;raises exception on division by zero&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-18-30"><a id="__codelineno-18-30" name="__codelineno-18-30" href="#__codelineno-18-30"></a><span class="w">                </span><span class="n">expectThrows</span><span class="o">&lt;</span><span class="nn">System</span><span class="p">.</span><span class="n">ArgumentException</span><span class="o">&gt;(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
-</span><span id="__span-18-31"><a id="__codelineno-18-31" name="__codelineno-18-31" href="#__codelineno-18-31"></a><span class="w">                    </span><span class="nn">Calculator</span><span class="p">.</span><span class="n">divide</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">ignore</span>
-</span><span id="__span-18-32"><a id="__codelineno-18-32" name="__codelineno-18-32" href="#__codelineno-18-32"></a><span class="w">                </span><span class="o">)</span>
-</span><span id="__span-18-33"><a id="__codelineno-18-33" name="__codelineno-18-33" href="#__codelineno-18-33"></a><span class="w">            </span><span class="o">)</span>
-</span><span id="__span-18-34"><a id="__codelineno-18-34" name="__codelineno-18-34" href="#__codelineno-18-34"></a><span class="w">        </span><span class="o">]</span>
-</span><span id="__span-18-35"><a id="__codelineno-18-35" name="__codelineno-18-35" href="#__codelineno-18-35"></a><span class="w">    </span><span class="o">]</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="k">let</span><span class="w"> </span><span class="nv">add</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="k">let</span><span class="w"> </span><span class="nv">subtract</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="k">let</span><span class="w"> </span><span class="nv">multiply</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="k">let</span><span class="w"> </span><span class="nv">divide</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">        </span><span class="n">invalidArg</span><span class="w"> </span><span class="o">(</span><span class="n">nameof</span><span class="w"> </span><span class="n">y</span><span class="o">)</span><span class="w"> </span><span class="s">&quot;Cannot divide by zero&quot;</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">    </span><span class="k">else</span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">y</span>
+</span></code></pre></div>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1">// CalculatorSpecs.fs</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="k">module</span><span class="w"> </span><span class="nn">CalculatorSpecs</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Core</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Matchers</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="k">let</span><span class="w"> </span><span class="nv">calculatorSpecs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Calculator&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="w">        </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;add&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;adds positive numbers&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="w">                </span><span class="n">expect</span><span class="o">(</span><span class="nn">Calculator</span><span class="p">.</span><span class="n">add</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="w">            </span><span class="o">)</span>
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;adds negative numbers&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a><span class="w">                </span><span class="n">expect</span><span class="o">(</span><span class="nn">Calculator</span><span class="p">.</span><span class="n">add</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(-</span><span class="mi">3</span><span class="o">)</span>
+</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="w">            </span><span class="o">)</span>
+</span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>
+</span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;adds mixed numbers&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-19-20"><a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="w">                </span><span class="n">expect</span><span class="o">(</span><span class="nn">Calculator</span><span class="p">.</span><span class="n">add</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">-</span><span class="mi">5</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
+</span><span id="__span-19-21"><a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="w">            </span><span class="o">)</span>
+</span><span id="__span-19-22"><a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="w">        </span><span class="o">]</span>
+</span><span id="__span-19-23"><a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a>
+</span><span id="__span-19-24"><a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="w">        </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;divide&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-19-25"><a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;divides evenly&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-19-26"><a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="w">                </span><span class="n">expect</span><span class="o">(</span><span class="nn">Calculator</span><span class="p">.</span><span class="n">divide</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">2</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
+</span><span id="__span-19-27"><a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a><span class="w">            </span><span class="o">)</span>
+</span><span id="__span-19-28"><a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a>
+</span><span id="__span-19-29"><a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a><span class="w">            </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;raises exception on division by zero&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-19-30"><a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a><span class="w">                </span><span class="n">expectThrows</span><span class="o">&lt;</span><span class="nn">System</span><span class="p">.</span><span class="n">ArgumentException</span><span class="o">&gt;(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
+</span><span id="__span-19-31"><a id="__codelineno-19-31" name="__codelineno-19-31" href="#__codelineno-19-31"></a><span class="w">                    </span><span class="nn">Calculator</span><span class="p">.</span><span class="n">divide</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">ignore</span>
+</span><span id="__span-19-32"><a id="__codelineno-19-32" name="__codelineno-19-32" href="#__codelineno-19-32"></a><span class="w">                </span><span class="o">)</span>
+</span><span id="__span-19-33"><a id="__codelineno-19-33" name="__codelineno-19-33" href="#__codelineno-19-33"></a><span class="w">            </span><span class="o">)</span>
+</span><span id="__span-19-34"><a id="__codelineno-19-34" name="__codelineno-19-34" href="#__codelineno-19-34"></a><span class="w">        </span><span class="o">]</span>
+</span><span id="__span-19-35"><a id="__codelineno-19-35" name="__codelineno-19-35" href="#__codelineno-19-35"></a><span class="w">    </span><span class="o">]</span>
 </span></code></pre></div>
 <hr />
 <h2 id="running-tests">Running Tests<a class="headerlink" href="#running-tests" title="Permanent link">&para;</a></h2>
 <h3 id="basic-run">Basic Run<a class="headerlink" href="#basic-run" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>dotnet<span class="w"> </span>run
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>dotnet<span class="w"> </span>run
 </span></code></pre></div>
 <h3 id="run-specific-tests">Run Specific Tests<a class="headerlink" href="#run-specific-tests" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--<span class="w"> </span>--filter<span class="w"> </span><span class="s2">&quot;Calculator&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--<span class="w"> </span>--filter<span class="w"> </span><span class="s2">&quot;Calculator&quot;</span>
 </span></code></pre></div>
 <h3 id="choose-output-format">Choose Output Format<a class="headerlink" href="#choose-output-format" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Documentation format (default, colorful)</span>
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--<span class="w"> </span>--format<span class="w"> </span>documentation
-</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
-</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># Simple format (plain text)</span>
-</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--<span class="w"> </span>--format<span class="w"> </span>simple
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Documentation format (default, colorful)</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--<span class="w"> </span>--format<span class="w"> </span>documentation
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># Simple format (plain text)</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--<span class="w"> </span>--format<span class="w"> </span>simple
 </span></code></pre></div>
 <hr />
 <h2 id="async-testing">Async Testing<a class="headerlink" href="#async-testing" title="Permanent link">&para;</a></h2>
 <p>FxSpec supports asynchronous tests using <code>itAsync</code>:</p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">open</span><span class="w"> </span><span class="nn">System.Net.Http</span>
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
-</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="k">let</span><span class="w"> </span><span class="nv">asyncSpecs</span><span class="w"> </span><span class="o">=</span>
-</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Async Operations&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="w">        </span><span class="n">itAsync</span><span class="w"> </span><span class="s">&quot;fetches data from API&quot;</span><span class="w"> </span><span class="o">(</span><span class="n">async</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="w">            </span><span class="k">use</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpClient</span><span class="bp">()</span>
-</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">            </span><span class="k">let!</span><span class="w"> </span><span class="nv">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="o">.</span><span class="n">GetAsync</span><span class="o">(</span><span class="s">&quot;https://api.github.com&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Async</span><span class="p">.</span><span class="n">AwaitTask</span>
-</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="w">            </span><span class="n">expectHttp</span><span class="o">(</span><span class="n">response</span><span class="o">).</span><span class="n">toHaveStatusOk</span><span class="bp">()</span>
-</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="w">        </span><span class="o">})</span>
-</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>
-</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a><span class="w">        </span><span class="n">itAsync</span><span class="w"> </span><span class="s">&quot;handles async computations&quot;</span><span class="w"> </span><span class="o">(</span><span class="n">async</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="w">            </span><span class="k">let!</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">async</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="mi">42</span>
-</span><span id="__span-22-15"><a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="w">            </span><span class="o">}</span>
-</span><span id="__span-22-16"><a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a><span class="w">            </span><span class="n">expect</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">42</span><span class="o">)</span>
-</span><span id="__span-22-17"><a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a><span class="w">        </span><span class="o">})</span>
-</span><span id="__span-22-18"><a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a><span class="w">    </span><span class="o">]</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">open</span><span class="w"> </span><span class="nn">System.Net.Http</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="k">let</span><span class="w"> </span><span class="nv">asyncSpecs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Async Operations&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">        </span><span class="n">itAsync</span><span class="w"> </span><span class="s">&quot;fetches data from API&quot;</span><span class="w"> </span><span class="o">(</span><span class="n">async</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="w">            </span><span class="k">use</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpClient</span><span class="bp">()</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">            </span><span class="k">let!</span><span class="w"> </span><span class="nv">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="o">.</span><span class="n">GetAsync</span><span class="o">(</span><span class="s">&quot;https://api.github.com&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Async</span><span class="p">.</span><span class="n">AwaitTask</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">            </span><span class="n">expectHttp</span><span class="o">(</span><span class="n">response</span><span class="o">).</span><span class="n">toHaveStatusOk</span><span class="bp">()</span>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="w">        </span><span class="o">})</span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="w">        </span><span class="n">itAsync</span><span class="w"> </span><span class="s">&quot;handles async computations&quot;</span><span class="w"> </span><span class="o">(</span><span class="n">async</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="w">            </span><span class="k">let!</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">async</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="mi">42</span>
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a><span class="w">            </span><span class="o">}</span>
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="w">            </span><span class="n">expect</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toEqual</span><span class="o">(</span><span class="mi">42</span><span class="o">)</span>
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a><span class="w">        </span><span class="o">})</span>
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a><span class="w">    </span><span class="o">]</span>
 </span></code></pre></div>
 <p><strong>Key Points:</strong>
 - Use <code>itAsync</code> instead of <code>it</code> for async tests
@@ -1973,44 +2008,44 @@
 <hr />
 <h2 id="result-testing">Result Testing<a class="headerlink" href="#result-testing" title="Permanent link">&para;</a></h2>
 <p>Test F# Result types with state-only or value-specific matchers:</p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="k">let</span><span class="w"> </span><span class="nv">resultSpecs</span><span class="w"> </span><span class="o">=</span>
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Result Matchers&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;checks success state&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">            </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ok</span><span class="w"> </span><span class="mi">42</span>
-</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">            </span><span class="n">expectResult</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toBeOk</span><span class="bp">()</span><span class="w">  </span><span class="c1">// Just check it succeeded</span>
-</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="w">        </span><span class="o">)</span>
-</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>
-</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;checks specific success value&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="w">            </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ok</span><span class="w"> </span><span class="s">&quot;success&quot;</span>
-</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="w">            </span><span class="n">expectResult</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toBeOk</span><span class="o">(</span><span class="s">&quot;success&quot;</span><span class="o">)</span><span class="w">  </span><span class="c1">// Check value too</span>
-</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="w">        </span><span class="o">)</span>
-</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>
-</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;checks error state&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
-</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a><span class="w">            </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="s">&quot;failed&quot;</span>
-</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="w">            </span><span class="n">expectResult</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toBeError</span><span class="bp">()</span><span class="w">  </span><span class="c1">// Just check it failed</span>
-</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a><span class="w">        </span><span class="o">)</span>
-</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a><span class="w">    </span><span class="o">]</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="k">let</span><span class="w"> </span><span class="nv">resultSpecs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;Result Matchers&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;checks success state&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="w">            </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ok</span><span class="w"> </span><span class="mi">42</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="w">            </span><span class="n">expectResult</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toBeOk</span><span class="bp">()</span><span class="w">  </span><span class="c1">// Just check it succeeded</span>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="w">        </span><span class="o">)</span>
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;checks specific success value&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="w">            </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ok</span><span class="w"> </span><span class="s">&quot;success&quot;</span>
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="w">            </span><span class="n">expectResult</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toBeOk</span><span class="o">(</span><span class="s">&quot;success&quot;</span><span class="o">)</span><span class="w">  </span><span class="c1">// Check value too</span>
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a><span class="w">        </span><span class="o">)</span>
+</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>
+</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a><span class="w">        </span><span class="n">it</span><span class="w"> </span><span class="s">&quot;checks error state&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-24-15"><a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a><span class="w">            </span><span class="k">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="s">&quot;failed&quot;</span>
+</span><span id="__span-24-16"><a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a><span class="w">            </span><span class="n">expectResult</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="n">toBeError</span><span class="bp">()</span><span class="w">  </span><span class="c1">// Just check it failed</span>
+</span><span id="__span-24-17"><a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a><span class="w">        </span><span class="o">)</span>
+</span><span id="__span-24-18"><a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a><span class="w">    </span><span class="o">]</span>
 </span></code></pre></div>
 <p>For more details, see <a href="../reference/matchers/result/">Result Matchers</a>.</p>
 <hr />
 <h2 id="http-testing">HTTP Testing<a class="headerlink" href="#http-testing" title="Permanent link">&para;</a></h2>
 <p>Test HTTP responses with the fluent HTTP API:</p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Http</span>
-</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="k">open</span><span class="w"> </span><span class="nn">System.Net.Http</span>
-</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
-</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
-</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="k">let</span><span class="w"> </span><span class="nv">httpSpecs</span><span class="w"> </span><span class="o">=</span>
-</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;HTTP API Tests&quot;</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="w">        </span><span class="n">itAsync</span><span class="w"> </span><span class="s">&quot;validates API response&quot;</span><span class="w"> </span><span class="o">(</span><span class="n">async</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="w">            </span><span class="k">use</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpClient</span><span class="bp">()</span>
-</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="w">            </span><span class="k">let!</span><span class="w"> </span><span class="nv">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="o">.</span><span class="n">GetAsync</span><span class="o">(</span><span class="s">&quot;https://api.example.com/users&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Async</span><span class="p">.</span><span class="n">AwaitTask</span>
-</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>
-</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="w">            </span><span class="n">expectHttp</span><span class="o">(</span><span class="n">response</span><span class="o">).</span><span class="n">toHaveStatusOk</span><span class="bp">()</span>
-</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a><span class="w">            </span><span class="n">expectHttp</span><span class="o">(</span><span class="n">response</span><span class="o">).</span><span class="n">toHaveContentType</span><span class="o">(</span><span class="s">&quot;application/json&quot;</span><span class="o">)</span>
-</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="w">            </span><span class="n">expectHttp</span><span class="o">(</span><span class="n">response</span><span class="o">).</span><span class="n">toHaveBodyContaining</span><span class="o">(</span><span class="s">&quot;users&quot;</span><span class="o">)</span>
-</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a><span class="w">        </span><span class="o">})</span>
-</span><span id="__span-24-15"><a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a><span class="w">    </span><span class="o">]</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Http</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="k">open</span><span class="w"> </span><span class="nn">System.Net.Http</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="k">let</span><span class="w"> </span><span class="nv">httpSpecs</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">    </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;HTTP API Tests&quot;</span><span class="w"> </span><span class="o">[</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="w">        </span><span class="n">itAsync</span><span class="w"> </span><span class="s">&quot;validates API response&quot;</span><span class="w"> </span><span class="o">(</span><span class="n">async</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="w">            </span><span class="k">use</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpClient</span><span class="bp">()</span>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="w">            </span><span class="k">let!</span><span class="w"> </span><span class="nv">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="o">.</span><span class="n">GetAsync</span><span class="o">(</span><span class="s">&quot;https://api.example.com/users&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Async</span><span class="p">.</span><span class="n">AwaitTask</span>
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="w">            </span><span class="n">expectHttp</span><span class="o">(</span><span class="n">response</span><span class="o">).</span><span class="n">toHaveStatusOk</span><span class="bp">()</span>
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="w">            </span><span class="n">expectHttp</span><span class="o">(</span><span class="n">response</span><span class="o">).</span><span class="n">toHaveContentType</span><span class="o">(</span><span class="s">&quot;application/json&quot;</span><span class="o">)</span>
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="w">            </span><span class="n">expectHttp</span><span class="o">(</span><span class="n">response</span><span class="o">).</span><span class="n">toHaveBodyContaining</span><span class="o">(</span><span class="s">&quot;users&quot;</span><span class="o">)</span>
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="w">        </span><span class="o">})</span>
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a><span class="w">    </span><span class="o">]</span>
 </span></code></pre></div>
 <p>For more details, see <a href="../reference/http/">HTTP Testing</a>.</p>
 <hr />
@@ -2039,8 +2074,8 @@
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="tests-not-discovered">Tests Not Discovered<a class="headerlink" href="#tests-not-discovered" title="Permanent link">&para;</a></h3>
 <p>Make sure your test module has the <code>[&lt;Tests&gt;]</code> attribute:</p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span><span class="w">  </span><span class="c1">// Don&#39;t forget this!</span>
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="k">let</span><span class="w"> </span><span class="nv">mySpecs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="w"> </span><span class="o">[...]</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span><span class="w">  </span><span class="c1">// Don&#39;t forget this!</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="k">let</span><span class="w"> </span><span class="nv">mySpecs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">describe</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="w"> </span><span class="o">[...]</span>
 </span></code></pre></div>
 <h3 id="compilation-errors">Compilation Errors<a class="headerlink" href="#compilation-errors" title="Permanent link">&para;</a></h3>
 <p>Common issues:</p>
@@ -2052,7 +2087,7 @@
 </ol>
 <h3 id="need-help">Need Help?<a class="headerlink" href="#need-help" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://github.com/fxspec/fx-spec/issues">Open an issue on GitHub</a></li>
+<li><a href="https://github.com/dawsons-creek/fx-spec/issues">Open an issue on GitHub</a></li>
 <li>Check existing issues for similar problems</li>
 <li>Read the <a href="../community/contributing/">Contributing Guide</a> to submit bug reports</li>
 </ul>
@@ -2078,7 +2113,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 1, 2025 23:00:26 UTC"><span class="timeago" datetime="2025-11-01T23:00:26+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 1, 2025 23:00:26 UTC">2025-11-01</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 3, 2025 17:45:03 UTC"><span class="timeago" datetime="2025-11-03T17:45:03+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 3, 2025 17:45:03 UTC">2025-11-03</span>
   </span>
 
     
