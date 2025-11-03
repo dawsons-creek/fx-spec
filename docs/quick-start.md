@@ -1,6 +1,6 @@
 # Quick Start
 
-Get your first FxSpec test running in 5 minutes.
+Get your first FxSpec specification running in 5 minutes and start documenting your code's behavior.
 
 ---
 
@@ -38,44 +38,51 @@ dotnet add package FxSpec.Runner
 
 ---
 
-## Your First Test
+## Your First Specification
 
-### Step 1: Create a Test File
+### Step 1: Create a Specification File
 
-Create a new file called `MyFirstSpecs.fs` in your test project:
+Create a new file called `CalculatorSpecs.fs` in your test project. Note how the tests read like documentation:
 
 ```fsharp
-module MyFirstSpecs
+module CalculatorSpecs
 
 open FxSpec.Core
 open FxSpec.Matchers
 
 [<Tests>]
-let myFirstSpecs =
-    describe "My First Test Suite" [
-        it "passes!" (fun () ->
-            expectBool(true).toBeTrue()
-        )
+let calculatorSpecs =
+    describe "Calculator arithmetic operations" [
+        context "when adding numbers" [
+            it "returns the sum of two positive integers" (fun () ->
+                let result = 2 + 3
+                expect(result).toEqual(5)
+            )
 
-        it "checks equality" (fun () ->
-            let result = 2 + 2
-            expect(result).toEqual(4)
-        )
+            it "handles negative numbers correctly" (fun () ->
+                let result = -5 + 3
+                expect(result).toEqual(-2)
+            )
+        ]
 
-        it "works with strings" (fun () ->
-            let greeting = "Hello, FxSpec!"
-            expectStr(greeting).toStartWith("Hello")
-        )
+        context "when dividing numbers" [
+            it "raises an exception when dividing by zero" (fun () ->
+                expectThrows<System.DivideByZeroException>(fun () ->
+                    let _ = 10 / 0
+                    ()
+                )
+            )
+        ]
     ]
 ```
 
 ### Step 2: Update Your .fsproj
 
-Make sure your test file is included in the project:
+Make sure your specification file is included in the project:
 
 ```xml
 <ItemGroup>
-  <Compile Include="MyFirstSpecs.fs" />
+  <Compile Include="CalculatorSpecs.fs" />
   <Compile Include="Program.fs" />
 </ItemGroup>
 ```
@@ -100,13 +107,15 @@ dotnet build
 dotnet run
 ```
 
-You should see beautiful output like this:
+You should see beautiful, hierarchical output that documents your calculator's behavior:
 
 ```
-My First Test Suite
-  ✓ passes! (2ms)
-  ✓ checks equality (1ms)
-  ✓ works with strings (1ms)
+Calculator arithmetic operations
+  when adding numbers
+    ✓ returns the sum of two positive integers (2ms)
+    ✓ handles negative numbers correctly (1ms)
+  when dividing numbers
+    ✓ raises an exception when dividing by zero (1ms)
 
 ┌─────┬────────┬────────┬─────────┬──────────┐
 │ ... │ Passed │ Failed │ Skipped │ Duration │
@@ -115,7 +124,7 @@ My First Test Suite
 ```
 
 !!! success "Congratulations!"
-    You've just written and run your first FxSpec tests!
+    You've just created executable documentation for your code! These specifications serve as both tests and documentation.
 
 ---
 
@@ -123,40 +132,53 @@ My First Test Suite
 
 Let's break down what you just wrote:
 
-### The Test Structure
+### The Specification Structure
 
 ```fsharp
 [<Tests>]
-let myFirstSpecs =
-    describe "My First Test Suite" [
-        // Individual tests go here
+let calculatorSpecs =
+    describe "Calculator arithmetic operations" [
+        // Individual specifications go here
     ]
 ```
 
-FxSpec tests are simple values marked with the `[<Tests>]` attribute. The test discovery system finds these automatically.
+FxSpec specifications are simple values marked with the `[<Tests>]` attribute. The test discovery system finds these automatically.
 
 ### The `describe` Function
 
 ```fsharp
-describe "My First Test Suite" [
-    // Individual tests go here
+describe "Calculator arithmetic operations" [
+    // Specifications for this feature
 ]
 ```
 
-`describe` groups related tests together. You can nest multiple `describe` blocks to create a hierarchy.
+`describe` groups related specifications together. It names the feature or behavior you're documenting. You can nest multiple `describe` blocks to create hierarchical documentation.
+
+### The `context` Function
+
+```fsharp
+context "when adding numbers" [
+    // Specifications for this specific scenario
+]
+```
+
+`context` describes specific conditions or scenarios. Use it to organize specifications by state, input, or situation.
 
 ### The `it` Function
 
 ```fsharp
-it "passes!" (fun () ->
-    expectBool(true).toBeTrue()
+it "returns the sum of two positive integers" (fun () ->
+    let result = 2 + 3
+    expect(result).toEqual(5)
 )
 ```
 
-`it` defines an individual test case:
+`it` defines an individual specification:
 
-- First parameter: Test description (string)
-- Second parameter: Test function that makes assertions
+- First parameter: Describes the expected behavior (reads like documentation)
+- Second parameter: Function that verifies the behavior
+
+**Tip:** Write `it` descriptions as complete sentences describing what the code should do.
 
 ### The Fluent Expectation API
 
@@ -533,6 +555,6 @@ Common issues:
 
 ### Need Help?
 
-- [Open an issue on GitHub](https://github.com/fxspec/fx-spec/issues)
+- [Open an issue on GitHub](https://github.com/dawsons-creek/fx-spec/issues)
 - Check existing issues for similar problems
 - Read the [Contributing Guide](community/contributing.md) to submit bug reports

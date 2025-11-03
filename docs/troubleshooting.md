@@ -511,7 +511,7 @@ If you encounter an issue not covered here:
    - [DSL API Reference](reference/dsl-api.md)
    - [Test Runner](reference/runner.md)
 
-2. **Search existing issues**: [GitHub Issues](https://github.com/fxspec/fx-spec/issues)
+2. **Search existing issues**: [GitHub Issues](https://github.com/dawsons-creek/fx-spec/issues)
 
 3. **Ask for help**:
    - Open a new issue with:

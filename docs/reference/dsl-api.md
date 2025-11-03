@@ -6,7 +6,9 @@ Complete reference for FxSpec's Domain-Specific Language functions.
 
 ## Overview
 
-FxSpec uses a clean, functional DSL to build test trees. The DSL provides functions for organizing tests, defining test cases, and managing test lifecycle with hooks.
+FxSpec uses a clean, functional DSL to build specification trees. The DSL provides functions for organizing specifications, defining behavioral requirements, and managing test lifecycle with hooks.
+
+Think of your tests as **living documentation** - they describe what your system does, not just verify it works.
 
 ---
 
@@ -156,35 +158,47 @@ describe "Stack" [
 
 **Type:** `string -> (unit -> unit) -> TestNode`
 
-Defines an individual test case.
+Defines an individual specification that describes a single behavior.
 
 **Parameters:**
 
-- `description` - String describing what the test does
-- `test` - Function that performs assertions
+- `description` - String describing the expected behavior (reads like documentation)
+- `test` - Function that verifies the behavior
 
 **Usage:**
 
 ```fsharp
-it "description" (fun () ->
-    // test code and assertions
+it "description of expected behavior" (fun () ->
+    // verification code
 )
 ```
 
 **Example:**
 
 ```fsharp
-it "adds two numbers" (fun () ->
+it "calculates the sum of two positive integers" (fun () ->
     let result = Calculator.add 2 3
     expect(result).toEqual(5)
 )
+
+it "raises an exception when input is invalid" (fun () ->
+    expectThrows<ArgumentException>(fun () ->
+        Calculator.divide 10 0 |> ignore
+    )
+)
 ```
+
+**Writing Good Specifications:**
+
+- Describe **what** the code does, not **how** it does it
+- Write complete sentences: "returns X when Y" not just "test add"
+- Focus on one behavior per specification
+- Use business/domain language, not technical jargon
 
 **Notes:**
 
 - Test function must be wrapped in `fun () ->` for lazy evaluation
-- Descriptions should start with a verb (e.g., "returns", "throws", "creates")
-- Tests should focus on one behavior
+- Descriptions should start with a verb (e.g., "returns", "throws", "creates", "validates")
 - If the test function throws an exception, the test fails
 
 ---
@@ -852,7 +866,7 @@ describe "Integration Tests" [
 
 ## Complete Example
 
-Here's a comprehensive example using all DSL features:
+Here's a comprehensive example using all DSL features with specification-focused descriptions:
 
 ```fsharp
 module UserServiceSpecs
@@ -862,96 +876,117 @@ open FxSpec.Matchers
 
 [<Tests>]
 let userServiceSpecs =
-    spec {
-        describe "UserService" [
-            let mutable service = null
-            let mutable db = null
+    describe "UserService user management" [
+        let mutable service = null
+        let mutable db = null
 
-            beforeAll (fun () ->
-                db <- Database.createInMemory()
-            )
+        beforeAll (fun () ->
+            db <- Database.createInMemory()
+        )
 
-            afterAll (fun () ->
-                db.Dispose()
-            )
+        afterAll (fun () ->
+            db.Dispose()
+        )
 
-            beforeEach (fun () ->
-                db.Clear()
-                service <- UserService(db)
-            )
+        beforeEach (fun () ->
+            db.Clear()
+            service <- UserService(db)
+        )
 
-            describe "CreateUser" [
-                context "when valid data is provided" [
-                    it "creates a new user" (fun () ->
-                        let user = service.CreateUser("Alice", "alice@example.com")
-                        expect(user.Name).toEqual("Alice")
-                        expect(user.Email).toEqual("alice@example.com")
-                    )
-
-                    it "assigns a unique ID" (fun () ->
-                        let user = service.CreateUser("Bob", "bob@example.com")
-                        expect user.Id |> should (beGreaterThan 0)
-                    )
-                ]
-
-                context "when invalid data is provided" [
-                    it "raises exception for empty name" (fun () ->
-                        let action () = service.CreateUser("", "test@example.com")
-                        expect action |> should raiseException
-                    )
-
-                    xit "validates email format" (fun () ->
-                        // TODO: implement email validation
-                        let action () = service.CreateUser("Test", "invalid-email")
-                        expect action |> should raiseException
-                    )
-                ]
-            ]
-
-            describe "GetUser" [
-                it "returns existing user" (fun () ->
-                    let created = service.CreateUser("Charlie", "charlie@example.com")
-                    let retrieved = service.GetUser(created.Id)
-                    expect retrieved |> should (beSome created)
+        context "when creating a new user account" [
+            context "with valid registration data" [
+                it "creates a user account with the provided name and email" (fun () ->
+                    let user = service.CreateUser("Alice", "alice@example.com")
+                    expect(user.Name).toEqual("Alice")
+                    expect(user.Email).toEqual("alice@example.com")
                 )
 
-                it "returns None for non-existent user" (fun () ->
-                    let result = service.GetUser(9999)
-                    expect result |> should beNone
+                it "assigns a unique identifier to the new user" (fun () ->
+                    let user = service.CreateUser("Bob", "bob@example.com")
+                    expectNum(user.Id).toBeGreaterThan(0)
+                )
+            ]
+
+            context "with invalid registration data" [
+                it "rejects registration when name is empty" (fun () ->
+                    expectThrows<ArgumentException>(fun () ->
+                        service.CreateUser("", "test@example.com") |> ignore
+                    )
+                )
+
+                xit "validates email format before accepting registration" (fun () ->
+                    // TODO: implement email validation
+                    expectThrows<ArgumentException>(fun () ->
+                        service.CreateUser("Test", "invalid-email") |> ignore
+                    )
                 )
             ]
         ]
-    }
+
+        context "when retrieving user information" [
+            it "returns the user account when ID exists in system" (fun () ->
+                let created = service.CreateUser("Charlie", "charlie@example.com")
+                let retrieved = service.GetUser(created.Id)
+                expectOption(retrieved).toBeSome(created)
+            )
+
+            it "returns None when requested user ID does not exist" (fun () ->
+                let result = service.GetUser(9999)
+                expectOption(result).toBeNone()
+            )
+        ]
+    ]
 ```
 
 ---
 
 ## Best Practices
 
-### Naming Conventions
+### Writing Specifications as Documentation
 
 ```fsharp
-// Good
-describe "UserService"
-it "creates a new user"
-context "when user is authenticated"
+// Good - Reads like documentation
+describe "User authentication system"
+it "allows login with valid credentials"
+it "locks account after three failed login attempts"
+context "when password has expired"
 
-// Avoid
-describe "Test Suite 1"
-it "test1"
+// Avoid - Too technical or vague
+describe "AuthService tests"
+it "test_login"
+it "edge case 1"
 context "scenario A"
 ```
 
-### Test Organization
+**Tips for good specifications:**
+- Use business domain language
+- Write what the system does, not what the code does
+- Complete sentences that non-developers can understand
+- Focus on behavior, not implementation
+
+### Organizing Specifications
 
 ```fsharp
-describe "FeatureName" [           // Top-level: feature/module/class
-        describe "MethodOrFunction" [   // Second-level: method/function
-            context "when condition" [  // Third-level: specific context
-                it "expected behavior" (fun () -> ...)
-            ]
-        ]
+describe "Feature or Component Name" [     // Top: What you're documenting
+    context "under specific conditions" [  // Middle: When/where
+        it "expected observable behavior" (fun () -> ...) // Bottom: What happens
     ]
+]
+```
+
+**Example hierarchy:**
+```fsharp
+describe "Shopping cart" [
+    context "when cart is empty" [
+        it "displays a message prompting user to add items" (fun () -> ...)
+        it "disables the checkout button" (fun () -> ...)
+    ]
+
+    context "when cart contains items" [
+        it "calculates the correct total including tax" (fun () -> ...)
+        it "enables the checkout button" (fun () -> ...)
+    ]
+]
 ```
 
 ### Hook Usage

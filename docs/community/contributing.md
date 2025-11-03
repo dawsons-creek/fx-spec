@@ -19,7 +19,7 @@ Thank you for your interest in contributing to FxSpec! This document provides gu
 1. **Fork and clone the repository:**
 
 ```bash
-git clone https://github.com/fxspec/fx-spec.git
+git clone https://github.com/dawsons-creek/fx-spec.git
 cd fx-spec
 ```
 
@@ -341,7 +341,7 @@ We always welcome new matchers! Ideas:
 
 ### Bug Fixes
 
-Check [open issues](https://github.com/fxspec/fx-spec/issues) for bugs to fix.
+Check [open issues](https://github.com/dawsons-creek/fx-spec/issues) for bugs to fix.
 
 ---
 
@@ -431,8 +431,8 @@ it "test1" (fun () ->
 
 ## Getting Help
 
-- **Questions:** [Open a discussion](https://github.com/fxspec/fx-spec/discussions)
-- **Bugs:** [Open an issue](https://github.com/fxspec/fx-spec/issues)
+- **Questions:** [Open a discussion](https://github.com/dawsons-creek/fx-spec/discussions)
+- **Bugs:** [Open an issue](https://github.com/dawsons-creek/fx-spec/issues)
 - **Chat:** Join our community chat (link TBD)
 
 ---
