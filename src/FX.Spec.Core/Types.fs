@@ -1,4 +1,4 @@
-namespace FxSpec.Core
+namespace FX.Spec.Core
 
 /// Represents the outcome of a single test execution.
 type TestResult =
@@ -151,21 +151,25 @@ module TestNode =
     // in SpecBuilder.fs. Hooks are never standalone nodes in the tree - they're
     // always processed and attached to their parent group during construction.
 
+    /// Filters a single node to include only focused tests.
+    let rec private filterFocusedNode (node: TestNode) : TestNode option =
+        match node with
+        | FocusedExample (desc, test) ->
+            Some (Example (desc, test))
+        | FocusedGroup (desc, hooks, children) ->
+            Some (Group (desc, hooks, filterFocused children))
+        | Group (desc, hooks, children) ->
+            match filterFocused children with
+            | [] -> None
+            | filtered -> Some (Group (desc, hooks, filtered))
+        | Example _ -> None
+        | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ -> None
+
     /// Filters a test tree to only include focused tests.
     /// If no focused tests exist, returns the original tree.
-    let rec filterFocused (nodes: TestNode list) : TestNode list =
+    and filterFocused (nodes: TestNode list) : TestNode list =
         if nodes |> List.exists hasFocused then
-            nodes |> List.choose (fun node ->
-                match node with
-                | FocusedExample (desc, test) -> Some (Example (desc, test))
-                | FocusedGroup (desc, hooks, children) -> Some (Group (desc, hooks, filterFocused children))
-                | Group (desc, hooks, children) ->
-                    let filtered = filterFocused children
-                    if List.isEmpty filtered then None
-                    else Some (Group (desc, hooks, filtered))
-                | Example _ -> None
-                | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ -> None
-            )
+            nodes |> List.choose filterFocusedNode
         else
             nodes
 

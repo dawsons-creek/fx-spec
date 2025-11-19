@@ -1,8 +1,8 @@
 /// Beautiful test output formatter using Spectre.Console
-module FxSpec.Runner.DocumentationFormatter
+module FX.Spec.Runner.DocumentationFormatter
 
 open System
-open FxSpec.Core
+open FX.Spec.Core
 open Spectre.Console
 
 /// Duration threshold (ms) for fast tests (shown in grey)
@@ -81,7 +81,7 @@ let renderFailureDetails (indent: int) (fullPath: string) (result: TestResult) =
         
         // Check if it's an AssertionException with expected/actual values
         match ex with
-        | :? FxSpec.Matchers.AssertionException as assertEx ->
+        | :? FX.Spec.Matchers.AssertionException as assertEx ->
             // Use DiffFormatter for rich diff display
             let message = assertEx.Message
             let expected = assertEx.Expected
@@ -107,34 +107,35 @@ let renderFailureDetails (indent: int) (fullPath: string) (result: TestResult) =
         AnsiConsole.WriteLine()
     | TestResult.Pass -> ()
 
+/// Renders failure and skip details for an example result.
+let private renderExampleDetails (indent: int) (fullPath: string) (result: TestResult) =
+    if TestResult.isFail result then
+        AnsiConsole.WriteLine()
+        renderFailureDetails indent fullPath result
+
+    if TestResult.isSkipped result then
+        AnsiConsole.WriteLine()
+        match result with
+        | TestResult.Skipped reason ->
+            let indentStr = String(' ', (indent + 1) * 2)
+            AnsiConsole.MarkupLine(sprintf "%s[dim]%s[/]" indentStr (Markup.Escape(reason)))
+        | _ -> ()
+
 /// Recursively renders a test result tree
 let rec renderNode (indent: int) (pathSoFar: string list) (isLast: bool) (node: TestResultNode) =
     match node with
     | ExampleResult (desc, result, duration) ->
         let fullPath = (pathSoFar @ [desc]) |> String.concat " > "
         renderTestLine indent desc result duration
-
-        // Show failure details if test failed
-        if TestResult.isFail result then
-            AnsiConsole.WriteLine()
-            renderFailureDetails indent fullPath result
-
-        // Show skip reason if test was skipped  
-        if TestResult.isSkipped result then
-            AnsiConsole.WriteLine()
-            match result with
-            | TestResult.Skipped reason ->
-                let indentStr = String(' ', (indent + 1) * 2)
-                AnsiConsole.MarkupLine(sprintf "%s[dim]%s[/]" indentStr (Markup.Escape(reason)))
-            | _ -> ()
+        renderExampleDetails indent fullPath result
 
     | GroupResult (desc, children) ->
         renderGroupHeader indent desc
         let newPath = pathSoFar @ [desc]
         let childCount = List.length children
-        children |> List.iteri (fun i child -> 
+        children |> List.iteri (fun i child ->
             renderNode (indent + 1) newPath (i = childCount - 1) child)
-        
+
         // Add blank line after group (unless it's the last node)
         if not isLast then
             AnsiConsole.WriteLine()

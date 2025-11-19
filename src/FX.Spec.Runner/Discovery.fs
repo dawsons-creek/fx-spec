@@ -1,8 +1,8 @@
-namespace FxSpec.Runner
+namespace FX.Spec.Runner
 
 open System
 open System.Reflection
-open FxSpec.Core
+open FX.Spec.Core
 
 /// Module for discovering tests in assemblies using reflection.
 module Discovery =
@@ -142,40 +142,26 @@ module Discovery =
             printfn "Stack trace: %s" ex.StackTrace
             []
     
+    /// Filters a single test node by description (case-insensitive substring match).
+    let rec private filterTestNode (filter: string) (filterLower: string) (node: TestNode) : TestNode option =
+        match node with
+        | Example (desc, test) | FocusedExample (desc, test) when desc.ToLowerInvariant().Contains(filterLower) ->
+            Some (Example (desc, test))
+        | Group (desc, hooks, children) | FocusedGroup (desc, hooks, children) when desc.ToLowerInvariant().Contains(filterLower) ->
+            Some (Group (desc, hooks, children))
+        | Group (desc, hooks, children) | FocusedGroup (desc, hooks, children) ->
+            match filterTests filter children with
+            | [] -> None
+            | filteredChildren -> Some (Group (desc, hooks, filteredChildren))
+        | _ -> None
+
     /// Filters test nodes by description (case-insensitive substring match).
-    let rec filterTests (filter: string) (nodes: TestNode list) : TestNode list =
+    and filterTests (filter: string) (nodes: TestNode list) : TestNode list =
         if String.IsNullOrWhiteSpace(filter) then
             nodes
         else
             let filterLower = filter.ToLowerInvariant()
-            
-            nodes
-            |> List.choose (fun node ->
-                match node with
-                | Example (desc, test) | FocusedExample (desc, test) ->
-                    if desc.ToLowerInvariant().Contains(filterLower) then
-                        Some (Example (desc, test))
-                    else
-                        None
-                | Group (desc, hooks, children) | FocusedGroup (desc, hooks, children) ->
-                    // Check if group description matches
-                    let descMatches = desc.ToLowerInvariant().Contains(filterLower)
-
-                    // If group description matches, include all children
-                    // Otherwise, recursively filter children
-                    if descMatches then
-                        Some (Group (desc, hooks, children))
-                    else
-                        let filteredChildren = filterTests filter children
-                        // Include group if any children match
-                        if not (List.isEmpty filteredChildren) then
-                            Some (Group (desc, hooks, filteredChildren))
-                        else
-                            None
-                | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ ->
-                    // Skip hook nodes during filtering
-                    None
-            )
+            nodes |> List.choose (filterTestNode filter filterLower)
     
     /// Counts total examples in a list of test nodes.
     let countExamples (nodes: TestNode list) : int =

@@ -1,7 +1,7 @@
-namespace FxSpec.Runner
+namespace FX.Spec.Runner
 
 open System
-open FxSpec.Core
+open FX.Spec.Core
 
 /// Simple console formatter for test results.
 /// This is a basic implementation - Phase 4 will add Spectre.Console for beautiful output.
@@ -49,33 +49,38 @@ module SimpleFormatter =
     let formatResults (results: TestResultNode list) : string =
         let lines = results |> List.collect (formatResultNode 0)
         String.concat "\n" lines
-    
+
+    /// Checks if a stack trace line is relevant (not framework code).
+    let private isRelevantStackLine (line: string) : bool =
+        not (line.Contains("FX.Spec.Runner")) &&
+        not (line.Contains("FX.Spec.Core.SpecHelpers")) &&
+        not (line.Contains("System.Reflection")) &&
+        not (line.Contains("System.Runtime")) &&
+        not (line.Contains("Microsoft.FSharp.Core"))
+
+    /// Formats a stack trace for display.
+    let private formatStackTrace (ex: Exception) : string =
+        if String.IsNullOrWhiteSpace(ex.StackTrace) then
+            ""
+        else
+            let relevantLines =
+                ex.StackTrace.Split('\n')
+                |> Array.filter isRelevantStackLine
+                |> Array.truncate maxStackTraceLines
+
+            match relevantLines with
+            | [||] -> ""
+            | lines ->
+                let formatted = lines |> Array.map (fun l -> "    " + l.Trim())
+                "\n  Stack trace:\n" + String.concat "\n" formatted
+
     /// Formats failure details for a test result.
     let formatFailureDetails (result: TestResult) : string option =
         match result with
         | Fail (Some ex) ->
             let exType = ex.GetType().Name
             let msg = sprintf "  %s: %s" exType ex.Message
-            let stackTrace = 
-                if not (String.IsNullOrWhiteSpace(ex.StackTrace)) then
-                    let lines = ex.StackTrace.Split('\n')
-                    // Take first few lines of stack trace, filtering out framework code
-                    let relevantLines =
-                        lines
-                        |> Array.filter (fun line ->
-                            not (line.Contains("FxSpec.Runner")) &&
-                            not (line.Contains("FxSpec.Core.SpecHelpers")) &&
-                            not (line.Contains("System.Reflection")) &&
-                            not (line.Contains("System.Runtime")) &&
-                            not (line.Contains("Microsoft.FSharp.Core"))
-                        )
-                        |> Array.truncate maxStackTraceLines
-                    if Array.isEmpty relevantLines then
-                        ""
-                    else
-                        "\n  Stack trace:\n" + String.concat "\n" (relevantLines |> Array.map (fun l -> "    " + l.Trim()))
-                else
-                    ""
+            let stackTrace = formatStackTrace ex
             Some (msg + stackTrace)
         | Fail None ->
             Some "  Error: Test failed without exception"
