@@ -1,8 +1,8 @@
-namespace FxSpec.Runner
+namespace FX.Spec.Runner
 
 open System
 open System.Diagnostics
-open FxSpec.Core
+open FX.Spec.Core
 
 /// Summary of test execution.
 type ExecutionSummary = {
@@ -66,6 +66,38 @@ module Executor =
         sw.Stop()
         ExampleResult (description, result, sw.Elapsed)
 
+    /// Runs beforeAll hooks and returns any failures as TestResultNodes.
+    let private runBeforeAllHooks (hooks: (unit -> unit) list) : TestResultNode list =
+        hooks
+        |> List.map (fun hook ->
+            let sw = Stopwatch.StartNew()
+            try
+                hook()
+                sw.Stop()
+                None
+            with ex ->
+                sw.Stop()
+                let wrappedEx = System.Exception($"beforeAll hook failed: {ex.Message}", ex)
+                Some (ExampleResult ($"beforeAll hook", Fail (Some wrappedEx), sw.Elapsed))
+        )
+        |> List.choose id
+
+    /// Runs afterAll hooks and returns any failures as TestResultNodes.
+    let private runAfterAllHooks (hooks: (unit -> unit) list) : TestResultNode list =
+        hooks
+        |> List.map (fun hook ->
+            let sw = Stopwatch.StartNew()
+            try
+                hook()
+                sw.Stop()
+                None
+            with ex ->
+                sw.Stop()
+                let wrappedEx = System.Exception($"afterAll hook failed: {ex.Message}", ex)
+                Some (ExampleResult ($"afterAll hook", Fail (Some wrappedEx), sw.Elapsed))
+        )
+        |> List.choose id
+
     /// Executes a single test node recursively with accumulated hooks.
     /// Returns a TestResultNode with timing information.
     let rec executeNodeWithHooks (beforeEachHooks: (unit -> unit) list) (afterEachHooks: (unit -> unit) list) (node: TestNode) : TestResultNode =
@@ -74,98 +106,37 @@ module Executor =
             executeExample description test beforeEachHooks afterEachHooks
 
         | Group (description, hooks, children) ->
-            // Run beforeAll hooks, catching failures
-            let beforeAllResults =
-                hooks.BeforeAll
-                |> List.map (fun hook ->
-                    let sw = Stopwatch.StartNew()
-                    try
-                        hook()
-                        sw.Stop()
-                        None  // Success
-                    with ex ->
-                        sw.Stop()
-                        let wrappedEx = System.Exception($"beforeAll hook failed: {ex.Message}", ex)
-                        Some (ExampleResult ($"beforeAll hook", Fail (Some wrappedEx), sw.Elapsed))
-                )
-                |> List.choose id
-
-            // Accumulate hooks for children
-            let childBeforeEachHooks = beforeEachHooks @ hooks.BeforeEach
-            let childAfterEachHooks = hooks.AfterEach @ afterEachHooks
-
-            // Execute all children with accumulated hooks
-            let childResults = children |> List.map (executeNodeWithHooks childBeforeEachHooks childAfterEachHooks)
-
-            // Run afterAll hooks, catching failures
-            let afterAllResults =
-                hooks.AfterAll
-                |> List.map (fun hook ->
-                    let sw = Stopwatch.StartNew()
-                    try
-                        hook()
-                        sw.Stop()
-                        None  // Success
-                    with ex ->
-                        sw.Stop()
-                        let wrappedEx = System.Exception($"afterAll hook failed: {ex.Message}", ex)
-                        Some (ExampleResult ($"afterAll hook", Fail (Some wrappedEx), sw.Elapsed))
-                )
-                |> List.choose id
-
-            // Combine all results: beforeAll failures + child results + afterAll failures
-            GroupResult (description, beforeAllResults @ childResults @ afterAllResults)
+            executeGroupNode description hooks children beforeEachHooks afterEachHooks
 
         | FocusedExample (description, test) ->
             executeExample description test beforeEachHooks afterEachHooks
 
         | FocusedGroup (description, hooks, children) ->
-            // Run beforeAll hooks, catching failures
-            let beforeAllResults =
-                hooks.BeforeAll
-                |> List.map (fun hook ->
-                    let sw = Stopwatch.StartNew()
-                    try
-                        hook()
-                        sw.Stop()
-                        None  // Success
-                    with ex ->
-                        sw.Stop()
-                        let wrappedEx = System.Exception($"beforeAll hook failed: {ex.Message}", ex)
-                        Some (ExampleResult ($"beforeAll hook", Fail (Some wrappedEx), sw.Elapsed))
-                )
-                |> List.choose id
-
-            // Accumulate hooks for children
-            let childBeforeEachHooks = beforeEachHooks @ hooks.BeforeEach
-            let childAfterEachHooks = hooks.AfterEach @ afterEachHooks
-
-            // Execute all children with accumulated hooks
-            let childResults = children |> List.map (executeNodeWithHooks childBeforeEachHooks childAfterEachHooks)
-
-            // Run afterAll hooks, catching failures
-            let afterAllResults =
-                hooks.AfterAll
-                |> List.map (fun hook ->
-                    let sw = Stopwatch.StartNew()
-                    try
-                        hook()
-                        sw.Stop()
-                        None  // Success
-                    with ex ->
-                        sw.Stop()
-                        let wrappedEx = System.Exception($"afterAll hook failed: {ex.Message}", ex)
-                        Some (ExampleResult ($"afterAll hook", Fail (Some wrappedEx), sw.Elapsed))
-                )
-                |> List.choose id
-
-            // Combine all results: beforeAll failures + child results + afterAll failures
-            GroupResult (description, beforeAllResults @ childResults @ afterAllResults)
+            executeGroupNode description hooks children beforeEachHooks afterEachHooks
 
         | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ ->
             // Hook nodes should have been processed during group construction
             // If we encounter them here, just skip them
             GroupResult ("hook", [])
+
+    /// Executes a group node with its hooks and children.
+    and private executeGroupNode
+        (description: string)
+        (hooks: GroupHooks)
+        (children: TestNode list)
+        (beforeEachHooks: (unit -> unit) list)
+        (afterEachHooks: (unit -> unit) list) : TestResultNode =
+
+        let beforeAllResults = runBeforeAllHooks hooks.BeforeAll
+
+        let childBeforeEachHooks = beforeEachHooks @ hooks.BeforeEach
+        let childAfterEachHooks = hooks.AfterEach @ afterEachHooks
+
+        let childResults = children |> List.map (executeNodeWithHooks childBeforeEachHooks childAfterEachHooks)
+
+        let afterAllResults = runAfterAllHooks hooks.AfterAll
+
+        GroupResult (description, beforeAllResults @ childResults @ afterAllResults)
 
     /// Executes a single test node recursively.
     /// Returns a TestResultNode with timing information.
