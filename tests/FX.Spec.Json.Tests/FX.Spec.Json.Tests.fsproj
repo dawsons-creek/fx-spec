@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="JsonHelpersSpecs.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\\..\\src\\FX.Spec.Json\\FX.Spec.Json.fsproj" />
+    <ProjectReference Include="..\\..\\src\\FX.Spec.Core\\FX.Spec.Core.fsproj" />
+    <ProjectReference Include="..\\..\\src\\FX.Spec.Matchers\\FX.Spec.Matchers.fsproj" />
+    <ProjectReference Include="..\\..\\src\\FX.Spec.Runner\\FX.Spec.Runner.fsproj" />
+  </ItemGroup>
+
+</Project>
