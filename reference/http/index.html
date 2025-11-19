@@ -9,7 +9,7 @@
         <meta name="description" content="Pure F# BDD testing framework inspired by RSpec. Type-safe, functional, and beautiful.">
       
       
-        <meta name="author" content="FxSpec Contributors">
+        <meta name="author" content="FX.Spec Contributors">
       
       
         <link rel="canonical" href="https://dawsons-creek.github.io/fx-spec/reference/http/">
@@ -26,7 +26,7 @@
     
     
       
-        <title>HTTP Testing - FxSpec</title>
+        <title>HTTP Testing - FX.Spec</title>
       
     
     
@@ -96,7 +96,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="FxSpec" class="md-header__button md-logo" aria-label="FxSpec" data-md-component="logo">
+    <a href="../.." title="FX.Spec" class="md-header__button md-logo" aria-label="FX.Spec" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"/></svg>
@@ -110,7 +110,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            FxSpec
+            FX.Spec
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -353,13 +353,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="FxSpec" class="md-nav__button md-logo" aria-label="FxSpec" data-md-component="logo">
+    <a href="../.." title="FX.Spec" class="md-nav__button md-logo" aria-label="FX.Spec" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"/></svg>
 
     </a>
-    FxSpec
+    FX.Spec
   </label>
   
     <div class="md-nav__source">
@@ -1576,10 +1576,10 @@
 
 
 <h1 id="http-testing">HTTP Testing<a class="headerlink" href="#http-testing" title="Permanent link">&para;</a></h1>
-<p>FxSpec provides a fluent API for testing HTTP responses with comprehensive matchers for status codes, headers, and body content.</p>
+<p>FX.Spec provides a fluent API for testing HTTP responses with comprehensive matchers for status codes, headers, and body content.</p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p>The <code>expectHttp()</code> function creates an HTTP response expectation that provides type-safe, chainable matchers specifically designed for testing web APIs and HTTP services.</p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Http</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">open</span><span class="w"> </span><span class="nn">FX.Spec.Http</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">itAsync</span><span class="w"> </span><span class="s">&quot;tests API response&quot;</span><span class="w"> </span><span class="o">(</span><span class="n">async</span><span class="w"> </span><span class="o">{</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="k">let!</span><span class="w"> </span><span class="nv">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="o">.</span><span class="n">GetAsync</span><span class="o">(</span><span class="s">&quot;/api/users&quot;</span><span class="o">)</span>
@@ -1594,7 +1594,7 @@
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">expectHttp</span><span class="o">(</span><span class="n">response</span><span class="o">).</span><span class="n">toHaveStatus</span><span class="o">(</span><span class="mi">500</span><span class="o">)</span>
 </span></code></pre></div>
 <h3 id="semantic-status-matchers">Semantic Status Matchers<a class="headerlink" href="#semantic-status-matchers" title="Permanent link">&para;</a></h3>
-<p>FxSpec provides semantic matchers for common HTTP status codes:</p>
+<p>FX.Spec provides semantic matchers for common HTTP status codes:</p>
 <table>
 <thead>
 <tr>
@@ -1764,7 +1764,7 @@
 <p>FxSpec's <code>itAsync</code> works seamlessly with F#'s <code>async</code> workflows and .NET's <code>Task</code>-based APIs:</p>
 <div class="language-fsharp highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">open</span><span class="w"> </span><span class="nn">System.Net.Http</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">open</span><span class="w"> </span><span class="nn">System.Text</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Http</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="k">open</span><span class="w"> </span><span class="nn">FX.Spec.Http</span>
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
 </span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="n">describe</span><span class="w"> </span><span class="s">&quot;User API Integration Tests&quot;</span><span class="w"> </span><span class="o">[</span>
 </span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpClient</span><span class="o">(</span><span class="n">BaseAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Uri</span><span class="o">(</span><span class="s">&quot;http://localhost:5000&quot;</span><span class="o">))</span>
@@ -1798,7 +1798,7 @@
 </span><span id="__span-12-34"><a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a><span class="o">]</span>
 </span></code></pre></div>
 <h2 id="error-messages">Error Messages<a class="headerlink" href="#error-messages" title="Permanent link">&para;</a></h2>
-<p>FxSpec provides clear, actionable error messages when HTTP assertions fail:</p>
+<p>FX.Spec provides clear, actionable error messages when HTTP assertions fail:</p>
 <h3 id="status-code-mismatch">Status Code Mismatch<a class="headerlink" href="#status-code-mismatch" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Expected HTTP status 200, but got 404
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Expected: 200
@@ -1827,7 +1827,7 @@
 </span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>{&quot;id&quot;:1,&quot;name&quot;:&quot;Jane&quot;}
 </span></code></pre></div>
 <h2 id="migration-guide-old-api-to-new-api">Migration Guide: Old API to New API<a class="headerlink" href="#migration-guide-old-api-to-new-api" title="Permanent link">&para;</a></h2>
-<p>FxSpec previously used a <code>should</code>-based API. The new <code>expectHttp()</code> API is more consistent with the rest of the framework and provides better error messages.</p>
+<p>FX.Spec previously used a <code>should</code>-based API. The new <code>expectHttp()</code> API is more consistent with the rest of the framework and provides better error messages.</p>
 <h3 id="old-api-deprecated">Old API (Deprecated)<a class="headerlink" href="#old-api-deprecated" title="Permanent link">&para;</a></h3>
 <div class="language-fsharp highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">// Old style - still works but deprecated</span>
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">response</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="o">(</span><span class="n">haveStatus</span><span class="w"> </span><span class="n">beOk</span><span class="o">)</span>
@@ -1889,7 +1889,7 @@
 <ul>
 <li><a href="../dsl-api.md#async-tests">Async Support</a> - Using <code>itAsync</code> for asynchronous tests</li>
 <li><a href="../matchers/core/">Core Matchers</a> - General-purpose matchers</li>
-<li><a href="../../quick-start/">Quick Start</a> - Getting started with FxSpec</li>
+<li><a href="../../quick-start/">Quick Start</a> - Getting started with FX.Spec</li>
 </ul>
 
 
@@ -1913,7 +1913,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 1, 2025 22:46:46 UTC"><span class="timeago" datetime="2025-11-01T22:46:46+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 1, 2025 22:46:46 UTC">2025-11-01</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 19, 2025 07:35:59 UTC"><span class="timeago" datetime="2025-11-19T07:35:59+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 19, 2025 07:35:59 UTC">2025-11-19</span>
   </span>
 
     
@@ -1960,7 +1960,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2025 FxSpec Contributors
+      Copyright &copy; 2025 FX.Spec Contributors
     </div>
   
   

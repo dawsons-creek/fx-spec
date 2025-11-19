@@ -9,7 +9,7 @@
         <meta name="description" content="Pure F# BDD testing framework inspired by RSpec. Type-safe, functional, and beautiful.">
       
       
-        <meta name="author" content="FxSpec Contributors">
+        <meta name="author" content="FX.Spec Contributors">
       
       
         <link rel="canonical" href="https://dawsons-creek.github.io/fx-spec/reference/runner/">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Test Runner - FxSpec</title>
+        <title>Test Runner - FX.Spec</title>
       
     
     
@@ -96,7 +96,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="FxSpec" class="md-header__button md-logo" aria-label="FxSpec" data-md-component="logo">
+    <a href="../.." title="FX.Spec" class="md-header__button md-logo" aria-label="FX.Spec" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"/></svg>
@@ -110,7 +110,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            FxSpec
+            FX.Spec
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -353,13 +353,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="FxSpec" class="md-nav__button md-logo" aria-label="FxSpec" data-md-component="logo">
+    <a href="../.." title="FX.Spec" class="md-nav__button md-logo" aria-label="FX.Spec" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"/></svg>
 
     </a>
-    FxSpec
+    FX.Spec
   </label>
   
     <div class="md-nav__source">
@@ -1492,10 +1492,10 @@
 
 
 <h1 id="test-runner">Test Runner<a class="headerlink" href="#test-runner" title="Permanent link">&para;</a></h1>
-<p>The FxSpec test runner discovers and executes tests from compiled assemblies.</p>
+<p>The FX.Spec test runner discovers and executes tests from compiled assemblies.</p>
 <hr />
 <h2 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--project<span class="w"> </span>src/FxSpec.Runner/FxSpec.Runner.fsproj<span class="w"> </span>--<span class="w"> </span>&lt;assembly-path&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--project<span class="w"> </span>src/FX.Spec.Runner/FX.Spec.Runner.fsproj<span class="w"> </span>--<span class="w"> </span>&lt;assembly-path&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
 </span></code></pre></div>
 <p>Or use the convenience script:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>./run-tests.sh<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
@@ -1504,7 +1504,7 @@
 <h2 id="command-line-options">Command-Line Options<a class="headerlink" href="#command-line-options" title="Permanent link">&para;</a></h2>
 <h3 id="assembly-path">Assembly Path<a class="headerlink" href="#assembly-path" title="Permanent link">&para;</a></h3>
 <p><strong>Required.</strong> Path to the compiled test assembly (<code>.dll</code> file).</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--project<span class="w"> </span>src/FxSpec.Runner/FxSpec.Runner.fsproj<span class="w"> </span>--<span class="w"> </span>tests/MyTests.dll
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--project<span class="w"> </span>src/FX.Spec.Runner/FX.Spec.Runner.fsproj<span class="w"> </span>--<span class="w"> </span>tests/MyTests.dll
 </span></code></pre></div>
 <hr />
 <h3 id="-filter-f"><code>--filter</code>, <code>-f</code><a class="headerlink" href="#-filter-f" title="Permanent link">&para;</a></h3>
@@ -1566,7 +1566,7 @@
 </span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>└───────┴────────┴────────┴─────────┴──────────┘
 </span></code></pre></div>
 <p><strong>Error Output with Stack Traces:</strong></p>
-<p>When tests fail due to exceptions in your code, FxSpec provides rich, actionable error information:</p>
+<p>When tests fail due to exceptions in your code, FX.Spec provides rich, actionable error information:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>  ✗ processes user data   (2ms)
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    Calculator &gt; processes user data
@@ -1580,11 +1580,11 @@
 </span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>         in Calculator.fs:67 (Calculator)
 </span></code></pre></div>
 <p><strong>Features:</strong>
-- 🎯 Clear exception type and message
-- 🔍 Filtered stack traces showing only YOUR code (framework internals removed)
+-  Clear exception type and message
+-  Filtered stack traces showing only YOUR code (framework internals removed)
 - 🔗 Clickable file links (Cmd/Ctrl+Click in supported terminals to jump to the error)
 - 📍 Precise file names and line numbers
-- 🎨 Color-coded for visual clarity</p>
+-  Color-coded for visual clarity</p>
 <p><strong>Simple Format:</strong></p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>SpecBuilder &gt; simple examples &gt; creates a single Example node: PASS
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>SpecBuilder &gt; simple examples &gt; creates multiple nodes: PASS
@@ -1638,13 +1638,13 @@
 <p><strong>CI/CD Integration:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="ch">#!/bin/bash</span>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>dotnet<span class="w"> </span>build<span class="w"> </span>tests/MyProject.Tests/MyProject.Tests.fsproj
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--project<span class="w"> </span>src/FxSpec.Runner/FxSpec.Runner.fsproj<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--project<span class="w"> </span>src/FX.Spec.Runner/FX.Spec.Runner.fsproj<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span>tests/MyProject.Tests/bin/Debug/net9.0/MyProject.Tests.dll
 </span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
 </span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$?</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;✅ All tests passed&quot;</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot; All tests passed&quot;</span>
 </span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="k">else</span>
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;❌ Tests failed&quot;</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot; Tests failed&quot;</span>
 </span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
 </span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="k">fi</span>
 </span></code></pre></div>
@@ -1652,9 +1652,9 @@
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <h3 id="run-all-tests">Run All Tests<a class="headerlink" href="#run-all-tests" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Build and run</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>dotnet<span class="w"> </span>build<span class="w"> </span>tests/FxSpec.Core.Tests/FxSpec.Core.Tests.fsproj
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--project<span class="w"> </span>src/FxSpec.Runner/FxSpec.Runner.fsproj<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>tests/FxSpec.Core.Tests/bin/Debug/net9.0/FxSpec.Core.Tests.dll
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>dotnet<span class="w"> </span>build<span class="w"> </span>tests/FX.Spec.Core.Tests/FX.Spec.Core.Tests.fsproj
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--project<span class="w"> </span>src/FX.Spec.Runner/FX.Spec.Runner.fsproj<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>tests/FX.Spec.Core.Tests/bin/Debug/net9.0/FX.Spec.Core.Tests.dll
 </span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
 </span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1"># Or use the script</span>
 </span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>./run-tests.sh
@@ -1707,8 +1707,8 @@
 <p><strong>Example:</strong></p>
 <div class="language-fsharp highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">module</span><span class="w"> </span><span class="nn">MyTests</span>
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Core</span>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="k">open</span><span class="w"> </span><span class="nn">FxSpec.Matchers</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="k">open</span><span class="w"> </span><span class="nn">FX.Spec.Core</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="k">open</span><span class="w"> </span><span class="nn">FX.Spec.Matchers</span>
 </span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
 </span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span><span class="w">  </span><span class="c1">// ← Required for discovery</span>
 </span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="k">let</span><span class="w"> </span><span class="nv">mySpecs</span><span class="w"> </span><span class="o">=</span>
@@ -1800,7 +1800,7 @@
 </span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>
 </span><span id="__span-23-19"><a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run Tests</span>
 </span><span id="__span-23-20"><a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-</span><span id="__span-23-21"><a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a><span class="w">          </span><span class="no">dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- \</span>
+</span><span id="__span-23-21"><a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a><span class="w">          </span><span class="no">dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj -- \</span>
 </span><span id="__span-23-22"><a id="__codelineno-23-22" name="__codelineno-23-22" href="#__codelineno-23-22"></a><span class="w">            </span><span class="no">tests/MyProject.Tests/bin/Debug/net9.0/MyProject.Tests.dll \</span>
 </span><span id="__span-23-23"><a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a><span class="w">            </span><span class="no">--format simple</span>
 </span></code></pre></div>
@@ -1809,7 +1809,7 @@
 </span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mcr.microsoft.com/dotnet/sdk:9.0</span>
 </span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">  </span><span class="nt">script</span><span class="p">:</span>
 </span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dotnet build</span>
-</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj --</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj --</span>
 </span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">tests/MyProject.Tests/bin/Debug/net9.0/MyProject.Tests.dll</span>
 </span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">--format simple</span>
 </span></code></pre></div>
@@ -1822,7 +1822,7 @@
 </span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">    </span><span class="nt">projects</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;tests/**/*.fsproj&#39;</span>
 </span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>
 </span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="w">    </span><span class="no">dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- \</span>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="w">    </span><span class="no">dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj -- \</span>
 </span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="w">      </span><span class="no">tests/MyProject.Tests/bin/Debug/net9.0/MyProject.Tests.dll \</span>
 </span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="w">      </span><span class="no">--format simple</span>
 </span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="w">  </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Run</span><span class="nv"> </span><span class="s">Tests&#39;</span>
@@ -1832,11 +1832,11 @@
 <h3 id="no-tests-found-in-assembly">"No tests found in assembly"<a class="headerlink" href="#no-tests-found-in-assembly" title="Permanent link">&para;</a></h3>
 <p><strong>Cause:</strong> No members marked with <code>[&lt;Tests&gt;]</code> attribute.</p>
 <p><strong>Solution:</strong></p>
-<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1">// ✅ Correct</span>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1">//  Correct</span>
 </span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="o">[&lt;</span><span class="n">Tests</span><span class="o">&gt;]</span>
 </span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="k">let</span><span class="w"> </span><span class="nv">mySpecs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="o">}</span>
 </span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>
-</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="c1">// ❌ Wrong - missing attribute</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="c1">//  Wrong - missing attribute</span>
 </span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="k">let</span><span class="w"> </span><span class="nv">mySpecs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="o">}</span>
 </span></code></pre></div>
 <h3 id="assembly-not-found">"Assembly not found"<a class="headerlink" href="#assembly-not-found" title="Permanent link">&para;</a></h3>
@@ -1846,7 +1846,7 @@
 </span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>dotnet<span class="w"> </span>build<span class="w"> </span>tests/MyProject.Tests/MyProject.Tests.fsproj
 </span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>
 </span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="c1"># Then run with correct path</span>
-</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--project<span class="w"> </span>src/FxSpec.Runner/FxSpec.Runner.fsproj<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>dotnet<span class="w"> </span>run<span class="w"> </span>--project<span class="w"> </span>src/FX.Spec.Runner/FX.Spec.Runner.fsproj<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">  </span>tests/MyProject.Tests/bin/Debug/net9.0/MyProject.Tests.dll
 </span></code></pre></div>
 <h3 id="no-tests-match-the-filter">"No tests match the filter"<a class="headerlink" href="#no-tests-match-the-filter" title="Permanent link">&para;</a></h3>
@@ -1886,7 +1886,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 3, 2025 16:50:36 UTC"><span class="timeago" datetime="2025-11-03T16:50:36+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 3, 2025 16:50:36 UTC">2025-11-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 19, 2025 07:35:59 UTC"><span class="timeago" datetime="2025-11-19T07:35:59+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 19, 2025 07:35:59 UTC">2025-11-19</span>
   </span>
 
     
@@ -1933,7 +1933,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2025 FxSpec Contributors
+      Copyright &copy; 2025 FX.Spec Contributors
     </div>
   
   
