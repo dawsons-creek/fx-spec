@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="PerformanceDslSpecs.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\\..\\src\\FX.Spec.Core\\FX.Spec.Core.fsproj" />
+    <ProjectReference Include="..\\..\\src\\FX.Spec.Matchers\\FX.Spec.Matchers.fsproj" />
+    <ProjectReference Include="..\\..\\src\\FX.Spec.Runner\\FX.Spec.Runner.fsproj" />
+    <ProjectReference Include="..\\..\\src\\FX.Spec.Performance\\FX.Spec.Performance.fsproj" />
+  </ItemGroup>
+</Project>

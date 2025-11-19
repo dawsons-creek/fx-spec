@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <PackageId>FX.Spec.Performance</PackageId>
+    <Version>0.1.0-alpha</Version>
+    <Authors>FX Framework Contributors</Authors>
+    <Company>FX Framework</Company>
+    <Description>Performance testing extensions for FX.Spec, providing DSL constructs, measurement backends, and baseline management.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://dawsons-creek.github.io/fx-spec</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dawsons-creek/fx-spec</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>fsharp;testing;bdd;performance;benchmarking</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="PerformancePrelude.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FX.Spec.Core\FX.Spec.Core.fsproj" />
+    <ProjectReference Include="..\FX.Spec.Matchers\FX.Spec.Matchers.fsproj" />
+  </ItemGroup>
+</Project>
