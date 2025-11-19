@@ -1,4 +1,4 @@
-namespace FxSpec.Core
+namespace FX.Spec.Core
 
 open System
 
@@ -20,11 +20,12 @@ module SpecHelpers =
     let it description (test: unit -> unit) : TestNode =
         let execution () =
             try
-                test()
+                test ()
                 Pass
             with ex ->
                 Fail(Some ex)
-        Example(description, execution)
+
+        Example(description, execution, TestMetadata.empty)
 
     /// Creates an async test example node.
     /// Usage: itAsync "description" (async { test code })
@@ -35,51 +36,60 @@ module SpecHelpers =
                 Pass
             with ex ->
                 Fail(Some ex)
-        Example(description, execution)
+
+        Example(description, execution, TestMetadata.empty)
 
     /// Creates a group node with nested tests.
     /// Usage: describe "description" [ ... tests ... ]
     let describe description (tests: TestNode list) : TestNode =
         // Separate hooks from other nodes
         let hooks, nonHooks =
-            tests |> List.partition (function
-                | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ -> true
+            tests
+            |> List.partition (function
+                | BeforeAllHook _
+                | BeforeEachHook _
+                | AfterEachHook _
+                | AfterAllHook _ -> true
                 | _ -> false)
 
         // Collect hooks into GroupHooks
         let groupHooks =
-            hooks |> List.fold (fun acc node ->
-                match node with
-                | BeforeAllHook h -> GroupHooks.addBeforeAll h acc
-                | BeforeEachHook h -> GroupHooks.addBeforeEach h acc
-                | AfterEachHook h -> GroupHooks.addAfterEach h acc
-                | AfterAllHook h -> GroupHooks.addAfterAll h acc
-                | _ -> acc
-            ) GroupHooks.empty
+            hooks
+            |> List.fold
+                (fun acc node ->
+                    match node with
+                    | BeforeAllHook h -> GroupHooks.addBeforeAll h acc
+                    | BeforeEachHook h -> GroupHooks.addBeforeEach h acc
+                    | AfterEachHook h -> GroupHooks.addAfterEach h acc
+                    | AfterAllHook h -> GroupHooks.addAfterAll h acc
+                    | _ -> acc)
+                GroupHooks.empty
 
-        Group(description, groupHooks, nonHooks)
+        Group(description, groupHooks, nonHooks, TestMetadata.empty)
 
     /// Creates a context node (alias for describe).
     /// Usage: context "description" [ ... tests ... ]
-    let context description (tests: TestNode list) : TestNode =
-        describe description tests
+    let context description (tests: TestNode list) : TestNode = describe description tests
 
     /// Creates a skipped test example (xit = "exclude it").
     /// Usage: xit "description" (fun () -> test code)
     let xit description (test: unit -> unit) : TestNode =
-        let execution () = Skipped "Test marked as pending with xit"
-        Example(description, execution)
+        let execution () =
+            Skipped "Test marked as pending with xit"
+
+        Example(description, execution, TestMetadata.empty)
 
     /// Creates a skipped async test example.
     /// Usage: xitAsync "description" (async { test code })
     let xitAsync description (test: Async<unit>) : TestNode =
-        let execution () = Skipped "Test marked as pending with xitAsync"
-        Example(description, execution)
+        let execution () =
+            Skipped "Test marked as pending with xitAsync"
+
+        Example(description, execution, TestMetadata.empty)
 
     /// Creates a skipped test example (alias for xit).
     /// Usage: pending "description" (fun () -> test code)
-    let pending description (test: unit -> unit) : TestNode =
-        xit description test
+    let pending description (test: unit -> unit) : TestNode = xit description test
 
     /// Creates a focused test example (fit = "focused it").
     /// When any fit is present, only fit tests will run.
@@ -87,11 +97,12 @@ module SpecHelpers =
     let fit description (test: unit -> unit) : TestNode =
         let execution () =
             try
-                test()
+                test ()
                 Pass
             with ex ->
                 Fail(Some ex)
-        FocusedExample(description, execution)
+
+        FocusedExample(description, execution, TestMetadata.empty)
 
     /// Creates a focused async test example (fitAsync = "focused it async").
     /// When any fit is present, only fit tests will run.
@@ -103,7 +114,8 @@ module SpecHelpers =
                 Pass
             with ex ->
                 Fail(Some ex)
-        FocusedExample(description, execution)
+
+        FocusedExample(description, execution, TestMetadata.empty)
 
     /// Creates a focused group (fdescribe = "focused describe").
     /// When any fdescribe is present, only tests in fdescribe blocks will run.
@@ -111,44 +123,45 @@ module SpecHelpers =
     let fdescribe description (tests: TestNode list) : TestNode =
         // Separate hooks from other nodes
         let hooks, nonHooks =
-            tests |> List.partition (function
-                | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ -> true
+            tests
+            |> List.partition (function
+                | BeforeAllHook _
+                | BeforeEachHook _
+                | AfterEachHook _
+                | AfterAllHook _ -> true
                 | _ -> false)
 
         // Collect hooks into GroupHooks
         let groupHooks =
-            hooks |> List.fold (fun acc node ->
-                match node with
-                | BeforeAllHook h -> GroupHooks.addBeforeAll h acc
-                | BeforeEachHook h -> GroupHooks.addBeforeEach h acc
-                | AfterEachHook h -> GroupHooks.addAfterEach h acc
-                | AfterAllHook h -> GroupHooks.addAfterAll h acc
-                | _ -> acc
-            ) GroupHooks.empty
+            hooks
+            |> List.fold
+                (fun acc node ->
+                    match node with
+                    | BeforeAllHook h -> GroupHooks.addBeforeAll h acc
+                    | BeforeEachHook h -> GroupHooks.addBeforeEach h acc
+                    | AfterEachHook h -> GroupHooks.addAfterEach h acc
+                    | AfterAllHook h -> GroupHooks.addAfterAll h acc
+                    | _ -> acc)
+                GroupHooks.empty
 
-        FocusedGroup(description, groupHooks, nonHooks)
+        FocusedGroup(description, groupHooks, nonHooks, TestMetadata.empty)
 
     /// Creates a focused context (alias for fdescribe).
     /// Usage: fcontext "description" [ ... tests ... ]
-    let fcontext description (tests: TestNode list) : TestNode =
-        fdescribe description tests
+    let fcontext description (tests: TestNode list) : TestNode = fdescribe description tests
 
     /// Registers a beforeAll hook.
     /// Usage: beforeAll (fun () -> setup code)
-    let beforeAll (hook: unit -> unit) : TestNode =
-        BeforeAllHook hook
+    let beforeAll (hook: unit -> unit) : TestNode = BeforeAllHook hook
 
     /// Registers a beforeEach hook.
     /// Usage: beforeEach (fun () -> setup code)
-    let beforeEach (hook: unit -> unit) : TestNode =
-        BeforeEachHook hook
+    let beforeEach (hook: unit -> unit) : TestNode = BeforeEachHook hook
 
     /// Registers an afterEach hook.
     /// Usage: afterEach (fun () -> teardown code)
-    let afterEach (hook: unit -> unit) : TestNode =
-        AfterEachHook hook
+    let afterEach (hook: unit -> unit) : TestNode = AfterEachHook hook
 
     /// Registers an afterAll hook.
     /// Usage: afterAll (fun () -> teardown code)
-    let afterAll (hook: unit -> unit) : TestNode =
-        AfterAllHook hook
+    let afterAll (hook: unit -> unit) : TestNode = AfterAllHook hook

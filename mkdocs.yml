@@ -1,7 +1,7 @@
 # Site Information
-site_name: FxSpec
+site_name: FX.Spec
 site_url: https://dawsons-creek.github.io/fx-spec
-site_author: FxSpec Contributors
+site_author: FX.Spec Contributors
 site_description: >-
   Pure F# BDD testing framework inspired by RSpec.
   Type-safe, functional, and beautiful.
@@ -12,7 +12,7 @@ repo_name: dawsons-creek/fx-spec
 edit_uri: edit/main/docs/
 
 # Copyright
-copyright: Copyright &copy; 2025 FxSpec Contributors
+copyright: Copyright &copy; 2025 FX.Spec Contributors
 
 # Theme Configuration
 theme:

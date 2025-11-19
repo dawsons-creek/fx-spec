@@ -1,7 +1,7 @@
 [project]
 name = "fxspec-docs"
 version = "0.1.0"
-description = "FxSpec Documentation"
+description = "FX.Spec Documentation"
 requires-python = ">=3.9"
 
 dependencies = [

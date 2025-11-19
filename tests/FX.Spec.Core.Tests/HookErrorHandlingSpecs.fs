@@ -1,10 +1,10 @@
 /// BDD specifications for hook error handling
-module FxSpec.Core.Tests.HookErrorHandlingSpecs
+module FX.Spec.Core.Tests.HookErrorHandlingSpecs
 
 open System
-open FxSpec.Core
-open FxSpec.Matchers
-open FxSpec.Runner
+open FX.Spec.Core
+open FX.Spec.Matchers
+open FX.Spec.Runner
 
 [<Tests>]
 let hookErrorHandlingSpecs =

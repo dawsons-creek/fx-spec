@@ -1,8 +1,8 @@
 /// Comprehensive tests for Result matchers
-module FxSpec.Matchers.Tests.ResultMatcherSpecs
+module FX.Spec.Matchers.Tests.ResultMatcherSpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 // Test domain types
 type AuthError = Unauthorized | Forbidden

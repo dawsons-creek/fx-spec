@@ -274,8 +274,8 @@ expect (fun () -> 1 / 0 |> ignore) |> should notRaiseException
 ```fsharp
 module ValidationSpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 open System
 
 type ValidationError =
@@ -376,8 +376,8 @@ let validationSpecs =
 ```fsharp
 module ErrorHandlingSpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 open System
 open System.IO
 
@@ -481,5 +481,5 @@ expect (validate invalidData) |> should (beError (ValidationError "Invalid data"
 ## See Also
 
 - **[Core Matchers](core.md)** - Basic matchers including Result matchers
-- **[Quick Start](../../quick-start.md)** - Get started with FxSpec
+- **[Quick Start](../../quick-start.md)** - Get started with FX.Spec
 - **[DSL API](../dsl-api.md)** - Complete DSL reference

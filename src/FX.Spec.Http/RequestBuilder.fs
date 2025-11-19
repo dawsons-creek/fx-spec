@@ -1,10 +1,10 @@
-namespace FxSpec.Http
+namespace FX.Spec.Http
 
 open System
 open System.Net.Http
 open System.Text
 open System.Text.Json
-open FxSpec.Matchers
+open FX.Spec.Matchers
 
 [<AutoOpen>]
 module RequestBuilder =

@@ -1,9 +1,9 @@
-namespace FxSpec.Runner
+namespace FX.Spec.Runner
 
 module Shuffle =
 
     open System
-    open FxSpec.Core
+    open FX.Spec.Core
 
     /// Shuffles a list recursively, including nested groups.
     /// Uses the provided Random instance to ensure deterministic shuffling with a seed.

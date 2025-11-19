@@ -1,6 +1,6 @@
 # Troubleshooting
 
-Common issues and solutions when using FxSpec.
+Common issues and solutions when using FX.Spec.
 
 ---
 
@@ -11,7 +11,7 @@ Common issues and solutions when using FxSpec.
 **Symptoms:**
 
 ```
-FxSpec Test Runner
+FX.Spec Test Runner
 ==================
 
 No tests found in assembly
@@ -24,7 +24,7 @@ No tests found in assembly
 **Problem:** Test module doesn't have the `[<Tests>]` attribute.
 
 ```fsharp
-// ❌ Wrong - no attribute
+//  Wrong - no attribute
 let mySpecs =
     spec {
         yield describe "Feature" [
@@ -36,7 +36,7 @@ let mySpecs =
 **Solution:** Add the `[<Tests>]` attribute:
 
 ```fsharp
-// ✅ Correct
+//  Correct
 [<Tests>]
 let mySpecs =
     spec {
@@ -51,7 +51,7 @@ let mySpecs =
 **Problem:** Test member doesn't return `TestNode list`.
 
 ```fsharp
-// ❌ Wrong - returns unit
+//  Wrong - returns unit
 [<Tests>]
 let mySpecs () =
     spec {
@@ -64,7 +64,7 @@ let mySpecs () =
 **Solution:** Return `TestNode list`:
 
 ```fsharp
-// ✅ Correct
+//  Correct
 [<Tests>]
 let mySpecs =
     spec {
@@ -79,7 +79,7 @@ let mySpecs =
 **Problem:** Test member is not static.
 
 ```fsharp
-// ❌ Wrong - instance member
+//  Wrong - instance member
 type MyTests() =
     [<Tests>]
     member this.Specs =
@@ -89,7 +89,7 @@ type MyTests() =
 **Solution:** Make it static:
 
 ```fsharp
-// ✅ Correct
+//  Correct
 type MyTests =
     [<Tests>]
     static member Specs =
@@ -109,13 +109,13 @@ let specs =
 
 ### "The value or constructor 'spec' is not defined"
 
-**Problem:** Missing `open FxSpec.Core`.
+**Problem:** Missing `open FX.Spec.Core`.
 
 **Solution:**
 
 ```fsharp
-open FxSpec.Core  // ← Add this
-open FxSpec.Matchers
+open FX.Spec.Core  // ← Add this
+open FX.Spec.Matchers
 
 [<Tests>]
 let mySpecs = spec { ... }
@@ -125,13 +125,13 @@ let mySpecs = spec { ... }
 
 ### "The value or constructor 'expect' is not defined"
 
-**Problem:** Missing `open FxSpec.Matchers`.
+**Problem:** Missing `open FX.Spec.Matchers`.
 
 **Solution:**
 
 ```fsharp
-open FxSpec.Core
-open FxSpec.Matchers  // ← Add this
+open FX.Spec.Core
+open FX.Spec.Matchers  // ← Add this
 
 [<Tests>]
 let mySpecs =
@@ -151,7 +151,7 @@ let mySpecs =
 **Problem:** Missing `yield` keyword in spec block.
 
 ```fsharp
-// ❌ Wrong
+//  Wrong
 spec {
     describe "Feature" [  // Missing yield
         it "test" (fun () -> ...)
@@ -162,7 +162,7 @@ spec {
 **Solution:** Add `yield`:
 
 ```fsharp
-// ✅ Correct
+//  Correct
 spec {
     yield describe "Feature" [
         it "test" (fun () -> ...)
@@ -177,7 +177,7 @@ spec {
 **Problem:** Test code not wrapped in a function.
 
 ```fsharp
-// ❌ Wrong
+//  Wrong
 it "test" (
     expect true |> should beTrue  // Not wrapped
 )
@@ -186,7 +186,7 @@ it "test" (
 **Solution:** Wrap in `(fun () -> ...)`:
 
 ```fsharp
-// ✅ Correct
+//  Correct
 it "test" (fun () ->
     expect true |> should beTrue
 )
@@ -201,14 +201,14 @@ it "test" (fun () ->
 **Problem:** Matcher type doesn't match actual value type.
 
 ```fsharp
-// ❌ Wrong - comparing int to string
+//  Wrong - comparing int to string
 expect 42 |> should (equal "42")
 ```
 
 **Solution:** Ensure types match:
 
 ```fsharp
-// ✅ Correct
+//  Correct
 expect 42 |> should (equal 42)
 expect "42" |> should (equal "42")
 ```
@@ -220,14 +220,14 @@ expect "42" |> should (equal "42")
 **Problem:** Calling matcher function instead of passing it.
 
 ```fsharp
-// ❌ Wrong - calling equal with ()
+//  Wrong - calling equal with ()
 expect 42 |> should (equal 42 ())
 ```
 
 **Solution:** Don't call the matcher:
 
 ```fsharp
-// ✅ Correct
+//  Correct
 expect 42 |> should (equal 42)
 ```
 
@@ -238,7 +238,7 @@ expect 42 |> should (equal 42)
 **Problem:** Using numeric matchers on non-comparable types.
 
 ```fsharp
-// ❌ Wrong - can't compare functions
+//  Wrong - can't compare functions
 let f = fun x -> x + 1
 expect f |> should (beGreaterThan (fun x -> x))
 ```
@@ -246,7 +246,7 @@ expect f |> should (beGreaterThan (fun x -> x))
 **Solution:** Use appropriate matchers for the type:
 
 ```fsharp
-// ✅ Correct - use equality for functions
+//  Correct - use equality for functions
 let f = fun x -> x + 1
 expect (f 5) |> should (equal 6)
 ```
@@ -266,7 +266,7 @@ expect (f 5) |> should (equal 6)
 dotnet build tests/MyProject.Tests/MyProject.Tests.fsproj
 
 # 2. Use the correct path to the built assembly
-dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- \
+dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj -- \
   tests/MyProject.Tests/bin/Debug/net9.0/MyProject.Tests.dll
 ```
 
@@ -290,20 +290,20 @@ No tests match the filter
 1. **Check case sensitivity** - filters are case-sensitive:
 
 ```bash
-# ❌ Wrong
+#  Wrong
 ./run-tests.sh --filter "calculator"
 
-# ✅ Correct
+#  Correct
 ./run-tests.sh --filter "Calculator"
 ```
 
 2. **Use partial matches**:
 
 ```bash
-# ❌ Too specific
+#  Too specific
 ./run-tests.sh --filter "Calculator > addition > adds two numbers"
 
-# ✅ Better
+#  Better
 ./run-tests.sh --filter "addition"
 ```
 
@@ -324,7 +324,7 @@ No tests match the filter
 1. **Using mutable variables without initialization**:
 
 ```fsharp
-// ❌ Wrong
+//  Wrong
 describe "Database" [
     let mutable connection = null  // null reference
 
@@ -337,7 +337,7 @@ describe "Database" [
 **Solution:** Use `beforeEach` to initialize:
 
 ```fsharp
-// ✅ Correct
+//  Correct
 describe "Database" [
     let mutable connection = null
 
@@ -389,7 +389,7 @@ describe "User Tests" [
 **Solution:** Ensure all tests are in the same assembly and discovered together:
 
 ```fsharp
-// ✅ Correct - both in same spec
+//  Correct - both in same spec
 [<Tests>]
 let specs =
     spec {
@@ -409,14 +409,14 @@ let specs =
 **Cause:** Typo in function name.
 
 ```fsharp
-// ❌ Wrong - typo
+//  Wrong - typo
 xIt "test" (fun () -> ...)  // Capital I
 ```
 
 **Solution:** Use correct function name:
 
 ```fsharp
-// ✅ Correct
+//  Correct
 xit "test" (fun () -> ...)  // lowercase i
 ```
 
@@ -433,7 +433,7 @@ xit "test" (fun () -> ...)  // lowercase i
 **Problem:** Expensive setup runs before every test.
 
 ```fsharp
-// ❌ Slow - database created for each test
+//  Slow - database created for each test
 beforeEach (fun () ->
     createDatabase()  // Expensive!
 )
@@ -442,7 +442,7 @@ beforeEach (fun () ->
 **Solution:** Use `beforeAll` for expensive setup:
 
 ```fsharp
-// ✅ Fast - database created once
+//  Fast - database created once
 beforeAll (fun () ->
     createDatabase()
 )
@@ -480,9 +480,9 @@ describe "File Tests" [
 
 ### Tests Not Discovered in IDE
 
-**Problem:** FxSpec doesn't integrate with standard .NET test explorers.
+**Problem:** FX.Spec doesn't integrate with standard .NET test explorers.
 
-**Explanation:** FxSpec uses its own test runner, not the standard .NET test framework.
+**Explanation:** FX.Spec uses its own test runner, not the standard .NET test framework.
 
 **Workaround:** Run tests from command line:
 
@@ -496,7 +496,7 @@ describe "File Tests" [
 
 ### Syntax Highlighting Issues
 
-**Problem:** F# syntax highlighting doesn't work well with FxSpec DSL.
+**Problem:** F# syntax highlighting doesn't work well with FX.Spec DSL.
 
 **Solution:** This is a limitation of current F# tooling. The code is valid F# even if highlighting is imperfect.
 
@@ -515,7 +515,7 @@ If you encounter an issue not covered here:
 
 3. **Ask for help**:
    - Open a new issue with:
-     - FxSpec version
+     - FX.Spec version
      - .NET version
      - Minimal reproduction code
      - Error messages
@@ -530,12 +530,12 @@ If you encounter an issue not covered here:
 ### 1. Forgetting `yield`
 
 ```fsharp
-// ❌ Won't compile
+//  Won't compile
 spec {
     describe "Test" [ ... ]
 }
 
-// ✅ Correct
+//  Correct
 spec {
     yield describe "Test" [ ... ]
 }
@@ -544,22 +544,22 @@ spec {
 ### 2. Not Wrapping Test Code in Function
 
 ```fsharp
-// ❌ Won't compile
+//  Won't compile
 it "test" (expect true |> should beTrue)
 
-// ✅ Correct
+//  Correct
 it "test" (fun () -> expect true |> should beTrue)
 ```
 
 ### 3. Using `{}` Instead of `[]`
 
 ```fsharp
-// ❌ Wrong syntax
+//  Wrong syntax
 describe "Test" {
     it "test" { ... }
 }
 
-// ✅ Correct syntax
+//  Correct syntax
 describe "Test" [
     it "test" (fun () -> ...)
 ]
@@ -568,10 +568,10 @@ describe "Test" [
 ### 4. Forgetting `[<Tests>]` Attribute
 
 ```fsharp
-// ❌ Tests won't be discovered
+//  Tests won't be discovered
 let mySpecs = spec { ... }
 
-// ✅ Tests will be discovered
+//  Tests will be discovered
 [<Tests>]
 let mySpecs = spec { ... }
 ```
@@ -579,12 +579,12 @@ let mySpecs = spec { ... }
 ### 5. Wrong `open` Statements
 
 ```fsharp
-// ❌ Missing opens
+//  Missing opens
 let specs = spec { ... }  // Error: 'spec' not defined
 
-// ✅ Correct opens
-open FxSpec.Core
-open FxSpec.Matchers
+//  Correct opens
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 let specs = spec { ... }
 ```

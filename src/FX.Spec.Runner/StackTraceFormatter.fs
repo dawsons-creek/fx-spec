@@ -1,5 +1,5 @@
 /// Formats exception stack traces with clickable file links
-module FxSpec.Runner.StackTraceFormatter
+module FX.Spec.Runner.StackTraceFormatter
 
 open System
 open System.Text.RegularExpressions
@@ -17,8 +17,8 @@ let private maxStackFramesToShow = 10
 
 /// Filters out framework and test runner frames from stack trace
 let private isRelevantFrame (line: string) =
-    not (line.Contains("FxSpec.Runner") ||
-         line.Contains("FxSpec.Core.SpecHelpers") ||
+    not (line.Contains("FX.Spec.Runner") ||
+         line.Contains("FX.Spec.Core.SpecHelpers") ||
          line.Contains("System.Reflection") ||
          line.Contains("System.Runtime") ||
          line.Contains("Microsoft.FSharp.Core") ||

@@ -1,8 +1,8 @@
-#r "nuget: FxSpec.Core"
-#load "../src/FxSpec.Core/Types.fs"
-#load "../src/FxSpec.Core/SpecBuilder.fs"
+#r "nuget: FX.Spec.Core"
+#load "../src/FX.Spec.Core/Types.fs"
+#load "../src/FX.Spec.Core/SpecBuilder.fs"
 
-open FxSpec.Core
+open FX.Spec.Core
 
 // Helper function that throws an exception
 let divideByZero x =

@@ -1,6 +1,6 @@
 # Reference Documentation
 
-Complete API reference for FxSpec.
+Complete API reference for FX.Spec.
 
 ---
 

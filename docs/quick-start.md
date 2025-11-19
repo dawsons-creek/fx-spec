@@ -1,6 +1,6 @@
 # Quick Start
 
-Get your first FxSpec specification running in 5 minutes and start documenting your code's behavior.
+Get your first FX.Spec specification running in 5 minutes and start documenting your code's behavior.
 
 ---
 
@@ -23,18 +23,18 @@ dotnet new console -lang F# -n MyProject.Tests
 cd MyProject.Tests
 ```
 
-### Step 2: Add FxSpec Packages
+### Step 2: Add FX.Spec Packages
 
-Add the FxSpec packages to your project:
+Add the FX.Spec packages to your project:
 
 ```bash
-dotnet add package FxSpec.Core
-dotnet add package FxSpec.Matchers
-dotnet add package FxSpec.Runner
+dotnet add package FX.Spec.Core
+dotnet add package FX.Spec.Matchers
+dotnet add package FX.Spec.Runner
 ```
 
 !!! info "Package Status"
-    FxSpec packages are not yet published to NuGet. For now, you'll need to build from source or reference the local projects.
+    FX.Spec packages are not yet published to NuGet. For now, you'll need to build from source or reference the local projects.
 
 ---
 
@@ -47,8 +47,8 @@ Create a new file called `CalculatorSpecs.fs` in your test project. Note how the
 ```fsharp
 module CalculatorSpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 [<Tests>]
 let calculatorSpecs =
@@ -94,13 +94,13 @@ Replace the contents of `Program.fs` with:
 ```fsharp
 [<EntryPoint>]
 let main args =
-    // FxSpec will automatically discover tests
+    // FX.Spec will automatically discover tests
     0
 ```
 
 ### Step 4: Run Your Tests
 
-Run the tests using the FxSpec runner:
+Run the tests using the FX.Spec runner:
 
 ```bash
 dotnet build
@@ -142,7 +142,7 @@ let calculatorSpecs =
     ]
 ```
 
-FxSpec specifications are simple values marked with the `[<Tests>]` attribute. The test discovery system finds these automatically.
+FX.Spec specifications are simple values marked with the `[<Tests>]` attribute. The test discovery system finds these automatically.
 
 ### The `describe` Function
 
@@ -188,7 +188,7 @@ expectBool(value).toBeTrue()
 expectSeq(list).toContain(item)
 ```
 
-FxSpec provides type-specific expectation functions that return fluent wrappers:
+FX.Spec provides type-specific expectation functions that return fluent wrappers:
 
 - `expect(value)` - Generic expectations for any type
 - `expectBool(value)` - Boolean assertions
@@ -201,7 +201,7 @@ FxSpec provides type-specific expectation functions that return fluent wrappers:
 
 ## Next Steps
 
-Now that you have FxSpec running, explore more features:
+Now that you have FX.Spec running, explore more features:
 
 ### Organize with Context
 
@@ -353,8 +353,8 @@ let divide x y =
 // CalculatorSpecs.fs
 module CalculatorSpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 [<Tests>]
 let calculatorSpecs =
@@ -417,7 +417,7 @@ dotnet run -- --format simple
 
 ## Async Testing
 
-FxSpec supports asynchronous tests using `itAsync`:
+FX.Spec supports asynchronous tests using `itAsync`:
 
 ```fsharp
 open System.Net.Http
@@ -484,7 +484,7 @@ For more details, see [Result Matchers](reference/matchers/result.md).
 Test HTTP responses with the fluent HTTP API:
 
 ```fsharp
-open FxSpec.Http
+open FX.Spec.Http
 open System.Net.Http
 
 [<Tests>]
@@ -507,7 +507,7 @@ For more details, see [HTTP Testing](reference/http.md).
 
 ## What's Next?
 
-You now have a solid foundation in FxSpec. Continue learning:
+You now have a solid foundation in FX.Spec. Continue learning:
 
 <div class="grid cards" markdown>
 
@@ -527,7 +527,7 @@ You now have a solid foundation in FxSpec. Continue learning:
 
     ---
 
-    Help improve FxSpec
+    Help improve FX.Spec
 
 </div>
 
@@ -548,7 +548,7 @@ let mySpecs = describe "..." [...]
 
 Common issues:
 
-1. **Missing opens**: Make sure you have both `open FxSpec.Core` and `open FxSpec.Matchers`
+1. **Missing opens**: Make sure you have both `open FX.Spec.Core` and `open FX.Spec.Matchers`
 2. **Wrong expectation type**: Use the appropriate type-specific function (e.g., `expectSeq` for collections, `expectStr` for strings)
 3. **Missing parentheses**: Remember to wrap your test in `fun () ->` for lazy evaluation
 4. **Method not available**: IntelliSense will show you the available methods for each expectation type

@@ -1,13 +1,13 @@
 # Result Matchers
 
-FxSpec provides comprehensive matchers for testing F#'s `Result<'T, 'E>` type, which is the idiomatic way to handle errors in functional F# code.
+FX.Spec provides comprehensive matchers for testing F#'s `Result<'T, 'E>` type, which is the idiomatic way to handle errors in functional F# code.
 
 ## Overview
 
 The `Result<'T, 'E>` type represents either success (`Ok 'T`) or failure (`Error 'E`). FxSpec's Result matchers allow you to assert on both the state and the value of Result types.
 
 ```fsharp
-open FxSpec.Matchers
+open FX.Spec.Matchers
 
 // State-only matchers
 expectResult(result).toBeOk()     // Just check it succeeded
@@ -283,7 +283,7 @@ describe "Validation with DU Errors" [
 
 ## Error Messages
 
-FxSpec provides clear error messages for Result assertions:
+FX.Spec provides clear error messages for Result assertions:
 
 ### toBeOk() Failure
 
@@ -345,7 +345,7 @@ expectResult(result).toBeError()
 
 ### 3. Combine with Other Matchers
 
-Result matchers work well with other FxSpec features:
+Result matchers work well with other FX.Spec features:
 
 ```fsharp
 describe "Complex Validation" [
@@ -411,7 +411,7 @@ toBeError : expected:'E -> unit
 - [Core Matchers](core.md) - Basic equality and type matchers
 - [Async Support](../dsl-api.md#async-tests) - Using `itAsync` with Result types
 - [HTTP Testing](../http.md) - HTTP responses often use Result patterns
-- [Quick Start](../../quick-start.md) - Getting started with FxSpec
+- [Quick Start](../../quick-start.md) - Getting started with FX.Spec
 
 ## See Also
 

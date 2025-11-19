@@ -1,13 +1,13 @@
 # HTTP Testing
 
-FxSpec provides a fluent API for testing HTTP responses with comprehensive matchers for status codes, headers, and body content.
+FX.Spec provides a fluent API for testing HTTP responses with comprehensive matchers for status codes, headers, and body content.
 
 ## Overview
 
 The `expectHttp()` function creates an HTTP response expectation that provides type-safe, chainable matchers specifically designed for testing web APIs and HTTP services.
 
 ```fsharp
-open FxSpec.Http
+open FX.Spec.Http
 
 itAsync "tests API response" (async {
     let! response = client.GetAsync("/api/users")
@@ -29,7 +29,7 @@ expectHttp(response).toHaveStatus(500)
 
 ### Semantic Status Matchers
 
-FxSpec provides semantic matchers for common HTTP status codes:
+FX.Spec provides semantic matchers for common HTTP status codes:
 
 | Matcher | Status Code | Description |
 |---------|-------------|-------------|
@@ -201,7 +201,7 @@ FxSpec's `itAsync` works seamlessly with F#'s `async` workflows and .NET's `Task
 ```fsharp
 open System.Net.Http
 open System.Text
-open FxSpec.Http
+open FX.Spec.Http
 
 describe "User API Integration Tests" [
     let client = new HttpClient(BaseAddress = Uri("http://localhost:5000"))
@@ -237,7 +237,7 @@ describe "User API Integration Tests" [
 
 ## Error Messages
 
-FxSpec provides clear, actionable error messages when HTTP assertions fail:
+FX.Spec provides clear, actionable error messages when HTTP assertions fail:
 
 ### Status Code Mismatch
 
@@ -283,7 +283,7 @@ Actual JSON body:
 
 ## Migration Guide: Old API to New API
 
-FxSpec previously used a `should`-based API. The new `expectHttp()` API is more consistent with the rest of the framework and provides better error messages.
+FX.Spec previously used a `should`-based API. The new `expectHttp()` API is more consistent with the rest of the framework and provides better error messages.
 
 ### Old API (Deprecated)
 
@@ -370,4 +370,4 @@ expectation.toHaveBodyContaining("data")
 
 - [Async Support](../dsl-api.md#async-tests) - Using `itAsync` for asynchronous tests
 - [Core Matchers](matchers/core.md) - General-purpose matchers
-- [Quick Start](../quick-start.md) - Getting started with FxSpec
+- [Quick Start](../quick-start.md) - Getting started with FX.Spec

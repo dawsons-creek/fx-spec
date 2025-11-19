@@ -420,8 +420,8 @@ expect [1; 2; 3] |> should (anySatisfy (fun x -> x > 10) "be greater than 10")
 ```fsharp
 module ShoppingCartSpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 type CartItem = { ProductId: int; Quantity: int; Price: decimal }
 type Cart = { Items: CartItem list }
@@ -494,4 +494,4 @@ let shoppingCartSpecs =
 - **[Core Matchers](core.md)** - Basic equality and type matchers
 - **[String Matchers](strings.md)** - String-specific matchers
 - **[Numeric Matchers](numeric.md)** - Numeric comparisons
-- **[Quick Start](../../quick-start.md)** - Get started with FxSpec
+- **[Quick Start](../../quick-start.md)** - Get started with FX.Spec

@@ -1,4 +1,4 @@
-namespace FxSpec.Http
+namespace FX.Spec.Http
 
 open System
 open System.Net.Http

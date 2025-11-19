@@ -1,5 +1,5 @@
 /// Formats expected vs actual diffs for better failure messages
-module FxSpec.Runner.DiffFormatter
+module FX.Spec.Runner.DiffFormatter
 
 open System
 open Spectre.Console

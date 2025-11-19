@@ -1,12 +1,12 @@
-/// Entry point for FxSpec.Matchers.Tests
-module FxSpec.Matchers.Tests.Program
+/// Entry point for FX.Spec.Matchers.Tests
+module FX.Spec.Matchers.Tests.Program
 
 [<EntryPoint>]
 let main argv =
-    printfn "FxSpec.Matchers.Tests"
-    printfn "Use FxSpec.Runner to run these tests"
+    printfn "FX.Spec.Matchers.Tests"
+    printfn "Use FX.Spec.Runner to run these tests"
     printfn ""
     printfn "Example:"
-    printfn "  dotnet run --project src/FxSpec.Runner tests/FxSpec.Matchers.Tests/bin/Debug/net9.0/FxSpec.Matchers.Tests.dll"
+    printfn "  dotnet run --project src/FX.Spec.Runner tests/FX.Spec.Matchers.Tests/bin/Debug/net9.0/FX.Spec.Matchers.Tests.dll"
     0
 

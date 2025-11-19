@@ -1,7 +1,7 @@
-// Basic example demonstrating the FxSpec DSL
-#r "../src/FxSpec.Core/bin/Debug/net8.0/FxSpec.Core.dll"
+// Basic example demonstrating the FX.Spec DSL
+#r "../src/FX.Spec.Core/bin/Debug/net8.0/FX.Spec.Core.dll"
 
-open FxSpec.Core
+open FX.Spec.Core
 
 // Example 1: Simple test structure
 let simpleSpec =

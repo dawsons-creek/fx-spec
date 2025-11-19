@@ -1,4 +1,4 @@
-namespace FxSpec.Matchers
+namespace FX.Spec.Matchers
 
 // NumericMatchers.fs is now deprecated.
 // All numeric assertion functionality has been moved to Assertions.fs

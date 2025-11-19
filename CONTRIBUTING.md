@@ -1,18 +1,18 @@
-# Contributing to FxSpec
+# Contributing to FX.Spec
 
 Thank you for your interest in contributing to FxSpec! This document will help you get started.
 
-## 🎯 Project Vision
+##  Project Vision
 
-FxSpec aims to be the best F# BDD testing framework by combining RSpec's elegant syntax with F#'s type safety and functional programming power.
+FX.Spec aims to be the best F# BDD testing framework by combining RSpec's elegant syntax with F#'s type safety and functional programming power.
 
-## 📋 Current Status
+##  Current Status
 
 **Phase**: Planning Complete, Ready for Implementation
 
 We have comprehensive documentation and a clear roadmap. Now we need contributors to help build it!
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -38,7 +38,7 @@ dotnet build
 dotnet test
 ```
 
-## 📚 Essential Reading
+##  Essential Reading
 
 Before contributing, please read:
 
@@ -47,7 +47,7 @@ Before contributing, please read:
 3. **[TECHNICAL_ARCHITECTURE.md](TECHNICAL_ARCHITECTURE.md)** - Design deep dive
 4. **[ARCHITECTURE_DECISIONS.md](ARCHITECTURE_DECISIONS.md)** - Key decisions and rationale
 
-## 🎯 How to Contribute
+##  How to Contribute
 
 ### 1. Pick a Task
 
@@ -78,16 +78,16 @@ Follow our [coding standards](#coding-standards) and write tests!
 - Ensure all tests pass
 - Request review
 
-## 📝 Coding Standards
+##  Coding Standards
 
 ### F# Style Guide
 
 ```fsharp
-// ✅ Good: Use camelCase for functions and values
+//  Good: Use camelCase for functions and values
 let calculateTotal items =
     items |> List.sum
 
-// ✅ Good: Use PascalCase for types and modules
+//  Good: Use PascalCase for types and modules
 type TestResult =
     | Pass
     | Fail of exn option
@@ -95,29 +95,29 @@ type TestResult =
 module TestRunner =
     let execute node = ...
 
-// ✅ Good: Use pipe operator for data flow
+//  Good: Use pipe operator for data flow
 let result =
     data
     |> transform
     |> validate
     |> process
 
-// ✅ Good: Pattern match exhaustively
+//  Good: Pattern match exhaustively
 match result with
 | Pass -> printfn "Success"
 | Fail ex -> printfn "Failed: %A" ex
 | Skipped reason -> printfn "Skipped: %s" reason
 
-// ❌ Bad: Incomplete pattern matching
+//  Bad: Incomplete pattern matching
 match result with
 | Pass -> printfn "Success"
 | _ -> printfn "Other"  // Too vague!
 
-// ✅ Good: Use type annotations for public APIs
+//  Good: Use type annotations for public APIs
 let equal (expected: 'a) : Matcher<'a> =
     fun actual -> ...
 
-// ✅ Good: Document complex functions
+//  Good: Document complex functions
 /// Executes a test node and returns the result.
 /// Manages scope stack and hook execution.
 let executeNode (scopeStack: ExecutionScope list) (node: TestNode) : TestResultNode =
@@ -127,7 +127,7 @@ let executeNode (scopeStack: ExecutionScope list) (node: TestNode) : TestResultN
 ### Testing Standards
 
 ```fsharp
-// ✅ Every public function should have tests
+//  Every public function should have tests
 [<Tests>]
 let matcherTests =
     spec {
@@ -157,37 +157,37 @@ test: Add tests for SpecBuilder.Combine method
 refactor: Simplify MatchResult pattern matching
 ```
 
-## 🏗️ Project Structure
+## 🏗 Project Structure
 
 ```
 FxSpec/
 ├── src/
-│   ├── FxSpec.Core/              # Core DSL and types
+│   ├── FX.Spec.Core/              # Core DSL and types
 │   │   ├── Types.fs              # TestNode, TestResult, etc.
 │   │   ├── SpecBuilder.fs        # Computation expression
 │   │   └── StateManagement.fs    # let', subject, hooks
-│   ├── FxSpec.Matchers/          # Assertion system
+│   ├── FX.Spec.Matchers/          # Assertion system
 │   │   ├── MatchResult.fs        # Result types
 │   │   ├── Core.fs               # expect, to'
 │   │   └── Matchers.fs           # equal, beNil, etc.
-│   ├── FxSpec.Runner/            # Test execution
+│   ├── FX.Spec.Runner/            # Test execution
 │   │   ├── Discovery.fs          # Reflection-based discovery
 │   │   ├── Executor.fs           # Execution engine
 │   │   └── CLI.fs                # Command-line interface
-│   ├── FxSpec.Formatters/        # Output formatting
+│   ├── FX.Spec.Formatters/        # Output formatting
 │   │   └── DocumentationFormatter.fs
-│   └── FxSpec.Extensions/        # Advanced features
+│   └── FX.Spec.Extensions/        # Advanced features
 │       └── RequestSpec.fs        # API testing
 ├── tests/
-│   ├── FxSpec.Core.Tests/
-│   ├── FxSpec.Matchers.Tests/
-│   └── FxSpec.Runner.Tests/
+│   ├── FX.Spec.Core.Tests/
+│   ├── FX.Spec.Matchers.Tests/
+│   └── FX.Spec.Runner.Tests/
 └── examples/
     ├── BasicExamples/
     └── WebApiExamples/
 ```
 
-## 🎯 Task Breakdown
+##  Task Breakdown
 
 ### Phase 1: Core DSL (Good First Issues 🟢)
 
@@ -244,7 +244,7 @@ FxSpec/
 dotnet test
 
 # Run specific test project
-dotnet test tests/FxSpec.Core.Tests
+dotnet test tests/FX.Spec.Core.Tests
 
 # Run with verbose output
 dotnet test -v detailed
@@ -262,7 +262,7 @@ When adding new features:
 3. **Add XML documentation** to public APIs
 4. **Create examples** in the examples/ directory
 
-## 🐛 Reporting Bugs
+##  Reporting Bugs
 
 When reporting bugs, please include:
 
@@ -271,7 +271,7 @@ When reporting bugs, please include:
 3. **Minimal reproduction** - Smallest code that reproduces the issue
 4. **Environment** - .NET version, OS, etc.
 
-## 💡 Suggesting Features
+##  Suggesting Features
 
 We love feature suggestions! Please:
 
@@ -309,9 +309,9 @@ We love feature suggestions! Please:
 
 ## 🙏 Thank You!
 
-Every contribution, no matter how small, helps make FxSpec better. We appreciate your time and effort!
+Every contribution, no matter how small, helps make FX.Spec better. We appreciate your time and effort!
 
 ---
 
-**Happy coding! Let's build the best F# BDD framework together! 🚀**
+**Happy coding! Let's build the best F# BDD framework together! **
 

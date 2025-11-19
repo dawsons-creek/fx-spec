@@ -3,8 +3,26 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <LangVersion>preview</LangVersion>
+    <LangVersion>latest</LangVersion>
+
+    <!-- Package Information -->
+    <PackageId>FX.Spec.Core</PackageId>
+    <Version>0.9.0-beta</Version>
+    <Authors>FX Framework Contributors</Authors>
+    <Company>FX Framework</Company>
+    <Description>Core types and DSL for FX.Spec - A behavior-driven development (BDD) testing framework for F# with elegant syntax, type safety, and beautiful output.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://dawsons-creek.github.io/fx-spec</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dawsons-creek/fx-spec</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>fsharp;testing;bdd;spec;tdd;test-framework;behavior-driven</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>Initial beta release of FX.Spec. Core BDD testing features including describe/context/it DSL, async support, hooks, and focused/pending tests.</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="Types.fs" />

@@ -1,13 +1,13 @@
 /// BDD specifications for fluent HTTP matchers
 /// Following TDD/BDD: Write tests first, then implement
-module FxSpec.Http.Tests.HttpMatcherSpecs
+module FX.Spec.Http.Tests.HttpMatcherSpecs
 
 open System.Net
 open System.Net.Http
 open System.Text
-open FxSpec.Core
-open FxSpec.Matchers
-open FxSpec.Http
+open FX.Spec.Core
+open FX.Spec.Matchers
+open FX.Spec.Http
 
 // Helper to create HTTP responses for testing
 let createResponse statusCode headers body =

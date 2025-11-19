@@ -1,4 +1,4 @@
-namespace FxSpec.Matchers
+namespace FX.Spec.Matchers
 
 // StringMatchers.fs is now deprecated.
 // All string assertion functionality has been moved to Assertions.fs

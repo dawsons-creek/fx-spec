@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="FxSpecMatchers.fs" />
+    <Compile Include="FXSpecMatchers.fs" />
     <Compile Include="TypesSpecs.fs" />
     <Compile Include="SpecBuilderSpecs.fs" />
     <Compile Include="AsyncSupportSpecs.fs" />
@@ -18,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\FxSpec.Core\FxSpec.Core.fsproj" />
-    <ProjectReference Include="..\..\src\FxSpec.Matchers\FxSpec.Matchers.fsproj" />
-    <ProjectReference Include="..\..\src\FxSpec.Runner\FxSpec.Runner.fsproj" />
+    <ProjectReference Include="..\..\src\FX.Spec.Core\FX.Spec.Core.fsproj" />
+    <ProjectReference Include="..\..\src\FX.Spec.Matchers\FX.Spec.Matchers.fsproj" />
+    <ProjectReference Include="..\..\src\FX.Spec.Runner\FX.Spec.Runner.fsproj" />
   </ItemGroup>
 
 </Project>

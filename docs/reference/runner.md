@@ -1,13 +1,13 @@
 # Test Runner
 
-The FxSpec test runner discovers and executes tests from compiled assemblies.
+The FX.Spec test runner discovers and executes tests from compiled assemblies.
 
 ---
 
 ## Basic Usage
 
 ```bash
-dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- <assembly-path> [options]
+dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj -- <assembly-path> [options]
 ```
 
 Or use the convenience script:
@@ -25,7 +25,7 @@ Or use the convenience script:
 **Required.** Path to the compiled test assembly (`.dll` file).
 
 ```bash
-dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- tests/MyTests.dll
+dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj -- tests/MyTests.dll
 ```
 
 ---
@@ -110,7 +110,7 @@ SpecBuilder
 
 **Error Output with Stack Traces:**
 
-When tests fail due to exceptions in your code, FxSpec provides rich, actionable error information:
+When tests fail due to exceptions in your code, FX.Spec provides rich, actionable error information:
 
 ```
   ✗ processes user data   (2ms)
@@ -127,11 +127,11 @@ When tests fail due to exceptions in your code, FxSpec provides rich, actionable
 ```
 
 **Features:**
-- 🎯 Clear exception type and message
-- 🔍 Filtered stack traces showing only YOUR code (framework internals removed)
+-  Clear exception type and message
+-  Filtered stack traces showing only YOUR code (framework internals removed)
 - 🔗 Clickable file links (Cmd/Ctrl+Click in supported terminals to jump to the error)
 - 📍 Precise file names and line numbers
-- 🎨 Color-coded for visual clarity
+-  Color-coded for visual clarity
 
 **Simple Format:**
 
@@ -193,13 +193,13 @@ The runner returns different exit codes based on test results:
 ```bash
 #!/bin/bash
 dotnet build tests/MyProject.Tests/MyProject.Tests.fsproj
-dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- \
+dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj -- \
   tests/MyProject.Tests/bin/Debug/net9.0/MyProject.Tests.dll
 
 if [ $? -eq 0 ]; then
-    echo "✅ All tests passed"
+    echo " All tests passed"
 else
-    echo "❌ Tests failed"
+    echo " Tests failed"
     exit 1
 fi
 ```
@@ -212,9 +212,9 @@ fi
 
 ```bash
 # Build and run
-dotnet build tests/FxSpec.Core.Tests/FxSpec.Core.Tests.fsproj
-dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- \
-  tests/FxSpec.Core.Tests/bin/Debug/net9.0/FxSpec.Core.Tests.dll
+dotnet build tests/FX.Spec.Core.Tests/FX.Spec.Core.Tests.fsproj
+dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj -- \
+  tests/FX.Spec.Core.Tests/bin/Debug/net9.0/FX.Spec.Core.Tests.dll
 
 # Or use the script
 ./run-tests.sh
@@ -282,8 +282,8 @@ Your test module must:
 ```fsharp
 module MyTests
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 [<Tests>]  // ← Required for discovery
 let mySpecs =
@@ -395,7 +395,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- \
+          dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj -- \
             tests/MyProject.Tests/bin/Debug/net9.0/MyProject.Tests.dll \
             --format simple
 ```
@@ -407,7 +407,7 @@ test:
   image: mcr.microsoft.com/dotnet/sdk:9.0
   script:
     - dotnet build
-    - dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj --
+    - dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj --
         tests/MyProject.Tests/bin/Debug/net9.0/MyProject.Tests.dll
         --format simple
 ```
@@ -423,7 +423,7 @@ steps:
     projects: 'tests/**/*.fsproj'
 
 - script: |
-    dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- \
+    dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj -- \
       tests/MyProject.Tests/bin/Debug/net9.0/MyProject.Tests.dll \
       --format simple
   displayName: 'Run Tests'
@@ -440,11 +440,11 @@ steps:
 **Solution:**
 
 ```fsharp
-// ✅ Correct
+//  Correct
 [<Tests>]
 let mySpecs = spec { ... }
 
-// ❌ Wrong - missing attribute
+//  Wrong - missing attribute
 let mySpecs = spec { ... }
 ```
 
@@ -459,7 +459,7 @@ let mySpecs = spec { ... }
 dotnet build tests/MyProject.Tests/MyProject.Tests.fsproj
 
 # Then run with correct path
-dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- \
+dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj -- \
   tests/MyProject.Tests/bin/Debug/net9.0/MyProject.Tests.dll
 ```
 

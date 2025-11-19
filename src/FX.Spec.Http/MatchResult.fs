@@ -1,4 +1,4 @@
-namespace FxSpec.Http
+namespace FX.Spec.Http
 
 /// Custom exception for HTTP assertion failures
 exception HttpAssertionException of string

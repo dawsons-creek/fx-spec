@@ -1,10 +1,10 @@
 /// Tests for Phase 6 features: hooks and state management
-module FxSpec.Core.Tests.HooksSpecs
+module FX.Spec.Core.Tests.HooksSpecs
 
 open System
-open FxSpec.Core
-open FxSpec.Matchers
-open FxSpec.Runner.Executor
+open FX.Spec.Core
+open FX.Spec.Matchers
+open FX.Spec.Runner.Executor
 
 /// Specs for beforeEach/afterEach hooks
 [<Tests>]

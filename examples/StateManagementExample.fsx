@@ -1,11 +1,11 @@
 /// This example demonstrates how to use hooks (beforeEach, afterEach, beforeAll, afterAll)
 /// for test setup and teardown.
 
-#load "../src/FxSpec.Core/bin/Debug/net9.0/FxSpec.Core.dll"
-#load "../src/FxSpec.Matchers/bin/Debug/net9.0/FxSpec.Matchers.dll"
+#load "../src/FX.Spec.Core/bin/Debug/net9.0/FX.Spec.Core.dll"
+#load "../src/FX.Spec.Matchers/bin/Debug/net9.0/FX.Spec.Matchers.dll"
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 /// A simple mutable stack for demonstration purposes.
 /// In a real functional application, you would use an immutable data structure.
@@ -117,4 +117,4 @@ printfn "1. beforeAll/afterAll - Run once per describe/context block"
 printfn "2. beforeEach/afterEach - Run before/after each test"
 printfn "3. Hook composition - Inner contexts inherit outer hooks"
 printfn "4. Hooks execute in order: outer-to-inner for before, inner-to-outer for after"
-printfn "\nRun with: dotnet run --project src/FxSpec.Runner -- examples/StateManagementExample.fsx"
+printfn "\nRun with: dotnet run --project src/FX.Spec.Runner -- examples/StateManagementExample.fsx"

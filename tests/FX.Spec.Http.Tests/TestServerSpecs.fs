@@ -1,13 +1,13 @@
 /// BDD specifications for TestServer lifecycle
-module FxSpec.Http.Tests.TestServerSpecs
+module FX.Spec.Http.Tests.TestServerSpecs
 
 open System
 open System.Net.Http
 open System.Threading
 open System.Threading.Tasks
-open FxSpec.Core
-open FxSpec.Matchers
-open FxSpec.Http
+open FX.Spec.Core
+open FX.Spec.Matchers
+open FX.Spec.Http
 
 [<Tests>]
 let testServerLifecycleSpecs =

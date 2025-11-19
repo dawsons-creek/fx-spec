@@ -1,4 +1,4 @@
-# FxSpec
+# FX.Spec
 
 <div class="grid cards" markdown>
 
@@ -17,7 +17,7 @@
 
 ---
 
-## Why FxSpec?
+## Why FX.Spec?
 
 <div class="grid cards" markdown>
 
@@ -64,8 +64,8 @@ Write tests that read like specifications:
 ```fsharp
 module UserAccountSpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 [<Tests>]
 let userAccountSpecs =
@@ -148,7 +148,7 @@ it "validates input against business rules" (fun () -> ...)
 
 ### :material-check-all:{ .lg } Type-Specific Matchers
 
-FxSpec provides specialized matchers that prevent runtime errors:
+FX.Spec provides specialized matchers that prevent runtime errors:
 
 ```fsharp
 // IntelliSense shows only applicable methods
@@ -179,7 +179,7 @@ expectResult(result).toBeOk()         // Result type handling
 
 ### :material-filter:{ .lg } Filtered Stack Traces
 
-When errors occur, FxSpec shows **only the relevant parts of your code**:
+When errors occur, FX.Spec shows **only the relevant parts of your code**:
 
 ```
 ✗ processes user data
@@ -196,7 +196,7 @@ When errors occur, FxSpec shows **only the relevant parts of your code**:
 ```
 
 **What's filtered out:**
-- Framework internals (FxSpec.Core, FxSpec.Runner)
+- Framework internals (FX.Spec.Core, FX.Spec.Runner)
 - .NET runtime frames (System.Reflection, System.Runtime)
 - F# compiler-generated noise
 
@@ -315,7 +315,7 @@ Hooks ensure test isolation and proper resource cleanup.
 
 ## Technical Architecture
 
-FxSpec builds an **immutable test tree at compile time**, separating test declaration from execution. This functional approach enables:
+FX.Spec builds an **immutable test tree at compile time**, separating test declaration from execution. This functional approach enables:
 
 - **Test filtering** - Run specific tests without re-compiling
 - **Multiple output formats** - Same tests, different presentations
@@ -339,29 +339,29 @@ expectStr("hello").toBeGreaterThan(5) // ✗ Compile error - no such method
 
 ### Core Capabilities
 
-- ✅ Hierarchical test organization with `describe`/`context`/`it`
-- ✅ 50+ type-specific assertion methods
-- ✅ Async/await support with `itAsync`
-- ✅ HTTP testing matchers for web APIs
-- ✅ Lifecycle hooks (`beforeEach`, `afterEach`, `beforeAll`, `afterAll`)
-- ✅ Focus and pending tests (`fit`, `xit`, `pending`)
+-  Hierarchical test organization with `describe`/`context`/`it`
+-  50+ type-specific assertion methods
+-  Async/await support with `itAsync`
+-  HTTP testing matchers for web APIs
+-  Lifecycle hooks (`beforeEach`, `afterEach`, `beforeAll`, `afterAll`)
+-  Focus and pending tests (`fit`, `xit`, `pending`)
 
 ### Developer Experience
 
-- ✅ Filtered stack traces showing only your code
-- ✅ Clickable file links (Cmd/Ctrl+Click to jump to errors)
-- ✅ Colored, hierarchical console output
-- ✅ Diff visualization for mismatched values
-- ✅ IntelliSense support for type-specific matchers
-- ✅ Self-hosting (FxSpec tests itself with 71+ passing tests)
+-  Filtered stack traces showing only your code
+-  Clickable file links (Cmd/Ctrl+Click to jump to errors)
+-  Colored, hierarchical console output
+-  Diff visualization for mismatched values
+-  IntelliSense support for type-specific matchers
+-  Self-hosting (FX.Spec tests itself with 71+ passing tests)
 
 ### Pure F# Design
 
-- ✅ No dependencies on xUnit, NUnit, or MSTest
-- ✅ Immutable test trees with functional composition
-- ✅ Pure functions throughout
-- ✅ Custom test discovery and execution
-- ✅ Independent CLI runner
+-  No dependencies on xUnit, NUnit, or MSTest
+-  Immutable test trees with functional composition
+-  Pure functions throughout
+-  Custom test discovery and execution
+-  Independent CLI runner
 
 ---
 
@@ -391,7 +391,7 @@ expectStr("hello").toBeGreaterThan(5) // ✗ Compile error - no such method
 
     ---
 
-    Join the community and contribute to FxSpec.
+    Join the community and contribute to FX.Spec.
 
 </div>
 
@@ -399,7 +399,7 @@ expectStr("hello").toBeGreaterThan(5) // ✗ Compile error - no such method
 
 ## For Developers Familiar with Other Frameworks
 
-If you've used BDD frameworks before, you'll recognize the describe/it syntax. FxSpec adapts these patterns to F#'s functional paradigm:
+If you've used BDD frameworks before, you'll recognize the describe/it syntax. FX.Spec adapts these patterns to F#'s functional paradigm:
 
 **Key differences from other BDD frameworks:**
 
@@ -427,7 +427,7 @@ The syntax is straightforward and leverages F#'s strengths: type safety, immutab
 
 Ready to dive in?
 
-1. **[Quick Start](quick-start.md)** - Install FxSpec and write your first test
+1. **[Quick Start](quick-start.md)** - Install FX.Spec and write your first test
 2. **[DSL API](reference/dsl-api.md)** - Learn all the DSL functions
 3. **[Matchers](reference/matchers/core.md)** - Explore the matcher library
 4. **[HTTP Testing](reference/http.md)** - Test web APIs with fluent matchers
@@ -438,7 +438,7 @@ Questions or feedback? [Open an issue on GitHub](https://github.com/dawsons-cree
 
 ## Inspired By
 
-FxSpec draws inspiration from the best in class:
+FX.Spec draws inspiration from the best in class:
 
 - **RSpec** - The gold standard for BDD testing in Ruby
 - **Expecto** - F# testing framework philosophy

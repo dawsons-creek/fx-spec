@@ -6,7 +6,7 @@ Complete reference for FxSpec's Domain-Specific Language functions.
 
 ## Overview
 
-FxSpec uses a clean, functional DSL to build specification trees. The DSL provides functions for organizing specifications, defining behavioral requirements, and managing test lifecycle with hooks.
+FX.Spec uses a clean, functional DSL to build specification trees. The DSL provides functions for organizing specifications, defining behavioral requirements, and managing test lifecycle with hooks.
 
 Think of your tests as **living documentation** - they describe what your system does, not just verify it works.
 
@@ -16,7 +16,7 @@ Think of your tests as **living documentation** - they describe what your system
 
 ### Test Structure
 
-FxSpec tests are simple values marked with the `[<Tests>]` attribute. No wrapper is needed.
+FX.Spec tests are simple values marked with the `[<Tests>]` attribute. No wrapper is needed.
 
 **Usage:**
 
@@ -256,7 +256,7 @@ itAsync "validates async operation" (async {
 - Test runs using `Async.RunSynchronously` internally
 - Can use `let!` to await async operations
 - Can use `Async.AwaitTask` to work with .NET Task-based APIs
-- Compatible with all FxSpec matchers and hooks
+- Compatible with all FX.Spec matchers and hooks
 - Can mix `it` and `itAsync` in the same test suite
 
 ---
@@ -267,7 +267,7 @@ itAsync "validates async operation" (async {
 
 ```fsharp
 open System.Net.Http
-open FxSpec.Http
+open FX.Spec.Http
 
 describe "User API" [
     let client = new HttpClient(BaseAddress = Uri("http://localhost:5000"))
@@ -871,8 +871,8 @@ Here's a comprehensive example using all DSL features with specification-focused
 ```fsharp
 module UserServiceSpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 [<Tests>]
 let userServiceSpecs =
@@ -1007,6 +1007,6 @@ describe "Shopping cart" [
 
 ## See Also
 
-- **[Quick Start](../quick-start.md)** - Get started with FxSpec
+- **[Quick Start](../quick-start.md)** - Get started with FX.Spec
 - **[Matchers Reference](matchers/core.md)** - Learn about assertions
-- **[Contributing](../community/contributing.md)** - Contribute to FxSpec
+- **[Contributing](../community/contributing.md)** - Contribute to FX.Spec

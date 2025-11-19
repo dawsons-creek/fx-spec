@@ -1,4 +1,4 @@
-namespace FxSpec.Matchers
+namespace FX.Spec.Matchers
 
 /// Wrapper type that enables fluent method chaining for assertions.
 /// Usage: expect(actual).toEqual(expected)

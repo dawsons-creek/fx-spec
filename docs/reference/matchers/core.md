@@ -6,7 +6,7 @@ Basic equality checks, booleans, Option, Result, and common assertions.
 
 ## Expectation Functions
 
-FxSpec provides type-specific expectation functions that return fluent wrappers with relevant assertion methods.
+FX.Spec provides type-specific expectation functions that return fluent wrappers with relevant assertion methods.
 
 ### expect
 
@@ -314,8 +314,8 @@ expect 3 |> should (satisfy (fun x -> x > 5) "be greater than 5")
 ```fsharp
 module UserRegistrationSpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 type ValidationError =
     | EmailInvalid
@@ -367,4 +367,4 @@ let userRegistrationSpecs =
 - **[String Matchers](strings.md)** - String-specific matchers
 - **[Numeric Matchers](numeric.md)** - Numeric comparisons
 - **[Exception Matchers](exceptions.md)** - Exception testing
-- **[Quick Start](../../quick-start.md)** - Get started with FxSpec
+- **[Quick Start](../../quick-start.md)** - Get started with FX.Spec

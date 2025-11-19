@@ -1,9 +1,9 @@
-/// Comprehensive tests for all FxSpec matchers
-module FxSpec.Matchers.Tests.MatchersSpecs
+/// Comprehensive tests for all FX.Spec matchers
+module FX.Spec.Matchers.Tests.MatchersSpecs
 
 open System
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 /// Specs for CoreMatchers
 [<Tests>]

@@ -1,10 +1,10 @@
-// Example demonstrating all FxSpec matchers
-#r "../src/FxSpec.Matchers/bin/Debug/net9.0/FxSpec.Matchers.dll"
+// Example demonstrating all FX.Spec matchers
+#r "../src/FX.Spec.Matchers/bin/Debug/net9.0/FX.Spec.Matchers.dll"
 
-open FxSpec.Matchers
+open FX.Spec.Matchers
 
 printfn "==================================="
-printfn "FxSpec Matchers Examples"
+printfn "FX.Spec Matchers Examples"
 printfn "==================================="
 printfn ""
 

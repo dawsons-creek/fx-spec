@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\FxSpec.Core\FxSpec.Core.fsproj" />
-    <ProjectReference Include="..\..\src\FxSpec.Matchers\FxSpec.Matchers.fsproj" />
-    <ProjectReference Include="..\..\src\FxSpec.Http\FxSpec.Http.fsproj" />
+    <ProjectReference Include="..\..\src\FX.Spec.Core\FX.Spec.Core.fsproj" />
+    <ProjectReference Include="..\..\src\FX.Spec.Matchers\FX.Spec.Matchers.fsproj" />
+    <ProjectReference Include="..\..\src\FX.Spec.Http\FX.Spec.Http.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

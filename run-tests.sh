@@ -1,20 +1,20 @@
 #!/bin/bash
-# Convenience script to run FxSpec tests using the FxSpec runner
+# Convenience script to run FX.Spec tests using the FX.Spec runner
 
 set -e
 
 # Build the test project
 echo "Building tests..."
-dotnet build tests/FxSpec.Core.Tests/FxSpec.Core.Tests.fsproj
+dotnet build tests/FX.Spec.Core.Tests/FX.Spec.Core.Tests.fsproj
 
 # Build the runner
 echo "Building runner..."
-dotnet build src/FxSpec.Runner/FxSpec.Runner.fsproj
+dotnet build src/FX.Spec.Runner/FX.Spec.Runner.fsproj
 
 # Run the tests
 echo ""
-echo "Running tests with FxSpec runner..."
+echo "Running tests with FX.Spec runner..."
 echo ""
-dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- \
-  tests/FxSpec.Core.Tests/bin/Debug/net9.0/FxSpec.Core.Tests.dll "$@"
+dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj -- \
+  tests/FX.Spec.Core.Tests/bin/Debug/net9.0/FX.Spec.Core.Tests.dll "$@"
 

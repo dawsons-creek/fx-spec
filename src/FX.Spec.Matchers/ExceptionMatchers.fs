@@ -1,4 +1,4 @@
-namespace FxSpec.Matchers
+namespace FX.Spec.Matchers
 
 // ExceptionMatchers.fs is now deprecated.
 // All exception testing functionality has been moved to Assertions.fs

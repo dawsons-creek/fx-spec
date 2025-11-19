@@ -1,4 +1,4 @@
-# Contributing to FxSpec
+# Contributing to FX.Spec
 
 Thank you for your interest in contributing to FxSpec! This document provides guidelines and instructions for contributing.
 
@@ -35,7 +35,7 @@ dotnet build
 ./run-tests.sh
 ```
 
-You should see all tests passing. FxSpec uses itself for testing (dogfooding).
+You should see all tests passing. FX.Spec uses itself for testing (dogfooding).
 
 ---
 
@@ -46,12 +46,12 @@ You should see all tests passing. FxSpec uses itself for testing (dogfooding).
 ```
 fx-spec/
 ├── src/
-│   ├── FxSpec.Core/          # Core DSL and test tree
-│   ├── FxSpec.Matchers/      # Assertion matchers
-│   └── FxSpec.Runner/        # Test discovery and execution
+│   ├── FX.Spec.Core/          # Core DSL and test tree
+│   ├── FX.Spec.Matchers/      # Assertion matchers
+│   └── FX.Spec.Runner/        # Test discovery and execution
 ├── tests/
-│   ├── FxSpec.Core.Tests/    # Tests for Core
-│   └── FxSpec.Matchers.Tests/# Tests for Matchers
+│   ├── FX.Spec.Core.Tests/    # Tests for Core
+│   └── FX.Spec.Matchers.Tests/# Tests for Matchers
 ├── examples/                  # Example usage
 └── docs/                      # Documentation
 ```
@@ -63,7 +63,7 @@ fx-spec/
 dotnet build
 
 # Build specific project
-dotnet build src/FxSpec.Core/FxSpec.Core.fsproj
+dotnet build src/FX.Spec.Core/FX.Spec.Core.fsproj
 
 # Clean build
 dotnet clean
@@ -77,7 +77,7 @@ dotnet build -c Release
 
 ## Running Tests
 
-FxSpec tests itself using its own framework.
+FX.Spec tests itself using its own framework.
 
 ### Run All Tests
 
@@ -99,9 +99,9 @@ FxSpec tests itself using its own framework.
 
 ```bash
 # Build and run
-dotnet build tests/FxSpec.Core.Tests/FxSpec.Core.Tests.fsproj
-dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- \
-  tests/FxSpec.Core.Tests/bin/Debug/net9.0/FxSpec.Core.Tests.dll
+dotnet build tests/FX.Spec.Core.Tests/FX.Spec.Core.Tests.fsproj
+dotnet run --project src/FX.Spec.Runner/FX.Spec.Runner.fsproj -- \
+  tests/FX.Spec.Core.Tests/bin/Debug/net9.0/FX.Spec.Core.Tests.dll
 ```
 
 ---
@@ -110,7 +110,7 @@ dotnet run --project src/FxSpec.Runner/FxSpec.Runner.fsproj -- \
 
 ### F# Conventions
 
-FxSpec follows standard F# conventions:
+FX.Spec follows standard F# conventions:
 
 - **Naming:**
   - `camelCase` for functions and values
@@ -179,13 +179,13 @@ git checkout -b fix/bug-description
 
 ### 3. Write Tests
 
-All code changes must include tests. FxSpec tests itself:
+All code changes must include tests. FX.Spec tests itself:
 
 ```fsharp
 module MyNewFeatureSpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 [<Tests>]
 let myNewFeatureSpecs =

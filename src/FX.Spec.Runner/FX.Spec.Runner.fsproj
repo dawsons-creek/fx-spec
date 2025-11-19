@@ -4,7 +4,30 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>fxspec</AssemblyName>
+    <LangVersion>latest</LangVersion>
+
+    <!-- Package Information -->
+    <PackageId>FX.Spec.Runner</PackageId>
+    <Version>0.9.0-beta</Version>
+    <Authors>FX Framework Contributors</Authors>
+    <Company>FX Framework</Company>
+    <Description>Command-line test runner for FX.Spec with beautiful output, clickable stack traces, filtered frames, and multiple formatters. Install as a global .NET tool.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://dawsons-creek.github.io/fx-spec</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dawsons-creek/fx-spec</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>fsharp;testing;test-runner;bdd;cli;dotnet-tool</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>Initial beta release. Beautiful test runner with stack trace filtering and clickable file links.</PackageReleaseNotes>
+
+    <!-- Tool Configuration -->
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>fxspec</ToolCommandName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="Discovery.fs" />
@@ -18,8 +41,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FxSpec.Core\FxSpec.Core.fsproj" />
-    <ProjectReference Include="..\FxSpec.Matchers\FxSpec.Matchers.fsproj" />
+    <ProjectReference Include="..\FX.Spec.Core\FX.Spec.Core.fsproj" />
+    <ProjectReference Include="..\FX.Spec.Matchers\FX.Spec.Matchers.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

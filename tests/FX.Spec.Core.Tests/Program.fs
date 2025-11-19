@@ -1,33 +1,39 @@
-// Test runner for FxSpec.Core.Tests
+// Test runner for FX.Spec.Core.Tests
 // This runs both old-style tests (for validation) and new FxSpec-based tests (dogfooding!)
 open System
-open FxSpec.Core
-open FxSpec.Core.Tests
+open FX.Spec.Core
+open FX.Spec.Core.Tests
 
 /// Simple test executor that runs a spec tree and reports results
 let rec executeNode (node: TestNode) : TestResultNode =
     match node with
-    | Example (desc, testFn) | FocusedExample (desc, testFn) ->
+    | Example(desc, testFn, meta)
+    | FocusedExample(desc, testFn, meta) ->
         let sw = System.Diagnostics.Stopwatch.StartNew()
-        let result = testFn()
+        let result = testFn ()
         sw.Stop()
-        ExampleResult (desc, result, sw.Elapsed)
-    | Group (desc, _, children) | FocusedGroup (desc, _, children) ->
+        ExampleResult(desc, result, sw.Elapsed, meta)
+    | Group(desc, _, children, meta)
+    | FocusedGroup(desc, _, children, meta) ->
         let results = children |> List.map executeNode
-        GroupResult (desc, results)
-    | BeforeAllHook _ | BeforeEachHook _ | AfterEachHook _ | AfterAllHook _ ->
+        GroupResult(desc, results, meta)
+    | BeforeAllHook _
+    | BeforeEachHook _
+    | AfterEachHook _
+    | AfterAllHook _ ->
         // Hooks are not executed in this simple runner
-        GroupResult ("hook", [])
+        GroupResult("hook", [], TestMetadata.empty)
 
 /// Simple formatter that prints test results
 let rec printResults indent (node: TestResultNode) =
     match node with
-    | ExampleResult (desc, result, duration) ->
+    | ExampleResult(desc, result, duration, _) ->
         let symbol =
             match result with
             | Pass -> "✓"
             | Fail _ -> "✗"
             | Skipped _ -> "⊘"
+
         let color =
             match result with
             | Pass -> ConsoleColor.Green
@@ -39,7 +45,7 @@ let rec printResults indent (node: TestResultNode) =
         Console.ResetColor()
 
         match result with
-        | Fail (Some ex) ->
+        | Fail(Some ex) ->
             Console.ForegroundColor <- ConsoleColor.Red
             printfn "%s  Error: %s" indent ex.Message
             Console.ResetColor()
@@ -52,7 +58,7 @@ let rec printResults indent (node: TestResultNode) =
             printfn "%s  Reason: %s" indent reason
             Console.ResetColor()
         | Pass -> ()
-    | GroupResult (desc, results) ->
+    | GroupResult(desc, results, _) ->
         printfn "%s%s" indent desc
         results |> List.iter (printResults (indent + "  "))
 
@@ -74,6 +80,7 @@ let runSpec name (nodes: TestNode list) =
     let total = List.length totalResults
 
     printfn ""
+
     if failed > 0 then
         Console.ForegroundColor <- ConsoleColor.Red
         printfn "%d examples, %d failures, %d skipped" total failed skipped
@@ -88,29 +95,42 @@ let runSpec name (nodes: TestNode list) =
 [<EntryPoint>]
 let main argv =
     printfn "╔═══════════════════════════════════════════════════════════╗"
-    printfn "║           FxSpec.Core Test Suite                          ║"
-    printfn "║           Testing FxSpec with FxSpec! 🎯                  ║"
-    printfn "║           (Legacy runner - use FxSpec.Runner instead)     ║"
+    printfn "║           FX.Spec.Core Test Suite                          ║"
+    printfn "║           Testing FX.Spec with FxSpec! 🎯                  ║"
+    printfn "║           (Legacy runner - use FX.Spec.Runner instead)     ║"
     printfn "╚═══════════════════════════════════════════════════════════╝"
 
     try
         // Run FxSpec-based tests using simple runner
-        let success1 = runSpec "TypesSpecs - Testing FxSpec Types" [TypesSpecs.testResultSpecs]
-        let success2 = runSpec "TypesSpecs - Testing TestNode" [TypesSpecs.testNodeSpecs]
-        let success3 = runSpec "TypesSpecs - Testing TestResultNode" [TypesSpecs.testResultNodeSpecs]
-        let success4 = runSpec "SpecBuilderSpecs - Basic Functionality" [SpecBuilderSpecs.specBuilderSpecs]
-        let success5 = runSpec "SpecBuilderSpecs - Example Execution" [SpecBuilderSpecs.exampleExecutionSpecs]
-        let success6 = runSpec "SpecBuilderSpecs - Complex Nesting" [SpecBuilderSpecs.complexNestingSpecs]
-        let success7 = runSpec "AsyncSupportSpecs - Async Test Support" [AsyncSupportSpecs.asyncSupportSpecs]
-        
+        let success1 =
+            runSpec "TypesSpecs - Testing FX.Spec Types" [ TypesSpecs.testResultSpecs ]
+
+        let success2 = runSpec "TypesSpecs - Testing TestNode" [ TypesSpecs.testNodeSpecs ]
+
+        let success3 =
+            runSpec "TypesSpecs - Testing TestResultNode" [ TypesSpecs.testResultNodeSpecs ]
+
+        let success4 =
+            runSpec "SpecBuilderSpecs - Basic Functionality" [ SpecBuilderSpecs.specBuilderSpecs ]
+
+        let success5 =
+            runSpec "SpecBuilderSpecs - Example Execution" [ SpecBuilderSpecs.exampleExecutionSpecs ]
+
+        let success6 =
+            runSpec "SpecBuilderSpecs - Complex Nesting" [ SpecBuilderSpecs.complexNestingSpecs ]
+
+        let success7 =
+            runSpec "AsyncSupportSpecs - Async Test Support" [ AsyncSupportSpecs.asyncSupportSpecs ]
+
         printfn ""
         printfn "╔═══════════════════════════════════════════════════════════╗"
+
         if success1 && success2 && success3 && success4 && success5 && success6 && success7 then
             Console.ForegroundColor <- ConsoleColor.Green
             printfn "║                 All tests passed! ✓                       ║"
             Console.ResetColor()
             printfn "║                                                           ║"
-            printfn "║  🎉 FxSpec successfully tests itself using FxSpec! 🎉    ║"
+            printfn "║  🎉 FX.Spec successfully tests itself using FxSpec! 🎉    ║"
             printfn "║                                                           ║"
             printfn "║  💡 Tip: Use ./run-tests.sh for beautiful output!        ║"
             printfn "╚═══════════════════════════════════════════════════════════╝"

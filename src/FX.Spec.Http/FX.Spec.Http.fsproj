@@ -3,7 +3,26 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>latest</LangVersion>
+
+    <!-- Package Information -->
+    <PackageId>FX.Spec.Http</PackageId>
+    <Version>0.9.0-beta</Version>
+    <Authors>FX Framework Contributors</Authors>
+    <Company>FX Framework</Company>
+    <Description>HTTP testing extensions for FX.Spec with fluent matchers for status codes, headers, body content, and JSON responses. Includes TestServer support.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://dawsons-creek.github.io/fx-spec</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dawsons-creek/fx-spec</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>fsharp;testing;http;api-testing;integration-testing;test-framework</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>Initial beta release. HTTP testing with fluent matchers and TestServer integration.</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="MatchResult.fs" />
@@ -13,8 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FxSpec.Core\FxSpec.Core.fsproj" />
-    <ProjectReference Include="..\FxSpec.Matchers\FxSpec.Matchers.fsproj" />
+    <ProjectReference Include="..\FX.Spec.Core\FX.Spec.Core.fsproj" />
+    <ProjectReference Include="..\FX.Spec.Matchers\FX.Spec.Matchers.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

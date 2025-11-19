@@ -1,4 +1,4 @@
-# FxSpec
+# FX.Spec
 
 > **Behavior-Driven Development meets Type Safety**
 > An elegant, powerful, and fully type-safe BDD testing framework for F#
@@ -7,7 +7,7 @@
 [![.NET](https://img.shields.io/badge/.NET-8.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![F#](https://img.shields.io/badge/F%23-8.0+-blue.svg)](https://fsharp.org/)
 
-## 📚 Documentation
+##  Documentation
 
 **[View the complete documentation →](https://dawsons-creek.github.io/fx-spec)**
 
@@ -16,15 +16,15 @@
 - [Matchers Reference](https://dawsons-creek.github.io/fx-spec/reference/matchers/core)
 - [Contributing Guide](https://dawsons-creek.github.io/fx-spec/community/contributing)
 
-## Why FxSpec?
+## Why FX.Spec?
 
-FxSpec brings **elegant, human-readable BDD syntax** together with the **compile-time safety and functional purity of F#**. Write tests that read like specifications while maintaining the type safety and composability that F# developers expect.
+FX.Spec brings **elegant, human-readable BDD syntax** together with the **compile-time safety and functional purity of F#**. Write tests that read like specifications while maintaining the type safety and composability that F# developers expect.
 
 ### The Vision
 
 ```fsharp
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 [<Tests>]
 let calculatorSpecs =
@@ -61,56 +61,73 @@ Calculator
 
 ## Key Features
 
-### 🎯 Expressive BDD Syntax
+### Expressive BDD Syntax
 - Intuitive `describe`, `context`, and `it` blocks
 - Nested test organization
 - Readable, specification-style tests
 
-### 🔒 Type-Safe by Design
+### Type-Safe by Design
 - Compile-time error detection
 - Type-specific expectation methods
 - No runtime type surprises
 
-### 💎 Fluent Assertion API
+### Fluent Assertion API
 - Natural method chaining: `expect(x).toEqual(y)`
 - Reads like English: "expect X to equal Y"
 - Type-specific expectations with IntelliSense support
 
-### 🎨 Discriminated Union Results
+### Discriminated Union Results
 - Explicit success/failure modeling
 - Rich failure data for debugging
 - Pattern matching support
 
-### 🎨 Beautiful Console Output
+### Beautiful Console Output
 - Powered by Spectre.Console
 - Nested, colored output
 - Comprehensive failure messages with diffs
 - **Rich stack traces with clickable file links** - Jump directly to errors in your code
 - Filtered stack traces showing only YOUR code, not framework internals
 
-### 🔧 Functional & Immutable
+### Functional & Immutable
 - Pure functions throughout
 - Immutable test data
 - Composable test structures
 
-### 🚀 Pure F# Implementation
+### Pure F# Implementation
 - No dependency on NUnit, xUnit, or MSTest
 - Custom test discovery and execution
 - Independent CLI runner
 
 ## Quick Start
 
-### Installation (Coming Soon)
+### Installation
+
+**Beta Release**: FX.Spec is currently in beta (v0.9.0-beta). We're actively seeking feedback from early adopters!
+
+Add FX.Spec packages to your test project:
 
 ```bash
-dotnet add package FxSpec
+# Core BDD framework
+dotnet add package FX.Spec.Core --version 0.9.0-beta
+
+# Fluent assertions
+dotnet add package FX.Spec.Matchers --version 0.9.0-beta
+
+# HTTP testing (optional)
+dotnet add package FX.Spec.Http --version 0.9.0-beta
+```
+
+Install the test runner as a global tool:
+
+```bash
+dotnet tool install --global FX.Spec.Runner --version 0.9.0-beta
 ```
 
 ### Write Your First Test
 
 ```fsharp
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 [<Tests>]
 let myFirstSpec =
@@ -230,7 +247,7 @@ describe "Feature" [
 
 ### Type-Specific Expectations
 
-FxSpec provides specialized expectation functions for different types:
+FX.Spec provides specialized expectation functions for different types:
 
 ```fsharp
 // Generic expectations
@@ -291,7 +308,7 @@ expectHttp(response).toHaveJsonBody({| name = "John"; age = 30 |})
 
 ### Async Test Support
 
-FxSpec supports asynchronous tests with `itAsync`:
+FX.Spec supports asynchronous tests with `itAsync`:
 
 ```fsharp
 describe "Async API" [
@@ -310,10 +327,10 @@ describe "Async API" [
 
 ### HTTP Testing
 
-FxSpec provides comprehensive HTTP matchers for testing web APIs:
+FX.Spec provides comprehensive HTTP matchers for testing web APIs:
 
 ```fsharp
-open FxSpec.Http
+open FX.Spec.Http
 
 describe "User API" [
     itAsync "creates a new user" (async {
@@ -341,7 +358,7 @@ describe "User API" [
 
 ### Exceptional Developer Experience
 
-When errors occur in your code under test, FxSpec provides **outstanding debugging support**:
+When errors occur in your code under test, FX.Spec provides **outstanding debugging support**:
 
 **Beautiful, Actionable Error Output:**
 ```
@@ -359,14 +376,14 @@ When errors occur in your code under test, FxSpec provides **outstanding debuggi
 ```
 
 **Key Features:**
-- 🎯 **Clear exception type and message** - Know exactly what went wrong
-- 🔍 **Filtered stack traces** - See only YOUR code, not framework internals  
+-  **Clear exception type and message** - Know exactly what went wrong
+-  **Filtered stack traces** - See only YOUR code, not framework internals  
 - 🔗 **Clickable file links** - Cmd/Ctrl+Click to jump directly to the error in VS Code
 - 📍 **Precise line numbers** - No hunting for the source of the problem
-- 🎨 **Color-coded output** - Visual hierarchy for quick scanning
+-  **Color-coded output** - Visual hierarchy for quick scanning
 
-FxSpec automatically filters out:
-- Framework internals (FxSpec.Core, FxSpec.Runner)
+FX.Spec automatically filters out:
+- Framework internals (FX.Spec.Core, FX.Spec.Runner)
 - .NET runtime frames (System.Reflection, System.Runtime)
 - F# compiler-generated code noise
 
@@ -388,7 +405,7 @@ This means **you see only the relevant parts of the stack trace from YOUR code**
 
 ### Simplified DSL
 
-FxSpec uses a clean, straightforward syntax without computation expressions:
+FX.Spec uses a clean, straightforward syntax without computation expressions:
 
 ```fsharp
 [<Tests>]
@@ -439,21 +456,25 @@ Benefits:
 
 ## Project Status
 
-✅ **MVP Complete!** ✅
+**Beta Release - v0.9.0-beta**
 
-FxSpec is a fully functional F# BDD testing framework with:
+FX.Spec is a fully functional F# BDD testing framework with:
 
-1. ✅ Complete DSL implementation (describe, it, context)
-2. ✅ Fluent assertion API with type-specific expectations
-3. ✅ Comprehensive matcher library (50+ assertion methods)
-4. ✅ Test discovery and execution
-5. ✅ Beautiful console output with Spectre.Console
-6. ✅ **Rich error output with clickable file links and filtered stack traces**
-7. ✅ Hooks (beforeEach, afterEach, beforeAll, afterAll)
-8. ✅ Focused and pending tests (fit, fdescribe, xit, pending)
-9. ✅ Self-hosting (FxSpec tests itself - 71 tests passing!)
+1. Complete DSL implementation (describe, it, context)
+2. Fluent assertion API with type-specific expectations
+3. Comprehensive matcher library (50+ assertion methods)
+4. Test discovery and execution
+5. Beautiful console output with Spectre.Console
+6. **Rich error output with clickable file links and filtered stack traces**
+7. Hooks (beforeEach, afterEach, beforeAll, afterAll)
+8. Focused and pending tests (fit, fdescribe, xit, pending)
+9. Async support (itAsync, fitAsync, xitAsync)
+10. HTTP testing with fluent matchers
+11. Self-hosting (FX.Spec tests itself - 71 tests passing!)
 
-**Ready for:** Early adopters and feedback
+**Current Phase:** Beta testing - actively seeking feedback from early adopters!
+
+**Feedback Welcome:** Try it out and let us know what you think via [GitHub Issues](https://github.com/dawsons-creek/fx-spec/issues) or [Discussions](https://github.com/dawsons-creek/fx-spec/discussions)
 
 ## Future Enhancements
 - [ ] Custom formatters API
@@ -468,11 +489,11 @@ FxSpec is a fully functional F# BDD testing framework with:
 We welcome contributions! This is an ambitious project and we'd love your help.
 
 **Ways to contribute:**
-- 💡 Design feedback and ideas
-- 🐛 Bug reports and testing
-- 📝 Documentation improvements
-- 💻 Code contributions
-- 🎨 Example specs and use cases
+-  Design feedback and ideas
+-  Bug reports and testing
+-  Documentation improvements
+-  Code contributions
+-  Example specs and use cases
 
 ## Design Principles
 
@@ -484,7 +505,7 @@ We welcome contributions! This is an ambitious project and we'd love your help.
 
 ## Inspired By
 
-FxSpec draws inspiration from the best in class:
+FX.Spec draws inspiration from the best in class:
 
 - **RSpec** - The gold standard for BDD testing in Ruby
 - **Expecto** - F# testing framework philosophy
@@ -499,8 +520,3 @@ MIT License - see [LICENSE](LICENSE) for details
 
 - **Issues**: [GitHub Issues](https://github.com/dawsons-creek/fx-spec/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/dawsons-creek/fx-spec/discussions)
-
----
-
-**Built with ❤️ and F# by developers who believe testing should be elegant, safe, and fun.**
-

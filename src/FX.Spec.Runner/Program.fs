@@ -1,8 +1,8 @@
-namespace FxSpec.Runner
+namespace FX.Spec.Runner
 
 open System
 
-/// Command-line interface for the FxSpec test runner.
+/// Command-line interface for the FX.Spec test runner.
 module Program =
     
     /// Output format options.
@@ -53,7 +53,7 @@ module Program =
                 printfn "Warning: Invalid seed value '%s'. Ignoring seed." seedStr
                 parseArgs rest options
         | "--help" :: _ | "-h" :: _ ->
-            printfn "FxSpec Test Runner"
+            printfn "FX.Spec Test Runner"
             printfn ""
             printfn "Usage: fxspec <assembly-path> [options]"
             printfn ""
@@ -81,7 +81,7 @@ module Program =
     [<EntryPoint>]
     let main argv =
         try
-            printfn "FxSpec Test Runner"
+            printfn "FX.Spec Test Runner"
             printfn "=================="
             printfn ""
             

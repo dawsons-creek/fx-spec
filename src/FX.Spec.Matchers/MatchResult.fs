@@ -1,4 +1,4 @@
-namespace FxSpec.Matchers
+namespace FX.Spec.Matchers
 
 /// Represents the outcome of a matcher evaluation.
 /// This is the core type that enables type-safe, composable assertions.

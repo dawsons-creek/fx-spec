@@ -95,7 +95,7 @@ expectStr(string).toContainSubstring(substring)
 
 ```fsharp
 expectStr("hello world").toContainSubstring("lo wo")
-expectStr("FxSpec is great").toContainSubstring("Spec")
+expectStr("FX.Spec is great").toContainSubstring("Spec")
 expectStr("error: file not found").toContainSubstring("error:")
 
 // Search in logs
@@ -432,8 +432,8 @@ expect "12.34" |> should beNumeric
 ```fsharp
 module UrlValidationSpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 [<Tests>]
 let urlValidationSpecs =
@@ -480,8 +480,8 @@ let urlValidationSpecs =
 ```fsharp
 module StringTransformationSpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 [<Tests>]
 let stringTransformationSpecs =
@@ -532,4 +532,4 @@ let stringTransformationSpecs =
 - **[Core Matchers](core.md)** - Basic equality matchers
 - **[Collection Matchers](collections.md)** - Collection matchers (strings are sequences of chars)
 - **[Numeric Matchers](numeric.md)** - Numeric comparisons
-- **[Quick Start](../../quick-start.md)** - Get started with FxSpec
+- **[Quick Start](../../quick-start.md)** - Get started with FX.Spec

@@ -470,8 +470,8 @@ expect 7 |> should (beDivisibleBy 3)
 ```fsharp
 module MathLibrarySpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 open System
 
 [<Tests>]
@@ -551,8 +551,8 @@ let mathLibrarySpecs =
 ```fsharp
 module FinancialSpecs
 
-open FxSpec.Core
-open FxSpec.Matchers
+open FX.Spec.Core
+open FX.Spec.Matchers
 
 [<Tests>]
 let financialSpecs =
@@ -602,4 +602,4 @@ let financialSpecs =
 - **[Core Matchers](core.md)** - Basic equality matchers
 - **[Collection Matchers](collections.md)** - Collection matchers
 - **[String Matchers](strings.md)** - String matchers
-- **[Quick Start](../../quick-start.md)** - Get started with FxSpec
+- **[Quick Start](../../quick-start.md)** - Get started with FX.Spec

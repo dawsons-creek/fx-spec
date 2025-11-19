@@ -1,11 +1,11 @@
-/// Entry point for FxSpec.Http.Tests
-module FxSpec.Http.Tests.Program
+/// Entry point for FX.Spec.Http.Tests
+module FX.Spec.Http.Tests.Program
 
 [<EntryPoint>]
 let main argv =
-    printfn "FxSpec.Http.Tests"
-    printfn "Use FxSpec.Runner to run these tests"
+    printfn "FX.Spec.Http.Tests"
+    printfn "Use FX.Spec.Runner to run these tests"
     printfn ""
     printfn "Example:"
-    printfn "  dotnet run --project src/FxSpec.Runner tests/FxSpec.Http.Tests/bin/Debug/net9.0/FxSpec.Http.Tests.dll"
+    printfn "  dotnet run --project src/FX.Spec.Runner tests/FX.Spec.Http.Tests/bin/Debug/net9.0/FX.Spec.Http.Tests.dll"
     0
