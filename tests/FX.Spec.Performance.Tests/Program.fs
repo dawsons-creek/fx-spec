@@ -11,7 +11,7 @@ module InternalRunner =
         | Example(desc, testFn, meta)
         | FocusedExample(desc, testFn, meta) ->
             let sw = Diagnostics.Stopwatch.StartNew()
-            let result = testFn ()
+            let result = testFn () |> Async.RunSynchronously
             sw.Stop()
             ExampleResult(desc, result, sw.Elapsed, meta)
 

@@ -9,9 +9,10 @@ let rec private executeNode (node: TestNode) : TestResultNode =
     | Example(description, testFn, metadata)
     | FocusedExample(description, testFn, metadata) ->
         let stopwatch = Diagnostics.Stopwatch.StartNew()
+
         let result =
             try
-                testFn ()
+                testFn () |> Async.RunSynchronously
             finally
                 stopwatch.Stop()
 
@@ -25,8 +26,7 @@ let rec private executeNode (node: TestNode) : TestResultNode =
     | BeforeAllHook _
     | BeforeEachHook _
     | AfterEachHook _
-    | AfterAllHook _ ->
-        GroupResult("hook", [], TestMetadata.empty)
+    | AfterAllHook _ -> GroupResult("hook", [], TestMetadata.empty)
 
 let rec private printResults (indent: string) (node: TestResultNode) =
     match node with
@@ -96,16 +96,14 @@ let main _ =
           "Powered by FX.Spec 🧪" ]
 
     try
-        let suites =
-            [ "JsonApiHelpers", JsonApiHelpersSpecs.specs ]
+        let suites = [ "JsonApiHelpers", JsonApiHelpersSpecs.specs ]
 
-        let results =
-            suites
-            |> List.map (fun (name, nodes) -> name, runSpec name [ nodes ])
+        let results = suites |> List.map (fun (name, nodes) -> name, runSpec name [ nodes ])
 
         let allPassed = results |> List.forall snd
 
         printfn ""
+
         if allPassed then
             banner [ "All specs passing! 🎉" ]
             0

@@ -39,7 +39,7 @@ module PerformanceDslSpecs =
 
                         match node with
                         | Example(_, execute, _) ->
-                            match execute () with
+                            match execute () |> Async.RunSynchronously with
                             | Pass ->
                                 if not !invoked then
                                     failwith "Expected the scenario to be invoked"
@@ -65,7 +65,7 @@ module PerformanceDslSpecs =
 
                         match node with
                         | Example(_, execute, _) ->
-                            match execute () with
+                            match execute () |> Async.RunSynchronously with
                             | Fail(Some(:? NotSupportedException)) -> ()
                             | Fail(Some ex) -> failwith $"Unexpected exception type: {ex.GetType().FullName}"
                             | Fail None -> failwith "Expected a NotSupportedException instance, got none"
@@ -85,7 +85,7 @@ module PerformanceDslSpecs =
 
                         match node with
                         | Example(_, execute, _) ->
-                            match execute () with
+                            match execute () |> Async.RunSynchronously with
                             | Fail(Some(:? NotSupportedException)) -> ()
                             | Fail(Some ex) -> failwith $"Unexpected exception type: {ex.GetType().FullName}"
                             | Fail None -> failwith "Expected a NotSupportedException instance, got none"
@@ -100,7 +100,7 @@ module PerformanceDslSpecs =
 
                         match node with
                         | Example(_, execute, _) ->
-                            match execute () with
+                            match execute () |> Async.RunSynchronously with
                             | Fail(Some(:? NotSupportedException)) -> ()
                             | Fail(Some ex) -> failwith $"Unexpected exception type: {ex.GetType().FullName}"
                             | Fail None -> failwith "Expected a NotSupportedException instance, got none"

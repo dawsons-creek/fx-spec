@@ -11,9 +11,9 @@ type TestResult =
     /// The test was skipped with a reason.
     | Skipped of reason: string
 
-/// A function that, when executed, produces a TestResult.
-/// This is a thunk that delays test execution until the runner is ready.
-type TestExecution = unit -> TestResult
+/// A function that, when executed, produces a TestResult asynchronously.
+/// This thunk allows the runner to defer execution until needed.
+type TestExecution = unit -> Async<TestResult>
 
 /// Metadata associated with an example or group.
 type TestMetadata =
@@ -89,10 +89,10 @@ module TestMetadata =
 
 /// Represents hooks that can be attached to a group.
 type GroupHooks =
-    { BeforeAll: (unit -> unit) list
-      BeforeEach: (unit -> unit) list
-      AfterEach: (unit -> unit) list
-      AfterAll: (unit -> unit) list }
+    { BeforeAll: (unit -> Async<unit>) list
+      BeforeEach: (unit -> Async<unit>) list
+      AfterEach: (unit -> Async<unit>) list
+      AfterAll: (unit -> Async<unit>) list }
 
 /// Helper module for GroupHooks.
 module GroupHooks =
@@ -137,10 +137,10 @@ type TestNode =
     /// A focused group (fdescribe). When any focused groups exist, only tests in focused groups run.
     | FocusedGroup of description: string * hooks: GroupHooks * tests: TestNode list * metadata: TestMetadata
     /// Hook nodes that get processed and attached to their parent group.
-    | BeforeAllHook of (unit -> unit)
-    | BeforeEachHook of (unit -> unit)
-    | AfterEachHook of (unit -> unit)
-    | AfterAllHook of (unit -> unit)
+    | BeforeAllHook of (unit -> Async<unit>)
+    | BeforeEachHook of (unit -> Async<unit>)
+    | AfterEachHook of (unit -> Async<unit>)
+    | AfterAllHook of (unit -> Async<unit>)
 
 /// Represents the result of executing a test node.
 /// This mirrors the TestNode structure but includes execution results.
@@ -244,7 +244,7 @@ module TestNode =
     let rec hasFocused =
         function
         | FocusedExample _ -> true
-        | FocusedGroup(_, _, children, _) -> children |> List.exists hasFocused
+        | FocusedGroup _ -> true
         | Group(_, _, children, _) -> children |> List.exists hasFocused
         | Example _ -> false
         | BeforeAllHook _

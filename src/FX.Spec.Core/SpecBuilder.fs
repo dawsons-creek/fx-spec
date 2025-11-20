@@ -19,11 +19,13 @@ module SpecHelpers =
     /// Usage: it "description" (fun () -> test code)
     let it description (test: unit -> unit) : TestNode =
         let execution () =
-            try
-                test ()
-                Pass
-            with ex ->
-                Fail(Some ex)
+            async {
+                try
+                    test ()
+                    return Pass
+                with ex ->
+                    return Fail(Some ex)
+            }
 
         Example(description, execution, TestMetadata.empty)
 
@@ -31,11 +33,13 @@ module SpecHelpers =
     /// Usage: itAsync "description" (async { test code })
     let itAsync description (test: Async<unit>) : TestNode =
         let execution () =
-            try
-                Async.RunSynchronously test
-                Pass
-            with ex ->
-                Fail(Some ex)
+            async {
+                try
+                    do! test
+                    return Pass
+                with ex ->
+                    return Fail(Some ex)
+            }
 
         Example(description, execution, TestMetadata.empty)
 
@@ -75,7 +79,7 @@ module SpecHelpers =
     /// Usage: xit "description" (fun () -> test code)
     let xit description (test: unit -> unit) : TestNode =
         let execution () =
-            Skipped "Test marked as pending with xit"
+            async { return Skipped "Test marked as pending with xit" }
 
         Example(description, execution, TestMetadata.empty)
 
@@ -83,7 +87,7 @@ module SpecHelpers =
     /// Usage: xitAsync "description" (async { test code })
     let xitAsync description (test: Async<unit>) : TestNode =
         let execution () =
-            Skipped "Test marked as pending with xitAsync"
+            async { return Skipped "Test marked as pending with xitAsync" }
 
         Example(description, execution, TestMetadata.empty)
 
@@ -96,11 +100,13 @@ module SpecHelpers =
     /// Usage: fit "description" (fun () -> test code)
     let fit description (test: unit -> unit) : TestNode =
         let execution () =
-            try
-                test ()
-                Pass
-            with ex ->
-                Fail(Some ex)
+            async {
+                try
+                    test ()
+                    return Pass
+                with ex ->
+                    return Fail(Some ex)
+            }
 
         FocusedExample(description, execution, TestMetadata.empty)
 
@@ -109,11 +115,13 @@ module SpecHelpers =
     /// Usage: fitAsync "description" (async { test code })
     let fitAsync description (test: Async<unit>) : TestNode =
         let execution () =
-            try
-                Async.RunSynchronously test
-                Pass
-            with ex ->
-                Fail(Some ex)
+            async {
+                try
+                    do! test
+                    return Pass
+                with ex ->
+                    return Fail(Some ex)
+            }
 
         FocusedExample(description, execution, TestMetadata.empty)
 
@@ -152,16 +160,48 @@ module SpecHelpers =
 
     /// Registers a beforeAll hook.
     /// Usage: beforeAll (fun () -> setup code)
-    let beforeAll (hook: unit -> unit) : TestNode = BeforeAllHook hook
+    let beforeAll (hook: unit -> unit) : TestNode =
+        let execution () = async { hook () }
+        BeforeAllHook execution
+
+    /// Registers an async beforeAll hook.
+    /// Usage: beforeAllAsync (async { setup code })
+    let beforeAllAsync (hook: Async<unit>) : TestNode =
+        let execution () = async { do! hook }
+        BeforeAllHook execution
 
     /// Registers a beforeEach hook.
     /// Usage: beforeEach (fun () -> setup code)
-    let beforeEach (hook: unit -> unit) : TestNode = BeforeEachHook hook
+    let beforeEach (hook: unit -> unit) : TestNode =
+        let execution () = async { hook () }
+        BeforeEachHook execution
+
+    /// Registers an async beforeEach hook.
+    /// Usage: beforeEachAsync (async { setup code })
+    let beforeEachAsync (hook: Async<unit>) : TestNode =
+        let execution () = async { do! hook }
+        BeforeEachHook execution
 
     /// Registers an afterEach hook.
     /// Usage: afterEach (fun () -> teardown code)
-    let afterEach (hook: unit -> unit) : TestNode = AfterEachHook hook
+    let afterEach (hook: unit -> unit) : TestNode =
+        let execution () = async { hook () }
+        AfterEachHook execution
+
+    /// Registers an async afterEach hook.
+    /// Usage: afterEachAsync (async { teardown code })
+    let afterEachAsync (hook: Async<unit>) : TestNode =
+        let execution () = async { do! hook }
+        AfterEachHook execution
 
     /// Registers an afterAll hook.
     /// Usage: afterAll (fun () -> teardown code)
-    let afterAll (hook: unit -> unit) : TestNode = AfterAllHook hook
+    let afterAll (hook: unit -> unit) : TestNode =
+        let execution () = async { hook () }
+        AfterAllHook execution
+
+    /// Registers an async afterAll hook.
+    /// Usage: afterAllAsync (async { teardown code })
+    let afterAllAsync (hook: Async<unit>) : TestNode =
+        let execution () = async { do! hook }
+        AfterAllHook execution
