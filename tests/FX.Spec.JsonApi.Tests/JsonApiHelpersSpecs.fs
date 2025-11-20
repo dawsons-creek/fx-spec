@@ -14,7 +14,12 @@ type private Widget = { id: string; name: string }
 type private Meta = { count: int }
 
 [<CLIMutable>]
-type private WidgetEnvelope = { data: Widget array; meta: Meta }
+type private WidgetEnvelope =
+    { data: Widget array
+      meta: Meta option }
+
+[<CLIMutable>]
+type private WidgetCollectionEnvelope = { data: Widget array }
 
 [<CLIMutable>]
 type private WidgetDocument = { data: Widget }
@@ -67,7 +72,7 @@ let specs =
                     let envelope = JsonApiHelpers.parseJsonApiWith<WidgetEnvelope> json
 
                     expectSeq(envelope.data).toHaveLength (2)
-                    expectNum(envelope.meta.count).toEqual (2)) ]
+                    expectNum(envelope.meta.Value.count).toEqual (2)) ]
           context
               "toJsonApiData"
               [ it "wraps a resource inside a JSON:API data envelope" (fun () ->
@@ -86,7 +91,7 @@ let specs =
                         [| { id = "w-1"; name = "Widget Mk1" }; { id = "w-2"; name = "Widget Mk2" } |]
 
                     let json = JsonApiHelpers.toJsonApiCollection widgets
-                    let envelope = JsonHelpers.parseJson<WidgetEnvelope> json
+                    let envelope = JsonHelpers.parseJson<WidgetCollectionEnvelope> json
 
                     expectSeq(envelope.data).toHaveLength (2)
                     expectStr(envelope.data.[0].name).toEqual ("Widget Mk1")
