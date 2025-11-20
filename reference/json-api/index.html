@@ -12,28 +12,28 @@
         <meta name="author" content="FX.Spec Contributors">
       
       
-        <link rel="canonical" href="https://dawsons-creek.github.io/fx-spec/reference/">
+        <link rel="canonical" href="https://dawsons-creek.github.io/fx-spec/reference/json-api/">
       
       
-        <link rel="prev" href="../troubleshooting/">
+        <link rel="prev" href="../json/">
       
       
-        <link rel="next" href="dsl-api/">
+        <link rel="next" href="../aspnetcore/">
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
     
     
       
-        <title>Reference Documentation - FX.Spec</title>
+        <title>JSON:API Testing - FX.Spec</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -52,9 +52,9 @@
       
     
     
-      <link rel="stylesheet" href="../css/timeago.css">
+      <link rel="stylesheet" href="../../css/timeago.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#reference-documentation" class="md-skip">
+        <a href="#jsonapi-testing" class="md-skip">
           Skip to content
         </a>
       
@@ -96,7 +96,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="FX.Spec" class="md-header__button md-logo" aria-label="FX.Spec" data-md-component="logo">
+    <a href="../.." title="FX.Spec" class="md-header__button md-logo" aria-label="FX.Spec" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"/></svg>
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Reference Documentation
+              JSON:API Testing
             
           </span>
         </div>
@@ -228,7 +228,7 @@
   
   
     <li class="md-tabs__item">
-      <a href=".." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -247,7 +247,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../quick-start/" class="md-tabs__link">
+      <a href="../../quick-start/" class="md-tabs__link">
         
   
   
@@ -266,7 +266,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../troubleshooting/" class="md-tabs__link">
+      <a href="../../troubleshooting/" class="md-tabs__link">
         
   
   
@@ -289,7 +289,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="./" class="md-tabs__link">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -311,7 +311,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../community/contributing/" class="md-tabs__link">
+        <a href="../../community/contributing/" class="md-tabs__link">
           
   
   
@@ -353,7 +353,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="FX.Spec" class="md-nav__button md-logo" aria-label="FX.Spec" data-md-component="logo">
+    <a href="../.." title="FX.Spec" class="md-nav__button md-logo" aria-label="FX.Spec" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"/></svg>
@@ -383,7 +383,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -405,7 +405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../quick-start/" class="md-nav__link">
+      <a href="../../quick-start/" class="md-nav__link">
         
   
   
@@ -427,7 +427,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
+      <a href="../../troubleshooting/" class="md-nav__link">
         
   
   
@@ -491,7 +491,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -504,7 +504,7 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_4" id="__nav_4_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -526,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dsl-api/" class="md-nav__link">
+      <a href="../dsl-api/" class="md-nav__link">
         
   
   
@@ -549,7 +549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="runner/" class="md-nav__link">
+      <a href="../runner/" class="md-nav__link">
         
   
   
@@ -572,7 +572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="http/" class="md-nav__link">
+      <a href="../http/" class="md-nav__link">
         
   
   
@@ -595,7 +595,7 @@
   
   
     <li class="md-nav__item">
-      <a href="json/" class="md-nav__link">
+      <a href="../json/" class="md-nav__link">
         
   
   
@@ -615,10 +615,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="json-api/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    JSON:API Testing
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -629,6 +651,161 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-matchers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Matchers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Matchers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#expectjsonapijson-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      expectJsonApi(json: string)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resource-identifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resource Identifiers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      Relationships
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#includes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Includes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collection-matchers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collection Matchers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Collection Matchers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#expectjsonapiarrayjson-string-path-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      expectJsonApiArray(json: string, path: string)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sorting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sorting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helper-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Helper Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Helper Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parsing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parsing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Serialization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -641,7 +818,7 @@
   
   
     <li class="md-nav__item">
-      <a href="aspnetcore/" class="md-nav__link">
+      <a href="../aspnetcore/" class="md-nav__link">
         
   
   
@@ -726,7 +903,7 @@
   
   
     <li class="md-nav__item">
-      <a href="matchers/core/" class="md-nav__link">
+      <a href="../matchers/core/" class="md-nav__link">
         
   
   
@@ -749,7 +926,7 @@
   
   
     <li class="md-nav__item">
-      <a href="matchers/collections/" class="md-nav__link">
+      <a href="../matchers/collections/" class="md-nav__link">
         
   
   
@@ -772,7 +949,7 @@
   
   
     <li class="md-nav__item">
-      <a href="matchers/strings/" class="md-nav__link">
+      <a href="../matchers/strings/" class="md-nav__link">
         
   
   
@@ -795,7 +972,7 @@
   
   
     <li class="md-nav__item">
-      <a href="matchers/numeric/" class="md-nav__link">
+      <a href="../matchers/numeric/" class="md-nav__link">
         
   
   
@@ -818,7 +995,7 @@
   
   
     <li class="md-nav__item">
-      <a href="matchers/result/" class="md-nav__link">
+      <a href="../matchers/result/" class="md-nav__link">
         
   
   
@@ -841,7 +1018,7 @@
   
   
     <li class="md-nav__item">
-      <a href="matchers/exceptions/" class="md-nav__link">
+      <a href="../matchers/exceptions/" class="md-nav__link">
         
   
   
@@ -928,7 +1105,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../community/contributing/" class="md-nav__link">
+      <a href="../../community/contributing/" class="md-nav__link">
         
   
   
@@ -978,142 +1155,64 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#quick-links" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
-      Quick Links
+      Overview
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#api-categories" class="md-nav__link">
+  <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
-      API Categories
+      Installation
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="API Categories">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#core-dsl" class="md-nav__link">
-    <span class="md-ellipsis">
-      Core DSL
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#focus-pending" class="md-nav__link">
-    <span class="md-ellipsis">
-      Focus &amp; Pending
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hooks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hooks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#expectations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Expectations
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#matcher-categories" class="md-nav__link">
-    <span class="md-ellipsis">
-      Matcher Categories
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Matcher Categories">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#core-matchers" class="md-nav__link">
     <span class="md-ellipsis">
       Core Matchers
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Core Matchers">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#collection-matchers" class="md-nav__link">
+  <a href="#expectjsonapijson-string" class="md-nav__link">
     <span class="md-ellipsis">
-      Collection Matchers
+      expectJsonApi(json: string)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#string-matchers" class="md-nav__link">
+  <a href="#resource-identifiers" class="md-nav__link">
     <span class="md-ellipsis">
-      String Matchers
+      Resource Identifiers
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#numeric-matchers" class="md-nav__link">
+  <a href="#relationships" class="md-nav__link">
     <span class="md-ellipsis">
-      Numeric Matchers
+      Relationships
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#exception-matchers" class="md-nav__link">
+  <a href="#includes" class="md-nav__link">
     <span class="md-ellipsis">
-      Exception Matchers
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#http-matchers" class="md-nav__link">
-    <span class="md-ellipsis">
-      HTTP Matchers
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#json-matchers" class="md-nav__link">
-    <span class="md-ellipsis">
-      JSON Matchers
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#jsonapi-matchers" class="md-nav__link">
-    <span class="md-ellipsis">
-      JSON:API Matchers
+      Includes
     </span>
   </a>
   
@@ -1125,19 +1224,61 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#integration-testing" class="md-nav__link">
+  <a href="#collection-matchers" class="md-nav__link">
     <span class="md-ellipsis">
-      Integration Testing
+      Collection Matchers
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Integration Testing">
+    <nav class="md-nav" aria-label="Collection Matchers">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#aspnet-core" class="md-nav__link">
+  <a href="#expectjsonapiarrayjson-string-path-string" class="md-nav__link">
     <span class="md-ellipsis">
-      ASP.NET Core
+      expectJsonApiArray(json: string, path: string)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sorting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sorting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helper-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Helper Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Helper Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parsing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parsing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Serialization
     </span>
   </a>
   
@@ -1167,84 +1308,82 @@
   
 
 
-<h1 id="reference-documentation">Reference Documentation<a class="headerlink" href="#reference-documentation" title="Permanent link">&para;</a></h1>
-<p>Complete API reference for FX.Spec.</p>
-<hr />
-<h2 id="quick-links">Quick Links<a class="headerlink" href="#quick-links" title="Permanent link">&para;</a></h2>
-<div class="grid cards">
-<ul>
-<li>
-<p><span class="twemoji lg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 3a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2H3v2h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h2v-2H8v-5a2 2 0 0 0-2-2 2 2 0 0 0 2-2V5h2V3m6 0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1v2h-1a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2v-2h2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5h-2V3z"/></svg></span> <strong><a href="dsl-api/">DSL API</a></strong></p>
-<hr />
-<p>Complete reference for <code>describe</code>, <code>it</code>, <code>context</code>, and all DSL functions.</p>
-</li>
-<li>
-<p><span class="twemoji lg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"/></svg></span> <strong><a href="matchers/core/">Matchers</a></strong></p>
-<hr />
-<p>All available matchers organized by category.</p>
-</li>
-</ul>
-</div>
-<hr />
-<h2 id="api-categories">API Categories<a class="headerlink" href="#api-categories" title="Permanent link">&para;</a></h2>
-<h3 id="core-dsl">Core DSL<a class="headerlink" href="#core-dsl" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="dsl-api/#describe">describe</a></strong> - Group related tests</li>
-<li><strong><a href="dsl-api/#context">context</a></strong> - Add context to test groups (alias for <code>describe</code>)</li>
-<li><strong><a href="dsl-api/#it">it</a></strong> - Define individual test cases</li>
-</ul>
-<h3 id="focus-pending">Focus &amp; Pending<a class="headerlink" href="#focus-pending" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="dsl-api/#fit">fit</a></strong> - Focus on specific test</li>
-<li><strong><a href="dsl-api/#fdescribe">fdescribe</a></strong> - Focus on test group</li>
-<li><strong><a href="dsl-api/#xit">xit</a></strong> - Skip a test</li>
-<li><strong><a href="dsl-api/#pending">pending</a></strong> - Mark test as pending (alias for <code>xit</code>)</li>
-</ul>
-<h3 id="hooks">Hooks<a class="headerlink" href="#hooks" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="dsl-api/#beforeeach">beforeEach</a></strong> - Run before each test</li>
-<li><strong><a href="dsl-api/#aftereach">afterEach</a></strong> - Run after each test</li>
-<li><strong><a href="dsl-api/#beforeall">beforeAll</a></strong> - Run once before all tests in group</li>
-<li><strong><a href="dsl-api/#afterall">afterAll</a></strong> - Run once after all tests in group</li>
-</ul>
-<h3 id="expectations">Expectations<a class="headerlink" href="#expectations" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="matchers/core/#expect">expect</a></strong> - Create a generic expectation</li>
-<li><strong><a href="matchers/core/#expectbool">expectBool</a></strong> - Create a boolean expectation</li>
-<li><strong><a href="matchers/core/#expectoption">expectOption</a></strong> - Create an Option expectation</li>
-<li><strong><a href="matchers/core/#expectresult">expectResult</a></strong> - Create a Result expectation</li>
-<li><strong><a href="matchers/collections/">expectSeq</a></strong> - Create a collection expectation</li>
-<li><strong><a href="matchers/strings/">expectStr</a></strong> - Create a string expectation</li>
-<li><strong><a href="matchers/numeric/">expectNum</a></strong> - Create a numeric expectation</li>
-<li><strong><a href="matchers/numeric/">expectInt</a></strong> - Create an integer expectation</li>
-<li><strong><a href="matchers/numeric/">expectFloat</a></strong> - Create a float expectation</li>
-<li><strong><a href="matchers/exceptions/">expectThrows</a></strong> - Assert an exception is thrown</li>
-<li><strong><a href="http/">expectHttp</a></strong> - Create an HTTP response expectation</li>
-<li><strong><a href="json/">expectJson</a></strong> - Create a JSON expectation</li>
-<li><strong><a href="json-api/">expectJsonApi</a></strong> - Create a JSON:API expectation</li>
-</ul>
-<hr />
-<h2 id="matcher-categories">Matcher Categories<a class="headerlink" href="#matcher-categories" title="Permanent link">&para;</a></h2>
-<h3 id="core-matchers"><a href="matchers/core/">Core Matchers</a><a class="headerlink" href="#core-matchers" title="Permanent link">&para;</a></h3>
-<p>Basic equality, null checks, boolean, and option matchers.</p>
-<h3 id="collection-matchers"><a href="matchers/collections/">Collection Matchers</a><a class="headerlink" href="#collection-matchers" title="Permanent link">&para;</a></h3>
-<p>Matchers for lists, arrays, sequences, and other collections.</p>
-<h3 id="string-matchers"><a href="matchers/strings/">String Matchers</a><a class="headerlink" href="#string-matchers" title="Permanent link">&para;</a></h3>
-<p>String-specific matchers for prefixes, suffixes, patterns, and more.</p>
-<h3 id="numeric-matchers"><a href="matchers/numeric/">Numeric Matchers</a><a class="headerlink" href="#numeric-matchers" title="Permanent link">&para;</a></h3>
-<p>Numeric comparisons and range checks.</p>
-<h3 id="exception-matchers"><a href="matchers/exceptions/">Exception Matchers</a><a class="headerlink" href="#exception-matchers" title="Permanent link">&para;</a></h3>
-<p>Testing exception throwing behavior.</p>
-<h3 id="http-matchers"><a href="http/">HTTP Matchers</a><a class="headerlink" href="#http-matchers" title="Permanent link">&para;</a></h3>
-<p>Testing HTTP responses (status, headers, body).</p>
-<h3 id="json-matchers"><a href="json/">JSON Matchers</a><a class="headerlink" href="#json-matchers" title="Permanent link">&para;</a></h3>
-<p>Testing JSON content with path-based navigation.</p>
-<h3 id="jsonapi-matchers"><a href="json-api/">JSON:API Matchers</a><a class="headerlink" href="#jsonapi-matchers" title="Permanent link">&para;</a></h3>
-<p>Testing JSON:API documents (resources, relationships, includes).</p>
-<hr />
-<h2 id="integration-testing">Integration Testing<a class="headerlink" href="#integration-testing" title="Permanent link">&para;</a></h2>
-<h3 id="aspnet-core"><a href="aspnetcore/">ASP.NET Core</a><a class="headerlink" href="#aspnet-core" title="Permanent link">&para;</a></h3>
-<p>Helpers for testing ASP.NET Core handlers and middleware with in-memory contexts.</p>
+<h1 id="jsonapi-testing">JSON:API Testing<a class="headerlink" href="#jsonapi-testing" title="Permanent link">&para;</a></h1>
+<p>FX.Spec provides dedicated support for testing APIs that adhere to the <a href="https://jsonapi.org/">JSON:API specification</a>.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The <code>FX.Spec.JsonApi</code> package extends the core JSON testing capabilities with semantic matchers for resources, relationships, includes, and sorting. It abstracts away the complex structure of JSON:API documents (data, included, relationships) so you can test the <em>content</em> of your API.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">open</span><span class="w"> </span><span class="nn">FX.Spec.JsonApi</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">it</span><span class="w"> </span><span class="s">&quot;returns the article with author&quot;</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="bp">()</span><span class="w"> </span><span class="o">-&gt;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="n">expectJsonApi</span><span class="o">(</span><span class="n">json</span><span class="o">)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">        </span><span class="o">.</span><span class="n">toHaveRelationship</span><span class="o">(</span><span class="s">&quot;author&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;people&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;9&quot;</span><span class="o">)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="o">.</span><span class="n">toHaveIncludedResource</span><span class="o">(</span><span class="s">&quot;people&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;9&quot;</span><span class="o">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="o">)</span>
+</span></code></pre></div>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<p>Add the JSON:API package to your test project:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>dotnet<span class="w"> </span>add<span class="w"> </span>package<span class="w"> </span>FX.Spec.JsonApi
+</span></code></pre></div>
+<h2 id="core-matchers">Core Matchers<a class="headerlink" href="#core-matchers" title="Permanent link">&para;</a></h2>
+<h3 id="expectjsonapijson-string"><code>expectJsonApi(json: string)</code><a class="headerlink" href="#expectjsonapijson-string" title="Permanent link">&para;</a></h3>
+<p>Creates an expectation wrapper specifically for JSON:API documents.</p>
+<h3 id="resource-identifiers">Resource Identifiers<a class="headerlink" href="#resource-identifiers" title="Permanent link">&para;</a></h3>
+<h4 id="toberesourceidentifierpath-string-type-string-id-string"><code>toBeResourceIdentifier(path: string, type: string, id: string)</code><a class="headerlink" href="#toberesourceidentifierpath-string-type-string-id-string" title="Permanent link">&para;</a></h4>
+<p>Asserts that the object at the specified path is a valid Resource Identifier Object containing the correct <code>type</code> and <code>id</code>.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Check the primary data</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">expectJsonApi</span><span class="o">(</span><span class="n">json</span><span class="o">).</span><span class="n">toBeResourceIdentifier</span><span class="o">(</span><span class="s">&quot;data&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;articles&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="o">)</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">// Check nested data</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">expectJsonApi</span><span class="o">(</span><span class="n">json</span><span class="o">).</span><span class="n">toBeResourceIdentifier</span><span class="o">(</span><span class="s">&quot;data.relationships.author.data&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;people&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;9&quot;</span><span class="o">)</span>
+</span></code></pre></div>
+<h3 id="relationships">Relationships<a class="headerlink" href="#relationships" title="Permanent link">&para;</a></h3>
+<h4 id="tohaverelationshipname-string-type-string-id-string"><code>toHaveRelationship(name: string, type: string, id: string)</code><a class="headerlink" href="#tohaverelationshipname-string-type-string-id-string" title="Permanent link">&para;</a></h4>
+<p>Asserts that the document's primary data has a relationship with the specified name, and that relationship links to a resource with the given type and ID.</p>
+<p>This shorthand validates the structure <code>data.relationships.{name}.data</code>.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// Verifies data.relationships.author.data has type=&quot;people&quot; and id=&quot;9&quot;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">expectJsonApi</span><span class="o">(</span><span class="n">json</span><span class="o">).</span><span class="n">toHaveRelationship</span><span class="o">(</span><span class="s">&quot;author&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;people&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;9&quot;</span><span class="o">)</span>
+</span></code></pre></div>
+<h3 id="includes">Includes<a class="headerlink" href="#includes" title="Permanent link">&para;</a></h3>
+<h4 id="tohaveincludedresourcetype-string-id-string"><code>toHaveIncludedResource(type: string, id: string)</code><a class="headerlink" href="#tohaveincludedresourcetype-string-id-string" title="Permanent link">&para;</a></h4>
+<p>Asserts that the <code>included</code> array contains a resource matching the specified type and ID. This is essential for testing compound documents.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">expectJsonApi</span><span class="o">(</span><span class="n">json</span><span class="o">).</span><span class="n">toHaveIncludedResource</span><span class="o">(</span><span class="s">&quot;comments&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;5&quot;</span><span class="o">)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">expectJsonApi</span><span class="o">(</span><span class="n">json</span><span class="o">).</span><span class="n">toHaveIncludedResource</span><span class="o">(</span><span class="s">&quot;people&quot;</span><span class="o">,</span><span class="w"> </span><span class="s">&quot;9&quot;</span><span class="o">)</span>
+</span></code></pre></div>
+<h2 id="collection-matchers">Collection Matchers<a class="headerlink" href="#collection-matchers" title="Permanent link">&para;</a></h2>
+<h3 id="expectjsonapiarrayjson-string-path-string"><code>expectJsonApiArray(json: string, path: string)</code><a class="headerlink" href="#expectjsonapiarrayjson-string-path-string" title="Permanent link">&para;</a></h3>
+<p>Creates an expectation for asserting on arrays within a JSON:API document (typically the <code>data</code> array for collection responses).</p>
+<h3 id="sorting">Sorting<a class="headerlink" href="#sorting" title="Permanent link">&para;</a></h3>
+<h4 id="tobeorderedbyselector-direction"><code>toBeOrderedBy(selector, direction)</code><a class="headerlink" href="#tobeorderedbyselector-direction" title="Permanent link">&para;</a></h4>
+<p>Asserts that the collection is sorted by a specific attribute.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">open</span><span class="w"> </span><span class="nn">FX.Spec.JsonApi</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1">// Ascending order</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">expectJsonApiArray</span><span class="o">(</span><span class="n">json</span><span class="o">)(</span><span class="s">&quot;data&quot;</span><span class="o">)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="o">.</span><span class="n">toBeOrderedBy</span><span class="o">((</span><span class="k">fun</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">item</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">created</span><span class="o">),</span><span class="w"> </span><span class="n">Ascending</span><span class="o">)</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">// Descending order</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">expectJsonApiArray</span><span class="o">(</span><span class="n">json</span><span class="o">)(</span><span class="s">&quot;data&quot;</span><span class="o">)</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="o">.</span><span class="n">toBeOrderedBy</span><span class="o">((</span><span class="k">fun</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">item</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">title</span><span class="o">),</span><span class="w"> </span><span class="n">Descending</span><span class="o">)</span>
+</span></code></pre></div>
+<h2 id="helper-functions">Helper Functions<a class="headerlink" href="#helper-functions" title="Permanent link">&para;</a></h2>
+<p>The <code>JsonApiHelpers</code> module provides strongly-typed parsing and serialization helpers for JSON:API envelopes.</p>
+<h3 id="parsing">Parsing<a class="headerlink" href="#parsing" title="Permanent link">&para;</a></h3>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">open</span><span class="w"> </span><span class="nn">FX.Spec.JsonApi</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1">// Parse single resource response -&gt; returns &#39;T</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">let</span><span class="w"> </span><span class="nv">article</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parseJsonApiData</span><span class="o">&lt;</span><span class="n">Article</span><span class="o">&gt;(</span><span class="n">json</span><span class="o">)</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1">// Parse collection response -&gt; returns &#39;T array</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="k">let</span><span class="w"> </span><span class="nv">articles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parseJsonApiCollection</span><span class="o">&lt;</span><span class="n">Article</span><span class="o">&gt;(</span><span class="n">json</span><span class="o">)</span>
+</span></code></pre></div>
+<h3 id="serialization">Serialization<a class="headerlink" href="#serialization" title="Permanent link">&para;</a></h3>
+<p>Useful for setting up test data or mocking responses.</p>
+<div class="language-fsharp highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// Wrap item in { &quot;data&quot;: ... }</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">let</span><span class="w"> </span><span class="nv">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">toJsonApiData</span><span class="o">(</span><span class="n">myArticle</span><span class="o">)</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1">// Wrap items in { &quot;data&quot;: [...] }</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">let</span><span class="w"> </span><span class="nv">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">toJsonApiCollection</span><span class="o">(</span><span class="n">myArticles</span><span class="o">)</span>
+</span></code></pre></div>
 
 
 
@@ -1267,7 +1406,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 20, 2025 03:00:04 UTC"><span class="timeago" datetime="2025-11-20T03:00:04+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 20, 2025 03:00:04 UTC">2025-11-20</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 20, 2025 02:59:49 UTC"><span class="timeago" datetime="2025-11-20T02:59:49+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 20, 2025 02:59:49 UTC">2025-11-20</span>
   </span>
 
     
@@ -1277,7 +1416,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 1, 2025 15:57:37 UTC"><span class="timeago" datetime="2025-11-01T15:57:37+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 1, 2025 15:57:37 UTC">2025-11-01</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 20, 2025 02:59:49 UTC"><span class="timeago" datetime="2025-11-20T02:59:49+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 20, 2025 02:59:49 UTC">2025-11-20</span>
   </span>
 
     
@@ -1353,14 +1492,14 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.instant.prefetch", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.path", "navigation.indexes", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "header.autohide", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.instant.prefetch", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.path", "navigation.indexes", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "search.share", "header.autohide", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="../js/timeago.min.js"></script>
+        <script src="../../js/timeago.min.js"></script>
       
-        <script src="../js/timeago_mkdocs_material.js"></script>
+        <script src="../../js/timeago_mkdocs_material.js"></script>
       
     
   </body>
