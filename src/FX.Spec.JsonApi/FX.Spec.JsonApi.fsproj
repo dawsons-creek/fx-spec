@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>latest</LangVersion>
+
+    <!-- Package Information -->
+    <PackageId>FX.Spec.JsonApi</PackageId>
+    <Version>0.9.0-beta</Version>
+    <Authors>FX Framework Contributors</Authors>
+    <Company>FX Framework</Company>
+    <Description>JSON:API testing helpers for FX.Spec providing envelope parsing and formatting utilities for JSON:API compliant applications.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://dawsons-creek.github.io/fx-spec</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dawsons-creek/fx-spec</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>fsharp;testing;jsonapi;bdd;fx-spec;helpers</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="JsonApiHelpers.fs" />
+    <Compile Include="JsonApiMatchers.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FX.Spec.Json\FX.Spec.Json.fsproj" />
+  </ItemGroup>
+
+</Project>
