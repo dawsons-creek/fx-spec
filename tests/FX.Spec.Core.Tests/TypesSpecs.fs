@@ -63,7 +63,7 @@ let testNodeSpecs =
               "description"
               [ it "returns the description for Example nodes" (fun () ->
                     let example =
-                        Example("test example", (fun () -> TestResult.Pass), TestMetadata.empty)
+                        Example("test example", (fun () -> async { return TestResult.Pass }), TestMetadata.empty)
 
                     expect(TestNode.description example).toEqual ("test example"))
 
@@ -74,12 +74,17 @@ let testNodeSpecs =
           context
               "countExamples"
               [ it "counts a single Example as 1" (fun () ->
-                    let example = Example("test", (fun () -> TestResult.Pass), TestMetadata.empty)
+                    let example =
+                        Example("test", (fun () -> async { return TestResult.Pass }), TestMetadata.empty)
+
                     expect(TestNode.countExamples example).toEqual (1))
 
                 it "counts examples in a Group" (fun () ->
-                    let example1 = Example("test 1", (fun () -> TestResult.Pass), TestMetadata.empty)
-                    let example2 = Example("test 2", (fun () -> TestResult.Pass), TestMetadata.empty)
+                    let example1 =
+                        Example("test 1", (fun () -> async { return TestResult.Pass }), TestMetadata.empty)
+
+                    let example2 =
+                        Example("test 2", (fun () -> async { return TestResult.Pass }), TestMetadata.empty)
 
                     let group =
                         Group("group", GroupHooks.empty, [ example1; example2 ], TestMetadata.empty)
@@ -87,8 +92,12 @@ let testNodeSpecs =
                     expect(TestNode.countExamples group).toEqual (2))
 
                 it "counts examples recursively in nested groups" (fun () ->
-                    let example1 = Example("test 1", (fun () -> TestResult.Pass), TestMetadata.empty)
-                    let example2 = Example("test 2", (fun () -> TestResult.Pass), TestMetadata.empty)
+                    let example1 =
+                        Example("test 1", (fun () -> async { return TestResult.Pass }), TestMetadata.empty)
+
+                    let example2 =
+                        Example("test 2", (fun () -> async { return TestResult.Pass }), TestMetadata.empty)
+
                     let innerGroup = Group("inner", GroupHooks.empty, [ example1 ], TestMetadata.empty)
 
                     let outerGroup =
@@ -99,16 +108,22 @@ let testNodeSpecs =
           context
               "countGroups"
               [ it "counts an Example as 0 groups" (fun () ->
-                    let example = Example("test", (fun () -> TestResult.Pass), TestMetadata.empty)
+                    let example =
+                        Example("test", (fun () -> async { return TestResult.Pass }), TestMetadata.empty)
+
                     expect(TestNode.countGroups example).toEqual (0))
 
                 it "counts a single Group as 1" (fun () ->
-                    let example = Example("test", (fun () -> TestResult.Pass), TestMetadata.empty)
+                    let example =
+                        Example("test", (fun () -> async { return TestResult.Pass }), TestMetadata.empty)
+
                     let group = Group("group", GroupHooks.empty, [ example ], TestMetadata.empty)
                     expect(TestNode.countGroups group).toEqual (1))
 
                 it "counts nested groups correctly" (fun () ->
-                    let example = Example("test", (fun () -> TestResult.Pass), TestMetadata.empty)
+                    let example =
+                        Example("test", (fun () -> async { return TestResult.Pass }), TestMetadata.empty)
+
                     let innerGroup = Group("inner", GroupHooks.empty, [ example ], TestMetadata.empty)
 
                     let outerGroup =

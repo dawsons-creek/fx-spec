@@ -79,7 +79,7 @@ let exampleExecutionSpecs =
 
                     match nodes with
                     | [ Example(_, testFn, _) ] ->
-                        let result = testFn ()
+                        let result = testFn () |> Async.RunSynchronously
                         expectBool(executed).toBeTrue ()
                         expectTestResult(result).toBePass ()
                     | _ -> failwith "Should create Example node")
@@ -89,7 +89,7 @@ let exampleExecutionSpecs =
 
                     match nodes with
                     | [ Example(_, testFn, _) ] ->
-                        let result = testFn ()
+                        let result = testFn () |> Async.RunSynchronously
                         expectTestResult(result).toBePass ()
                     | _ -> failwith "Should create Example node") ]
 
@@ -100,7 +100,7 @@ let exampleExecutionSpecs =
 
                     match nodes with
                     | [ Example(_, testFn, _) ] ->
-                        let result = testFn ()
+                        let result = testFn () |> Async.RunSynchronously
                         expectTestResult(result).toBeFail ()
                         expectTestResult(result).toBeFailWith ("intentional failure")
                     | _ -> failwith "Should create Example node") ] ]

@@ -56,7 +56,7 @@ let asyncSupportSpecs =
                     match node with
                     | Example(desc, execution, _) ->
                         expect(desc).toEqual ("skipped test")
-                        let result = execution ()
+                        let result = execution () |> Async.RunSynchronously
 
                         match result with
                         | Skipped reason -> expectStr(reason).toContain ("pending")

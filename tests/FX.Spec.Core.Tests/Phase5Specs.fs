@@ -20,7 +20,7 @@ let pendingSpecs =
                     // Execute the test
                     let result =
                         match List.head nodes with
-                        | Example(_, test, _) -> test ()
+                        | Example(_, test, _) -> test () |> Async.RunSynchronously
                         | _ -> failwith "Expected Example"
 
                     expectBool(TestResult.isSkipped result).toBeTrue ()) ]
@@ -35,7 +35,7 @@ let pendingSpecs =
                     // Execute the test
                     let result =
                         match List.head nodes with
-                        | Example(_, test, _) -> test ()
+                        | Example(_, test, _) -> test () |> Async.RunSynchronously
                         | _ -> failwith "Expected Example"
 
                     expectBool(TestResult.isSkipped result).toBeTrue ()) ] ]
@@ -89,43 +89,33 @@ let focusedFilteringSpecs =
         [ context
               "hasFocused"
               [ it "returns true for FocusedExample" (fun () ->
-                    let node = FocusedExample("test", fun () -> TestResult.Pass, TestMetadata.empty)
+                    let node = fit "test" (fun () -> ())
                     expectBool(TestNode.hasFocused node).toBeTrue ())
 
                 it "returns true for FocusedGroup" (fun () ->
-                    let node = FocusedGroup("group", GroupHooks.empty, [], TestMetadata.empty)
+                    let node = fdescribe "group" []
                     expectBool(TestNode.hasFocused node).toBeTrue ())
 
                 it "returns false for regular Example" (fun () ->
-                    let node = Example("test", fun () -> TestResult.Pass, TestMetadata.empty)
+                    let node = it "test" (fun () -> ())
                     expectBool(TestNode.hasFocused node).toBeFalse ())
 
                 it "returns true for Group containing focused tests" (fun () ->
                     let node =
-                        Group(
-                            "group",
-                            GroupHooks.empty,
-                            [ FocusedExample("focused", fun () -> TestResult.Pass, TestMetadata.empty)
-                              Example("regular", fun () -> TestResult.Pass, TestMetadata.empty) ],
-                            TestMetadata.empty
-                        )
+                        describe "group" [ fit "focused" (fun () -> ()); it "regular" (fun () -> ()) ]
 
                     expectBool(TestNode.hasFocused node).toBeTrue ()) ]
 
           context
               "filterFocused"
               [ it "returns original tree when no focused tests exist" (fun () ->
-                    let nodes =
-                        [ Example("test 1", fun () -> TestResult.Pass, TestMetadata.empty)
-                          Example("test 2", fun () -> TestResult.Pass, TestMetadata.empty) ]
+                    let nodes = [ it "test 1" (fun () -> ()); it "test 2" (fun () -> ()) ]
 
                     let filtered = TestNode.filterFocused nodes
                     expect(List.length filtered).toEqual (2))
 
                 it "filters to only focused tests when they exist" (fun () ->
-                    let nodes =
-                        [ FocusedExample("focused", fun () -> TestResult.Pass, TestMetadata.empty)
-                          Example("regular", fun () -> TestResult.Pass, TestMetadata.empty) ]
+                    let nodes = [ fit "focused" (fun () -> ()); it "regular" (fun () -> ()) ]
 
                     let filtered = TestNode.filterFocused nodes
                     expect(List.length filtered).toEqual (1)) ] ]

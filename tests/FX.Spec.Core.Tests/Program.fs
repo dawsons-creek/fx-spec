@@ -10,7 +10,7 @@ let rec executeNode (node: TestNode) : TestResultNode =
     | Example(desc, testFn, meta)
     | FocusedExample(desc, testFn, meta) ->
         let sw = System.Diagnostics.Stopwatch.StartNew()
-        let result = testFn ()
+        let result = testFn () |> Async.RunSynchronously
         sw.Stop()
         ExampleResult(desc, result, sw.Elapsed, meta)
     | Group(desc, _, children, meta)
