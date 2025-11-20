@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="FxContextHelpersSpecs.fs" />
+    <Compile Include="FxRouterHelpersSpecs.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\FX.Spec.Core\FX.Spec.Core.fsproj" />
+    <ProjectReference Include="..\..\src\FX.Spec.Matchers\FX.Spec.Matchers.fsproj" />
+    <ProjectReference Include="..\..\src\FX.Spec.AspNetCore\FX.Spec.AspNetCore.fsproj" />
+    <ProjectReference Include="..\FX.Core.Stub\FX.Core.Stub.fsproj" />
+    <ProjectReference Include="..\..\src\FX.Spec.Runner\FX.Spec.Runner.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
+    <PackageReference Include="System.Text.Json" Version="9.0.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>latest</LangVersion>
+
+    <!-- Package Information -->
+    <PackageId>FX.Spec.AspNetCore</PackageId>
+    <Version>0.9.0-beta</Version>
+    <Authors>FX Framework Contributors</Authors>
+    <Company>FX Framework</Company>
+    <Description>ASP.NET Core testing helpers for FX.Spec providing HttpContext creation and router execution utilities for FX applications.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://dawsons-creek.github.io/fx-spec</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dawsons-creek/fx-spec</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>fsharp;testing;aspnetcore;bdd;fx-spec;helpers</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <FxCoreProjectPath Condition="'$(FxCoreProjectPath)'==''">..\..\tests\FX.Core.Stub\FX.Core.Stub.fsproj</FxCoreProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="FxContextHelpers.fs" />
+    <Compile Include="FxRouterHelpers.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FX.Spec.Core\FX.Spec.Core.fsproj" />
+    <ProjectReference Include="..\FX.Spec.Matchers\FX.Spec.Matchers.fsproj" />
+    <ProjectReference Include="..\FX.Spec.Json\FX.Spec.Json.fsproj" />
+    <ProjectReference Include="$(FxCoreProjectPath)" Condition="Exists('$(FxCoreProjectPath)')" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
+  </ItemGroup>
+
+</Project>
