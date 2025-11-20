@@ -14,6 +14,7 @@
     <Compile Include="Phase5Specs.fs" />
     <Compile Include="HooksSpecs.fs" />
     <Compile Include="HookErrorHandlingSpecs.fs" />
+    <Compile Include="MatcherSafetySpecs.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

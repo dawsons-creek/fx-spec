@@ -39,142 +39,220 @@ module ExecutionSummary =
 /// Module for executing test nodes and producing results.
 module Executor =
 
+    let private runSequentially (items: 'a list) (f: 'a -> Async<'b>) : Async<'b list> =
+        let rec loop acc remaining =
+            async {
+                match remaining with
+                | [] -> return List.rev acc
+                | x :: xs ->
+                    let! result = f x
+                    return! loop (result :: acc) xs
+            }
+
+        loop [] items
+
     /// Executes a single example with hooks.
     let executeExample
         (description: string)
         (test: TestExecution)
         (metadata: TestMetadata)
-        (beforeEachHooks: (unit -> unit) list)
-        (afterEachHooks: (unit -> unit) list)
-        : TestResultNode =
-        let sw = Stopwatch.StartNew()
+        (beforeEachHooks: (unit -> Async<unit>) list)
+        (afterEachHooks: (unit -> Async<unit>) list)
+        : Async<TestResultNode> =
+        async {
+            let sw = Stopwatch.StartNew()
 
-        let result =
-            try
-                // Run beforeEach hooks (outer to inner)
-                beforeEachHooks |> List.iter (fun hook -> hook ())
+            let! result =
+                async {
+                    let mutable runResult = None
+                    let mutable runError = None
 
-                // Run the test
-                let testResult = test ()
+                    try
+                        // Run beforeEach hooks (outer to inner)
+                        for hook in beforeEachHooks do
+                            do! hook ()
 
-                // Run afterEach hooks (inner to outer)
-                afterEachHooks |> List.iter (fun hook -> hook ())
+                        // Run the test
+                        let! testResult = test ()
+                        runResult <- Some testResult
+                    with ex ->
+                        runError <- Some ex
 
-                testResult
-            with ex ->
-                // Run afterEach hooks even on failure
-                try
-                    afterEachHooks |> List.iter (fun hook -> hook ())
-                with _ ->
-                    () // Ignore hook failures during cleanup
+                    // Run afterEach hooks (inner to outer)
+                    try
+                        for hook in afterEachHooks do
+                            do! hook ()
+                    with ex ->
+                        // If we didn't have an error yet, this is our error
+                        if runError.IsNone then
+                            runError <- Some ex
+                        // If we already had an error, we ignore the cleanup error
 
-                // Any exception during test execution is a failure
-                Fail(Some ex)
+                    match runError with
+                    | Some ex -> return Fail(Some ex)
+                    | None -> 
+                        match runResult with
+                        | Some res -> return res
+                        | None -> return Fail(Some (Exception("Unknown error: result is missing but no exception captured")))
+                }
 
-        sw.Stop()
-        ExampleResult(description, result, sw.Elapsed, metadata)
+            sw.Stop()
+            return ExampleResult(description, result, sw.Elapsed, metadata)
+        }
 
     /// Runs beforeAll hooks and returns any failures as TestResultNodes.
-    let private runBeforeAllHooks (hooks: (unit -> unit) list) : TestResultNode list =
-        hooks
-        |> List.map (fun hook ->
-            let sw = Stopwatch.StartNew()
+    let private runBeforeAllHooks (hooks: (unit -> Async<unit>) list) : Async<TestResultNode list> =
+        let rec loop acc remaining =
+            async {
+                match remaining with
+                | [] -> return List.rev acc
+                | hook :: rest ->
+                    let sw = Stopwatch.StartNew()
 
-            try
-                hook ()
-                sw.Stop()
-                None
-            with ex ->
-                sw.Stop()
-                let wrappedEx = System.Exception($"beforeAll hook failed: {ex.Message}", ex)
-                Some(ExampleResult($"beforeAll hook", Fail(Some wrappedEx), sw.Elapsed, TestMetadata.empty)))
-        |> List.choose id
+                    let! maybeFailure =
+                        async {
+                            try
+                                do! hook ()
+                                sw.Stop()
+                                return None
+                            with ex ->
+                                sw.Stop()
+                                let wrappedEx = System.Exception($"beforeAll hook failed: {ex.Message}", ex)
+
+                                return
+                                    Some(
+                                        ExampleResult(
+                                            "beforeAll hook",
+                                            Fail(Some wrappedEx),
+                                            sw.Elapsed,
+                                            TestMetadata.empty
+                                        )
+                                    )
+                        }
+
+                    let acc' =
+                        match maybeFailure with
+                        | Some failure -> failure :: acc
+                        | None -> acc
+
+                    return! loop acc' rest
+            }
+
+        loop [] hooks
 
     /// Runs afterAll hooks and returns any failures as TestResultNodes.
-    let private runAfterAllHooks (hooks: (unit -> unit) list) : TestResultNode list =
-        hooks
-        |> List.map (fun hook ->
-            let sw = Stopwatch.StartNew()
+    let private runAfterAllHooks (hooks: (unit -> Async<unit>) list) : Async<TestResultNode list> =
+        let rec loop acc remaining =
+            async {
+                match remaining with
+                | [] -> return List.rev acc
+                | hook :: rest ->
+                    let sw = Stopwatch.StartNew()
 
-            try
-                hook ()
-                sw.Stop()
-                None
-            with ex ->
-                sw.Stop()
-                let wrappedEx = System.Exception($"afterAll hook failed: {ex.Message}", ex)
-                Some(ExampleResult($"afterAll hook", Fail(Some wrappedEx), sw.Elapsed, TestMetadata.empty)))
-        |> List.choose id
+                    let! maybeFailure =
+                        async {
+                            try
+                                do! hook ()
+                                sw.Stop()
+                                return None
+                            with ex ->
+                                sw.Stop()
+                                let wrappedEx = System.Exception($"afterAll hook failed: {ex.Message}", ex)
+
+                                return
+                                    Some(
+                                        ExampleResult(
+                                            "afterAll hook",
+                                            Fail(Some wrappedEx),
+                                            sw.Elapsed,
+                                            TestMetadata.empty
+                                        )
+                                    )
+                        }
+
+                    let acc' =
+                        match maybeFailure with
+                        | Some failure -> failure :: acc
+                        | None -> acc
+
+                    return! loop acc' rest
+            }
+
+        loop [] hooks
 
     /// Executes a single test node recursively with accumulated hooks.
     /// Returns a TestResultNode with timing information.
     let rec executeNodeWithHooks
-        (beforeEachHooks: (unit -> unit) list)
-        (afterEachHooks: (unit -> unit) list)
+        (beforeEachHooks: (unit -> Async<unit>) list)
+        (afterEachHooks: (unit -> Async<unit>) list)
         (node: TestNode)
-        : TestResultNode =
-        match node with
-        | Example(description, test, metadata) ->
-            executeExample description test metadata beforeEachHooks afterEachHooks
+        : Async<TestResultNode> =
+        async {
+            match node with
+            | Example(description, test, metadata) ->
+                return! executeExample description test metadata beforeEachHooks afterEachHooks
 
-        | Group(description, hooks, children, metadata) ->
-            executeGroupNode description hooks children metadata beforeEachHooks afterEachHooks
+            | Group(description, hooks, children, metadata) ->
+                return! executeGroupNode description hooks children metadata beforeEachHooks afterEachHooks
 
-        | FocusedExample(description, test, metadata) ->
-            executeExample description test metadata beforeEachHooks afterEachHooks
+            | FocusedExample(description, test, metadata) ->
+                return! executeExample description test metadata beforeEachHooks afterEachHooks
 
-        | FocusedGroup(description, hooks, children, metadata) ->
-            executeGroupNode description hooks children metadata beforeEachHooks afterEachHooks
+            | FocusedGroup(description, hooks, children, metadata) ->
+                return! executeGroupNode description hooks children metadata beforeEachHooks afterEachHooks
 
-        | BeforeAllHook _
-        | BeforeEachHook _
-        | AfterEachHook _
-        | AfterAllHook _ ->
-            // Hook nodes should have been processed during group construction
-            // If we encounter them here, just skip them
-            GroupResult("hook", [], TestMetadata.empty)
+            | BeforeAllHook _
+            | BeforeEachHook _
+            | AfterEachHook _
+            | AfterAllHook _ ->
+                // Hook nodes should have been processed during group construction
+                // If we encounter them here, just skip them
+                return GroupResult("hook", [], TestMetadata.empty)
+        }
 
-    /// Executes a group node with its hooks and children.
     and private executeGroupNode
         (description: string)
         (hooks: GroupHooks)
         (children: TestNode list)
         (metadata: TestMetadata)
-        (beforeEachHooks: (unit -> unit) list)
-        (afterEachHooks: (unit -> unit) list)
-        : TestResultNode =
+        (beforeEachHooks: (unit -> Async<unit>) list)
+        (afterEachHooks: (unit -> Async<unit>) list)
+        : Async<TestResultNode> =
+        async {
+            let! beforeAllResults = runBeforeAllHooks hooks.BeforeAll
 
-        let beforeAllResults = runBeforeAllHooks hooks.BeforeAll
+            let childBeforeEachHooks = beforeEachHooks @ hooks.BeforeEach
+            let childAfterEachHooks = hooks.AfterEach @ afterEachHooks
 
-        let childBeforeEachHooks = beforeEachHooks @ hooks.BeforeEach
-        let childAfterEachHooks = hooks.AfterEach @ afterEachHooks
+            let! childResults =
+                runSequentially children (fun child ->
+                    executeNodeWithHooks childBeforeEachHooks childAfterEachHooks child)
 
-        let childResults =
-            children
-            |> List.map (executeNodeWithHooks childBeforeEachHooks childAfterEachHooks)
+            let! afterAllResults = runAfterAllHooks hooks.AfterAll
 
-        let afterAllResults = runAfterAllHooks hooks.AfterAll
-
-        GroupResult(description, beforeAllResults @ childResults @ afterAllResults, metadata)
+            return GroupResult(description, beforeAllResults @ childResults @ afterAllResults, metadata)
+        }
 
     /// Executes a single test node recursively.
     /// Returns a TestResultNode with timing information.
-    let rec executeNode (node: TestNode) : TestResultNode = executeNodeWithHooks [] [] node
+    let executeNode (node: TestNode) : Async<TestResultNode> = executeNodeWithHooks [] [] node
 
     /// Executes a list of test nodes.
-    let executeTests (nodes: TestNode list) : TestResultNode list = nodes |> List.map executeNode
+    let executeTests (nodes: TestNode list) : Async<TestResultNode list> = runSequentially nodes executeNode
 
     /// Executes tests and returns summary statistics.
-    let executeWithSummary (nodes: TestNode list) : TestResultNode list * ExecutionSummary =
-        let sw = Stopwatch.StartNew()
-        let results = executeTests nodes
-        sw.Stop()
+    let executeWithSummary (nodes: TestNode list) : Async<TestResultNode list * ExecutionSummary> =
+        async {
+            let sw = Stopwatch.StartNew()
+            let! results = executeTests nodes
+            sw.Stop()
 
-        let summary =
-            { TotalTests = results |> List.sumBy TestResultNode.countTotal
-              PassedTests = results |> List.sumBy TestResultNode.countPassed
-              FailedTests = results |> List.sumBy TestResultNode.countFailed
-              SkippedTests = results |> List.sumBy TestResultNode.countSkipped
-              Duration = sw.Elapsed }
+            let summary =
+                { TotalTests = results |> List.sumBy TestResultNode.countTotal
+                  PassedTests = results |> List.sumBy TestResultNode.countPassed
+                  FailedTests = results |> List.sumBy TestResultNode.countFailed
+                  SkippedTests = results |> List.sumBy TestResultNode.countSkipped
+                  Duration = sw.Elapsed }
 
-        (results, summary)
+            return results, summary
+        }
