@@ -30,7 +30,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Test randomization with configurable seed
 - Command-line test runner (`fxspec`)
 - Comprehensive documentation site
-- 71 self-hosted tests validating the framework
+- 76 self-hosted tests validating the framework
+
+### Fixed
+- `afterEach` hooks now run exactly once per test, regardless of failures in test or `beforeEach`
+- `toEndWithSeq` safely handles cases where expected suffix is longer than actual sequence
+- `toBeOfType` handles null actual values gracefully with clear assertion messages
 
 ### Changed
 - F# language version set to `latest` (stable) instead of `preview`
@@ -66,7 +71,7 @@ This is the first public beta release of FX.Spec! The framework is feature-compl
 - Comprehensive assertion library
 - Async and HTTP testing support
 - Beautiful error reporting
-- Self-hosting with 71 passing tests
+- Self-hosting with 76 passing tests
 
 **What We're Looking For:**
 - Feedback on API ergonomics

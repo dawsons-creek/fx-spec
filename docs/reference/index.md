@@ -58,6 +58,9 @@ Complete API reference for FX.Spec.
 - **[expectInt](matchers/numeric.md)** - Create an integer expectation
 - **[expectFloat](matchers/numeric.md)** - Create a float expectation
 - **[expectThrows](matchers/exceptions.md)** - Assert an exception is thrown
+- **[expectHttp](http.md)** - Create an HTTP response expectation
+- **[expectJson](json.md)** - Create a JSON expectation
+- **[expectJsonApi](json-api.md)** - Create a JSON:API expectation
 
 ---
 
@@ -82,3 +85,23 @@ Numeric comparisons and range checks.
 ### [Exception Matchers](matchers/exceptions.md)
 
 Testing exception throwing behavior.
+
+### [HTTP Matchers](http.md)
+
+Testing HTTP responses (status, headers, body).
+
+### [JSON Matchers](json.md)
+
+Testing JSON content with path-based navigation.
+
+### [JSON:API Matchers](json-api.md)
+
+Testing JSON:API documents (resources, relationships, includes).
+
+---
+
+## Integration Testing
+
+### [ASP.NET Core](aspnetcore.md)
+
+Helpers for testing ASP.NET Core handlers and middleware with in-memory contexts.

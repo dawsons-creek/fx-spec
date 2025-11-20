@@ -470,7 +470,7 @@ FX.Spec is a fully functional F# BDD testing framework with:
 8. Focused and pending tests (fit, fdescribe, xit, pending)
 9. Async support (itAsync, fitAsync, xitAsync)
 10. HTTP testing with fluent matchers
-11. Self-hosting (FX.Spec tests itself - 71 tests passing!)
+11. Self-hosting (FX.Spec tests itself - 76 tests passing!)
 
 **Current Phase:** Beta testing - actively seeking feedback from early adopters!
 
