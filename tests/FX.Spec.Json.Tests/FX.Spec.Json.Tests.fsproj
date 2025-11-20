@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Include="JsonHelpersSpecs.fs" />
+    <Compile Include="JsonMatchersSpecs.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

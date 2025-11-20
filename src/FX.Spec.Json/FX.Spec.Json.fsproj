@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>latest</LangVersion>
+
+    <!-- Package Information -->
+    <PackageId>FX.Spec.Json</PackageId>
+    <Version>0.9.0-beta</Version>
+    <Authors>FX Framework Contributors</Authors>
+    <Company>FX Framework</Company>
+    <Description>Generic JSON testing helpers for FX.Spec providing parsing, serialization, and validation utilities with F# type support.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://dawsons-creek.github.io/fx-spec</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dawsons-creek/fx-spec</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>fsharp;testing;json;bdd;fx-spec;helpers</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="JsonHelpers.fs" />
+    <Compile Include="JsonMatchers.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FSharp.SystemTextJson" Version="1.4.36" />
+    <PackageReference Include="System.Text.Json" Version="9.0.0" />
+  </ItemGroup>
+
+</Project>

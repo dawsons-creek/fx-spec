@@ -12,6 +12,12 @@ module JsonHelpers =
         options.Converters.Add(System.Text.Json.Serialization.JsonFSharpConverter())
         options
 
+    /// Ensures the provided options include F# type support.
+    let private optionsWithConverter (options: JsonSerializerOptions) =
+        let opts = JsonSerializerOptions(options)
+        opts.Converters.Add(System.Text.Json.Serialization.JsonFSharpConverter())
+        opts
+
     /// Parse a JSON string into the requested type using default options.
     let parseJson<'T> (json: string) : 'T =
         if String.IsNullOrWhiteSpace(json) then
@@ -27,7 +33,7 @@ module JsonHelpers =
         if String.IsNullOrWhiteSpace(json) then
             invalidArg (nameof json) "JSON string must not be null or whitespace."
 
-        JsonSerializer.Deserialize<'T>(json, options)
+        JsonSerializer.Deserialize<'T>(json, optionsWithConverter options)
 
     /// Serialize a value to JSON string using default options.
     let toJson<'T> (value: 'T) : string =
@@ -38,4 +44,4 @@ module JsonHelpers =
         if isNull options then
             invalidArg (nameof options) "JsonSerializerOptions must not be null."
 
-        JsonSerializer.Serialize<'T>(value, options)
+        JsonSerializer.Serialize<'T>(value, optionsWithConverter options)
